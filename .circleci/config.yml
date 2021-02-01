@@ -26,5 +26,5 @@ jobs:
           name: Test Release Image
           command: |
             composer install --ignore-platform-reqs
-            docker-compose -f docker-compose.build.yml run web src/vendor/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 src/app/
-            docker-compose -f docker-compose.build.yml run --rm test bash /opt/bin/test
+            docker-compose -f docker-compose.build.yml run api src/vendor/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 src/app/
+            docker-compose -f docker-compose.build.yml run --rm api bash /opt/src/vendor/bin/phpunit
