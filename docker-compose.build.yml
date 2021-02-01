@@ -1,0 +1,39 @@
+version: '3.5'
+services:
+  nginx:
+    build:
+      dockerfile: ./.docker/nginx/Dockerfile
+      context: ./
+    ports:
+      - "80"
+      - "443"
+    links:
+      - api
+
+  api: &api
+    build:
+      dockerfile: ./.docker/api/Dockerfile
+      context: ./
+    volumes:
+      - .:/opt
+    environment:
+      DB_NAME: if_actor
+      DB_USER: fusion
+      DB_PASSWORD: password
+      DB_HOST: database
+      DB_DRIVER: pdo_pgsql
+      LOG_LOGGER: monolog
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: fusion
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: if_actor
+    ports:
+      - 5432:5432
+
+  migrate:
+    <<: *api
+    restart: on-failure
+    command: /opt/bin/migrate

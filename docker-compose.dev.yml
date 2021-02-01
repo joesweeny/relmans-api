@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+# Extends docker-compose.build.yml
+
+  api:
+    env_file:
+      - src/.env
+    volumes:
+      - .:/opt

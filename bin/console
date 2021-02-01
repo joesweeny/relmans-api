@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bin/docker-dev run --rm api php src/console.php $@
