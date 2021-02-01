@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IntelligenceFusion\Actor\Application\Console\Migrations;
+namespace Relmans\Application\Console\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -16,11 +16,9 @@ final class Version20210121121044 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-
     }
 
     public function down(Schema $schema) : void
     {
-
     }
 }

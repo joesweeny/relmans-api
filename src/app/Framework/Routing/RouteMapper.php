@@ -1,8 +1,8 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Framework\Routing;
+namespace Relmans\Framework\Routing;
 
-use IntelligenceFusion\Actor\Application\Http\HealthCheckController;
+use Relmans\Application\Http\HealthCheckController;
 use Slim\App;
 
 class RouteMapper

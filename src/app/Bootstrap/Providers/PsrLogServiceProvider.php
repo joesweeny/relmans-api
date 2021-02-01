@@ -1,10 +1,10 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Bootstrap\Providers;
+namespace Relmans\Bootstrap\Providers;
 
 use DI\Definition\Helper\DefinitionHelper;
-use IntelligenceFusion\Actor\Bootstrap\Config;
-use IntelligenceFusion\Actor\Bootstrap\ServiceProvider;
+use Relmans\Bootstrap\Config;
+use Relmans\Bootstrap\ServiceProvider;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\NullHandler;

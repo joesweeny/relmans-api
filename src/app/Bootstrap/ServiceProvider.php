@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Bootstrap;
+namespace Relmans\Bootstrap;
 
 use DI\Definition\Helper\DefinitionHelper;
 

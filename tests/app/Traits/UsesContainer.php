@@ -1,10 +1,10 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Traits;
+namespace Relmans\Traits;
 
-use IntelligenceFusion\Actor\Bootstrap\Config;
-use IntelligenceFusion\Actor\Bootstrap\ConfigFactory;
-use IntelligenceFusion\Actor\Bootstrap\ContainerFactory;
+use Relmans\Bootstrap\Config;
+use Relmans\Bootstrap\ConfigFactory;
+use Relmans\Bootstrap\ContainerFactory;
 use Psr\Container\ContainerInterface;
 
 trait UsesContainer

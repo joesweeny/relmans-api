@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Bootstrap\Providers;
+namespace Relmans\Bootstrap\Providers;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -8,8 +8,8 @@ use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\Migrations\Configuration\Connection\ExistingConnection;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationArray;
 use Doctrine\Migrations\DependencyFactory;
-use IntelligenceFusion\Actor\Bootstrap\Config;
-use IntelligenceFusion\Actor\Bootstrap\ServiceProvider;
+use Relmans\Bootstrap\Config;
+use Relmans\Bootstrap\ServiceProvider;
 use Psr\Container\ContainerInterface;
 
 class DoctrineServiceProvider implements ServiceProvider
@@ -40,7 +40,7 @@ class DoctrineServiceProvider implements ServiceProvider
 
                 $configuration = new ConfigurationArray([
                     'migrations_paths' => [
-                        'IntelligenceFusion\Actor\Application\Console\Migrations' => __DIR__ . '/../../Application/Console/Migrations',
+                        'Relmans\Application\Console\Migrations' => __DIR__ . '/../../Application/Console/Migrations',
                     ],
 
                     'table_storage' => [

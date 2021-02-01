@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Application\Console;
+namespace Relmans\Application\Console;
 
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Tools\Console\Command\DumpSchemaCommand;
@@ -13,7 +13,7 @@ use Doctrine\Migrations\Tools\Console\Command\RollupCommand;
 use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
-use IntelligenceFusion\Actor\Application\Console\Command\HelloCommand;
+use Relmans\Application\Console\Command\HelloCommand;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;

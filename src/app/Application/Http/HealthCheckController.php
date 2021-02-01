@@ -1,8 +1,8 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Application\Http;
+namespace Relmans\Application\Http;
 
-use IntelligenceFusion\Actor\Framework\Jsend\JsendSuccessResponse;
+use Relmans\Framework\Jsend\JsendSuccessResponse;
 use Psr\Http\Message\ResponseInterface;
 
 class HealthCheckController

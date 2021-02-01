@@ -1,10 +1,10 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Framework\Error;
+namespace Relmans\Framework\Error;
 
-use IntelligenceFusion\Actor\Framework\Jsend\JsendError;
-use IntelligenceFusion\Actor\Framework\Jsend\JsendErrorResponse;
-use IntelligenceFusion\Actor\Framework\Jsend\JsendFailResponse;
+use Relmans\Framework\Jsend\JsendError;
+use Relmans\Framework\Jsend\JsendErrorResponse;
+use Relmans\Framework\Jsend\JsendFailResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;

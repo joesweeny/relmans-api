@@ -1,9 +1,9 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Traits;
+namespace Relmans\Traits;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
-use IntelligenceFusion\Actor\Application\Console\Console;
+use Relmans\Application\Console\Console;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\BufferedOutput;
