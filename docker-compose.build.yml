@@ -17,8 +17,8 @@ services:
     volumes:
       - .:/opt
     environment:
-      DB_NAME: if_actor
-      DB_USER: fusion
+      DB_NAME: relmans
+      DB_USER: dev
       DB_PASSWORD: password
       DB_HOST: database
       DB_DRIVER: pdo_pgsql
@@ -27,9 +27,9 @@ services:
   database:
     image: postgres
     environment:
-      POSTGRES_USER: fusion
+      POSTGRES_USER: dev
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: if_actor
+      POSTGRES_DB: relmans
     ports:
       - 5432:5432
 
