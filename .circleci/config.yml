@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/relmans-api
     machine:
-      image: circleci/php:7.4.7-fpm
+      image: ubuntu-2004:202010-01
 
     steps:
       - checkout
