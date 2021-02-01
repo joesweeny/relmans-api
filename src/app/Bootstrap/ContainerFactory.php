@@ -12,6 +12,7 @@ use Relmans\Framework\Error\JsendErrorHandler;
 use Relmans\Framework\Routing\RouteMapper;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Relmans\Framework\Time\Clock;
 use Slim\App;
 use Slim\Factory\AppFactory;
 
@@ -103,6 +104,10 @@ class ContainerFactory
 
                 return $app;
             }),
+
+            Clock::class => function () {
+                return new SystemClock();
+            }
         ];
     }
 }
