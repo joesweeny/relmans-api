@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Framework\CommandBus;
+namespace Relmans\Framework\CommandBus;
 
 use PHPUnit\Framework\TestCase;
 

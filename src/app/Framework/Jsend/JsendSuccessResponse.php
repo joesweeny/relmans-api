@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Framework\Jsend;
+namespace Relmans\Framework\Jsend;
 
 use Laminas\Diactoros\Response\JsonResponse;
 

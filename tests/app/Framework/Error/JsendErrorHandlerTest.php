@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Framework\Error;
+namespace Relmans\Framework\Error;
 
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;

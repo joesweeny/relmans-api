@@ -1,10 +1,10 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Bootstrap\Providers;
+namespace Relmans\Bootstrap\Providers;
 
-use IntelligenceFusion\Actor\Bootstrap\ServiceProvider;
-use IntelligenceFusion\Actor\Framework\CommandBus\BaseNameExtractor;
-use IntelligenceFusion\Actor\Framework\CommandBus\ContainerHandlerLocator;
+use Relmans\Bootstrap\ServiceProvider;
+use Relmans\Framework\CommandBus\BaseNameExtractor;
+use Relmans\Framework\CommandBus\ContainerHandlerLocator;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
@@ -20,7 +20,7 @@ class CommandBusServiceProvider implements ServiceProvider
                     new BaseNameExtractor(),
                     new ContainerHandlerLocator(
                         $container,
-                        'IntelligenceFusion\\Actor\\Boundary\\Command\\Handler\\'
+                        'Relmans\\Boundary\\Command\\Handler\\'
                     ),
                     new HandleInflector()
                 );

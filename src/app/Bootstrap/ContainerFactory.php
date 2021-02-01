@@ -1,14 +1,14 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Bootstrap;
+namespace Relmans\Bootstrap;
 
 use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
-use IntelligenceFusion\Actor\Bootstrap\Providers\CommandBusServiceProvider;
-use IntelligenceFusion\Actor\Bootstrap\Providers\DoctrineServiceProvider;
-use IntelligenceFusion\Actor\Bootstrap\Providers\PsrLogServiceProvider;
-use IntelligenceFusion\Actor\Framework\Error\JsendErrorHandler;
-use IntelligenceFusion\Actor\Framework\Routing\RouteMapper;
+use Relmans\Bootstrap\Providers\CommandBusServiceProvider;
+use Relmans\Bootstrap\Providers\DoctrineServiceProvider;
+use Relmans\Bootstrap\Providers\PsrLogServiceProvider;
+use Relmans\Framework\Error\JsendErrorHandler;
+use Relmans\Framework\Routing\RouteMapper;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Slim\App;

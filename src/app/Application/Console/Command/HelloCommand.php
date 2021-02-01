@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Application\Console\Command;
+namespace Relmans\Application\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

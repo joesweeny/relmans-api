@@ -1,7 +1,7 @@
 <?php
 
-use IntelligenceFusion\Actor\Bootstrap\ConfigFactory;
-use IntelligenceFusion\Actor\Bootstrap\ContainerFactory;
+use Relmans\Bootstrap\ConfigFactory;
+use Relmans\Bootstrap\ContainerFactory;
 
 require __DIR__ . '/vendor/autoload.php';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace IntelligenceFusion\Actor\Framework\CommandBus;
+namespace Relmans\Framework\CommandBus;
 
 use DI\Container;
 use League\Tactician\Exception\MissingHandlerException;
