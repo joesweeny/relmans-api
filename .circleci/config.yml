@@ -20,11 +20,11 @@ jobs:
           name: Build Release Image
           command: |
             composer install --ignore-platform-reqs --no-dev --optimize-autoloader
-            docker-compose -f docker-compose.yml up -d --build
+            docker-compose -f docker-compose.build.yml up -d --build
 
       - run:
           name: Test Release Image
           command: |
             composer install --ignore-platform-reqs
-            docker-compose -f docker-compose.yml run web src/vendor/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 src/app/
-            docker-compose -f docker-compose.yml run --rm test bash /opt/bin/test
+            docker-compose -f docker-compose.build.yml run web src/vendor/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 src/app/
+            docker-compose -f docker-compose.build.yml run --rm test bash /opt/bin/test
