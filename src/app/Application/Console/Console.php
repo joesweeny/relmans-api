@@ -13,6 +13,7 @@ use Doctrine\Migrations\Tools\Console\Command\RollupCommand;
 use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
+use Relmans\Application\Console\Command\CategoryCreateCommand;
 use Relmans\Application\Console\Command\HelloCommand;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
@@ -43,6 +44,7 @@ class Console
 
         $app->addCommands([
             new HelloCommand(),
+            $this->container->get(CategoryCreateCommand::class),
             new DumpSchemaCommand($factory),
             new ExecuteCommand($factory),
             new GenerateCommand($factory),
