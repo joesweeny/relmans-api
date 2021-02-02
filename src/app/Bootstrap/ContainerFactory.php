@@ -7,7 +7,9 @@ use DI\Definition\Helper\DefinitionHelper;
 use Relmans\Bootstrap\Providers\CommandBusServiceProvider;
 use Relmans\Bootstrap\Providers\DoctrineServiceProvider;
 use Relmans\Bootstrap\Providers\PsrLogServiceProvider;
+use Relmans\Bootstrap\Providers\ReaderServiceProvider;
 use Relmans\Bootstrap\Providers\RepositoryServiceProvider;
+use Relmans\Bootstrap\Providers\WriterServiceProvider;
 use Relmans\Framework\Error\JsendErrorHandler;
 use Relmans\Framework\Routing\RouteMapper;
 use Psr\Container\ContainerInterface;
@@ -26,7 +28,9 @@ class ContainerFactory
         CommandBusServiceProvider::class,
         DoctrineServiceProvider::class,
         PsrLogServiceProvider::class,
+        ReaderServiceProvider::class,
         RepositoryServiceProvider::class,
+        WriterServiceProvider::class,
     ];
 
     /**

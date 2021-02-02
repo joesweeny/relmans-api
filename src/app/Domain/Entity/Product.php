@@ -2,6 +2,7 @@
 
 namespace Relmans\Domain\Entity;
 
+use DateTimeImmutable;
 use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Enum\ProductStatus;
 
