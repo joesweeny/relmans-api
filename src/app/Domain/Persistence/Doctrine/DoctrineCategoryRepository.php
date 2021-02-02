@@ -10,9 +10,6 @@ use Relmans\Domain\Persistence\CategoryRepository;
 
 class DoctrineCategoryRepository implements CategoryRepository
 {
-    /**
-     * @var Connection
-     */
     private Connection $connection;
 
     public function __construct(Connection $connection)

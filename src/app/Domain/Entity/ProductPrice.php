@@ -2,6 +2,7 @@
 
 namespace Relmans\Domain\Entity;
 
+use DateTimeImmutable;
 use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Enum\Measurement;
 
@@ -9,7 +10,7 @@ class ProductPrice
 {
     private UuidInterface $id;
     private UuidInterface $productId;
-    private int $price;
+    private int $value;
     private float $size;
     private Measurement $measurement;
     private DateTimeImmutable $createdAt;
@@ -18,7 +19,7 @@ class ProductPrice
     public function __construct(
         UuidInterface $id,
         UuidInterface $productId,
-        int $price,
+        int $value,
         float $size,
         Measurement $measurement,
         DateTimeImmutable $createdAt,
@@ -26,7 +27,7 @@ class ProductPrice
     ) {
         $this->id = $id;
         $this->productId = $productId;
-        $this->price = $price;
+        $this->value = $value;
         $this->size = $size;
         $this->measurement = $measurement;
         $this->createdAt = $createdAt;
@@ -43,9 +44,9 @@ class ProductPrice
         return $this->productId;
     }
 
-    public function getPrice(): int
+    public function getValue(): int
     {
-        return $this->price;
+        return $this->value;
     }
 
     public function getSize(): float
