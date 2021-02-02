@@ -32,9 +32,14 @@ final class Version20210202102120 extends AbstractMigration
 
         $table = $schema->createTable('product_price');
 
+        $table->addColumn('id', Types::STRING)->setNotnull(true);
         $table->addColumn('product_id', Types::STRING)->setNotnull(true);
-        $table->addColumn('price', Types::STRING)->setNotnull(true);
+        $table->addColumn('price', Types::INTEGER)->setNotnull(true);
+        $table->addColumn('size', Types::FLOAT)->setNotnull(true);
         $table->addColumn('measurement', Types::STRING)->setNotnull(true);
+        $table->addColumn('created_at', Types::INTEGER)->setNotnull(true);
+        $table->addColumn('updated_at', Types::INTEGER)->setNotnull(true);
+        $table->setPrimaryKey(['id']);
         $table->addIndex(['product_id']);
     }
 
