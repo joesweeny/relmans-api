@@ -25,7 +25,7 @@ final class Version20210202102120 extends AbstractMigration
         $table->addColumn('id', Types::STRING)->setNotnull(true);
         $table->addColumn('category_id', Types::STRING)->setNotnull(true);
         $table->addColumn('name', Types::STRING)->setNotnull(true);
-        $table->addColumn('status', Types::FLOAT)->setNotnull(true);
+        $table->addColumn('status', Types::STRING)->setNotnull(true);
         $table->addColumn('created_at', Types::INTEGER)->setNotnull(true);
         $table->addColumn('updated_at', Types::INTEGER)->setNotnull(true);
         $table->setPrimaryKey(['id']);

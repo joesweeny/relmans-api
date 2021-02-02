@@ -4,7 +4,7 @@ namespace Relmans\Domain\Persistence;
 
 use Ramsey\Uuid\UuidInterface;
 
-class ProductRepositoryQuery
+class ProductReaderQuery
 {
     private ?UuidInterface $categoryId;
     private ?string $term;
@@ -17,7 +17,7 @@ class ProductRepositoryQuery
 
     public function getCategoryId(): ?UuidInterface
     {
-        return $this->categoryId;
+        return $this->categoryId ?? null;
     }
 
     public function setSearchTerm(string $term): self
@@ -28,6 +28,6 @@ class ProductRepositoryQuery
 
     public function getSearchTerm(): ?string
     {
-        return $this->term;
+        return $this->term ?? null;
     }
 }

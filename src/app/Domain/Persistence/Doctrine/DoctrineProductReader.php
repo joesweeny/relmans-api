@@ -11,7 +11,7 @@ use Relmans\Domain\Entity\ProductPrice;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductReader;
-use Relmans\Domain\Persistence\ProductRepositoryQuery;
+use Relmans\Domain\Persistence\ProductReaderQuery;
 
 class DoctrineProductReader implements ProductReader
 {
@@ -22,7 +22,7 @@ class DoctrineProductReader implements ProductReader
         $this->connection = $connection;
     }
 
-    public function get(ProductRepositoryQuery $query): array
+    public function get(ProductReaderQuery $query): array
     {
         $productBuilder = $this->connection->createQueryBuilder()
             ->select('*')
@@ -42,7 +42,7 @@ class DoctrineProductReader implements ProductReader
             try {
                 $rows = $priceBuilder
                     ->where('product_id = :product_id')
-                    ->setParameter(':product_id', $row['product_id'])
+                    ->setParameter(':product_id', $row['id'])
                     ->execute()
                     ->fetchAllAssociative();
             } catch (Exception $e) {
@@ -50,18 +50,18 @@ class DoctrineProductReader implements ProductReader
             }
 
             $prices = array_map(function (array $price) {
-                return $this->hydratePrice($price);
+                return $this->hydratePrice((object) $price);
             }, $rows);
 
-                return $this->hydrateProduct($row, $prices);
+                return $this->hydrateProduct((object) $row, $prices);
         }, $rows->fetchAllAssociative());
     }
 
-    private function buildQuery(QueryBuilder $builder, ProductRepositoryQuery $query): QueryBuilder
+    private function buildQuery(QueryBuilder $builder, ProductReaderQuery $query): QueryBuilder
     {
         if ($query->getSearchTerm()) {
             $builder
-                ->andWhere('name LIKE :name')
+                ->andWhere('LOWER(name) LIKE LOWER(:name)')
                 ->setParameter(':name', "%{$query->getSearchTerm()}%");
         }
 

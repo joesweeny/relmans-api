@@ -51,8 +51,10 @@ class DoctrineProductWriter implements ProductWriter
 
     public function updateProductStatus(UuidInterface $id, ProductStatus $status): void
     {
+        $builder =  $this->connection->createQueryBuilder();
+
         try {
-            $row = $this->connection->createQueryBuilder()
+            $row = $builder
                 ->select('1')
                 ->from('product')
                 ->where('id = :id')
@@ -68,10 +70,10 @@ class DoctrineProductWriter implements ProductWriter
         }
 
         try {
-            $this->connection->createQueryBuilder()
+            $builder
                 ->update('product')
-                ->set('status', (string) $status)
-                ->set('updated_at', $this->clock->now())
+                ->set('status', $builder->createNamedParameter((string) $status))
+                ->set('updated_at', $this->clock->now()->getTimestamp())
                 ->where('id = :id')
                 ->setParameter(':id', (string) $id)
                 ->execute();
@@ -82,8 +84,10 @@ class DoctrineProductWriter implements ProductWriter
 
     public function updateProductPrice(UuidInterface $priceId, int $value): void
     {
+        $builder =  $this->connection->createQueryBuilder();
+
         try {
-            $row = $this->connection->createQueryBuilder()
+            $row = $builder
                 ->select('1')
                 ->from('product_price')
                 ->where('id = :id')
@@ -100,9 +104,9 @@ class DoctrineProductWriter implements ProductWriter
 
         try {
             $this->connection->createQueryBuilder()
-                ->update('product')
+                ->update('product_price')
                 ->set('value', $value)
-                ->set('updated_at', $this->clock->now())
+                ->set('updated_at', $this->clock->now()->getTimestamp())
                 ->where('id = :id')
                 ->setParameter(':id', (string) $priceId)
                 ->execute();
@@ -119,7 +123,7 @@ class DoctrineProductWriter implements ProductWriter
     {
         foreach ($prices as $price) {
             $query = $this->connection->createQueryBuilder()
-                ->insert('product')
+                ->insert('product_price')
                 ->values([
                     'id' => ':id',
                     'product_id' => ':product_id',

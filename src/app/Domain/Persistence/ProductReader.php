@@ -7,8 +7,8 @@ use Relmans\Domain\Entity\Product;
 interface ProductReader
 {
     /**
-     * @param ProductRepositoryQuery $query
+     * @param ProductReaderQuery $query
      * @return array|Product[]
      */
-    public function get(ProductRepositoryQuery $query): array;
+    public function get(ProductReaderQuery $query): array;
 }
