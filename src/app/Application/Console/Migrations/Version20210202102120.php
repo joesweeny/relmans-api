@@ -35,7 +35,7 @@ final class Version20210202102120 extends AbstractMigration
         $table->addColumn('id', Types::STRING)->setNotnull(true);
         $table->addColumn('product_id', Types::STRING)->setNotnull(true);
         $table->addColumn('value', Types::INTEGER)->setNotnull(true);
-        $table->addColumn('size', Types::FLOAT)->setNotnull(true);
+        $table->addColumn('size', Types::FLOAT);
         $table->addColumn('measurement', Types::STRING)->setNotnull(true);
         $table->addColumn('created_at', Types::INTEGER)->setNotnull(true);
         $table->addColumn('updated_at', Types::INTEGER)->setNotnull(true);

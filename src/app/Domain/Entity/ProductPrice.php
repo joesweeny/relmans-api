@@ -11,7 +11,7 @@ class ProductPrice
     private UuidInterface $id;
     private UuidInterface $productId;
     private int $value;
-    private float $size;
+    private ?float $size;
     private Measurement $measurement;
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
@@ -20,7 +20,7 @@ class ProductPrice
         UuidInterface $id,
         UuidInterface $productId,
         int $value,
-        float $size,
+        ?float $size,
         Measurement $measurement,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt
@@ -49,7 +49,7 @@ class ProductPrice
         return $this->value;
     }
 
-    public function getSize(): float
+    public function getSize(): ?float
     {
         return $this->size;
     }
