@@ -60,7 +60,7 @@ class Product
     /**
      * @return array|ProductPrice[]
      */
-    public function getPrices()
+    public function getPrices(): array
     {
         return $this->prices;
     }
