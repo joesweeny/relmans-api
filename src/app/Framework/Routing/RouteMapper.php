@@ -2,6 +2,7 @@
 
 namespace Relmans\Framework\Routing;
 
+use Relmans\Application\Http\CreateProductController;
 use Relmans\Application\Http\HealthCheckController;
 use Relmans\Application\Http\ListCategoriesController;
 use Slim\App;
@@ -12,5 +13,6 @@ class RouteMapper
     {
         $app->get('/health', HealthCheckController::class);
         $app->get('/category', ListCategoriesController::class);
+        $app->post('/product', CreateProductController::class);
     }
 }
