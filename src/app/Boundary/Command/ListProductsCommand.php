@@ -15,7 +15,7 @@ class ListProductsCommand
      * @param string|null $categoryId
      * @param string|null $search
      * @param string|null $orderBy
-     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      */
     public function __construct(?string $categoryId, ?string $search, ?string $orderBy)
     {
@@ -42,7 +42,7 @@ class ListProductsCommand
     /**
      * @param string|null $id
      * @return UuidInterface|null
-     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      */
     private function validateCategoryId(?string $id): ?UuidInterface
     {
