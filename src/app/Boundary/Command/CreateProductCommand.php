@@ -4,6 +4,7 @@ namespace Relmans\Boundary\Command;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\ProductStatus;
 
 class CreateProductCommand
@@ -25,7 +26,7 @@ class CreateProductCommand
     {
         $this->validatePrices($prices);
         $this->categoryId = Uuid::fromString($categoryId);
-        $this->name = $name;
+        $this->name = $this->validateName($name);
         $this->status = new ProductStatus($status);
         $this->prices = $prices;
     }
@@ -53,19 +54,33 @@ class CreateProductCommand
         return $this->prices;
     }
 
+    /**
+     * @param string $name
+     * @return string
+     * @throws \UnexpectedValueException
+     */
+    private function validateName(string $name): string
+    {
+        if (!$name) {
+            throw new \UnexpectedValueException("'name' field is required");
+        }
+
+        return $name;
+    }
+
     private function validatePrices(array $prices): void
     {
         foreach ($prices as $price) {
             if (!isset($price->value)) {
-                throw new \UnexpectedValueException("'value' field is required");
+                throw new \UnexpectedValueException("'price->value' field is required");
             }
 
             if (!isset($price->size)) {
-                throw new \UnexpectedValueException("'size' field is required");
+                throw new \UnexpectedValueException("'price->size' field is required");
             }
 
-            if (!isset($price->measurement)) {
-                throw new \UnexpectedValueException("'measurement' field is required");
+            if (!isset($price->measurement) || !Measurement::isValid($price->measurement)) {
+                throw new \UnexpectedValueException("'price->measurement' field is required");
             }
         }
     }
