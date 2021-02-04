@@ -9,7 +9,7 @@ class ProductReaderQuery
     private ?UuidInterface $categoryId;
     private ?string $term;
 
-    public function setCategoryId(UuidInterface $categoryId): self
+    public function setCategoryId(?UuidInterface $categoryId): self
     {
         $this->categoryId = $categoryId;
         return $this;
@@ -20,7 +20,7 @@ class ProductReaderQuery
         return $this->categoryId ?? null;
     }
 
-    public function setSearchTerm(string $term): self
+    public function setSearchTerm(?string $term): self
     {
         $this->term = $term;
         return $this;
