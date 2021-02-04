@@ -8,8 +8,9 @@ class ProductReaderQuery
 {
     private ?UuidInterface $categoryId;
     private ?string $term;
+    private ?string $orderBy;
 
-    public function setCategoryId(UuidInterface $categoryId): self
+    public function setCategoryId(?UuidInterface $categoryId): self
     {
         $this->categoryId = $categoryId;
         return $this;
@@ -20,7 +21,7 @@ class ProductReaderQuery
         return $this->categoryId ?? null;
     }
 
-    public function setSearchTerm(string $term): self
+    public function setSearchTerm(?string $term): self
     {
         $this->term = $term;
         return $this;
@@ -29,5 +30,16 @@ class ProductReaderQuery
     public function getSearchTerm(): ?string
     {
         return $this->term ?? null;
+    }
+
+    public function setOrderBy(?string $orderBy): self
+    {
+        $this->orderBy = $orderBy;
+        return $this;
+    }
+
+    public function getOrderBy(): string
+    {
+        return $this->orderBy ?? 'name_asc';
     }
 }
