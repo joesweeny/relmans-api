@@ -70,6 +70,14 @@ class DoctrineProductReader implements ProductReader
                 ->setParameter(':category_id', (string) $query->getCategoryId());
         }
 
+        if ($query->getOrderBy() === 'name_asc') {
+            $builder->orderBy('name', 'ASC');
+        }
+
+        if ($query->getOrderBy() === 'name_desc') {
+            $builder->orderBy('name', 'DESC');
+        }
+
         return $builder;
     }
 

@@ -9,16 +9,19 @@ class ListProductsCommand
 {
     private ?UuidInterface $categoryId;
     private ?string $search;
+    private ?string $orderBy;
 
     /**
      * @param string|null $categoryId
      * @param string|null $search
+     * @param string|null $orderBy
      * @throws \UnexpectedValueException
      */
-    public function __construct(?string $categoryId, ?string $search)
+    public function __construct(?string $categoryId, ?string $search, ?string $orderBy)
     {
         $this->categoryId = $this->validateCategoryId($categoryId);
         $this->search = $search;
+        $this->orderBy = $orderBy;
     }
 
     public function getCategoryId(): ?UuidInterface
@@ -29,6 +32,11 @@ class ListProductsCommand
     public function getSearch(): ?string
     {
         return $this->search;
+    }
+
+    public function getOrderBy(): ?string
+    {
+        return $this->orderBy;
     }
 
     /**

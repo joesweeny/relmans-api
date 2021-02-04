@@ -23,7 +23,8 @@ class ListProductsCommandHandler
     {
         $query = (new ProductReaderQuery())
             ->setCategoryId($command->getCategoryId())
-            ->setSearchTerm($command->getSearch());
+            ->setSearchTerm($command->getSearch())
+            ->setOrderBy($command->getOrderBy());
 
         $products = $this->reader->get($query);
 

@@ -40,6 +40,21 @@ class DoctrineProductReaderTest extends TestCase
         $this->assertEquals($this->products(), $fetched);
     }
 
+    public function test_get_returns_an_array_of_ordered_products_by_name()
+    {
+        $this->seedProducts();
+
+        $query = (new ProductReaderQuery())->setOrderBy('name_desc');
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(2, $fetched);
+        $this->assertEquals(Uuid::fromString('951af4b9-ce31-4ec9-bb00-fa34b6ed06a8'), $fetched[0]->getId());
+        $this->assertEquals('Vegetables', $fetched[0]->getName());
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[1]->getId());
+        $this->assertEquals('Fruit', $fetched[1]->getName());
+    }
+
     public function test_get_returns_an_array_of_objects_filtered_by_category_id()
     {
         $this->seedProducts();
