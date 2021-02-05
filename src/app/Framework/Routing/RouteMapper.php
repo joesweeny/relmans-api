@@ -6,6 +6,8 @@ use Relmans\Application\Http\CreateProductController;
 use Relmans\Application\Http\HealthCheckController;
 use Relmans\Application\Http\ListCategoriesController;
 use Relmans\Application\Http\ListProductsController;
+use Relmans\Application\Http\UpdateProductController;
+use Relmans\Application\Http\UpdateProductPriceController;
 use Slim\App;
 
 class RouteMapper
@@ -16,6 +18,7 @@ class RouteMapper
         $app->get('/category', ListCategoriesController::class);
         $app->post('/product', CreateProductController::class);
         $app->get('/product', ListProductsController::class);
-        $app->patch('/product/{id}', ListProductsController::class);
+        $app->patch('/product/{id}', UpdateProductController::class);
+        $app->patch('/price/{id}', UpdateProductPriceController::class);
     }
 }
