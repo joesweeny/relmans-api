@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Application\Http;
+namespace Relmans\Application\Http;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use League\Tactician\CommandBus;
@@ -10,7 +10,6 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
-use Relmans\Application\Http\UpdateProductController;
 use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Framework\Exception\NotFoundException;

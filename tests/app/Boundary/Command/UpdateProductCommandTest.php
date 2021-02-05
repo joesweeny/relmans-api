@@ -1,10 +1,9 @@
 <?php
 
-namespace app\Boundary\Command;
+namespace Relmans\Boundary\Command;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Enum\ProductStatus;
 
 class UpdateProductCommandTest extends TestCase

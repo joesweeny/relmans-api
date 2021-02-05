@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Boundary\Command\Handler;
+namespace Relmans\Boundary\Command\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -8,7 +8,6 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Ramsey\Uuid\Uuid;
 use Relmans\Boundary\Command\CreateProductCommand;
-use Relmans\Boundary\Command\Handler\CreateProductCommandHandler;
 use Relmans\Domain\Entity\Product;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\ProductStatus;
