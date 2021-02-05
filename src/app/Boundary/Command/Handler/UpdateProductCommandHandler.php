@@ -25,6 +25,10 @@ class UpdateProductCommandHandler
      */
     public function handle(UpdateProductCommand $command): void
     {
+        if ($command->getStatus() === null) {
+            return;
+        }
+
         $this->productWriter->updateProductStatus($command->getProductId(), $command->getStatus());
     }
 }

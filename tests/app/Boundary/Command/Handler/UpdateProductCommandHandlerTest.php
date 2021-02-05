@@ -49,4 +49,16 @@ class UpdateProductCommandHandlerTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->handler->handle($command);
     }
+
+    public function test_handle_does_not_call_ProductWriter_if_status_is_null()
+    {
+        $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', null);
+
+        $this->writer->updateProductStatus(
+            Argument::type(Uuid::class),
+            Argument::type(ProductStatus::class)
+        )->shouldNotBeCalled();
+
+        $this->handler->handle($command);
+    }
 }
