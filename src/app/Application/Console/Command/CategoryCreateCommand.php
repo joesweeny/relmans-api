@@ -24,7 +24,7 @@ class CategoryCreateCommand extends Command
     {
         $console = new SymfonyStyle($input, $output);
 
-        $name = $input->getArgument('name');
+        $name = implode(' ', $input->getArgument('name'));
 
         $command = new CreateCategoryCommand($name);
 
@@ -39,6 +39,6 @@ class CategoryCreateCommand extends Command
     {
         $this->setName('category:create')
             ->setDescription('Create a new category resource')
-            ->addArgument('name', InputArgument::REQUIRED, 'Name of the category');
+            ->addArgument('name', InputArgument::IS_ARRAY, 'Name of the category');
     }
 }
