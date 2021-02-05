@@ -1,13 +1,12 @@
 <?php
 
-namespace app\Boundary\Command\Handler;
+namespace Relmans\Boundary\Command\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Ramsey\Uuid\Uuid;
-use Relmans\Boundary\Command\Handler\UpdateProductCommandHandler;
 use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductWriter;

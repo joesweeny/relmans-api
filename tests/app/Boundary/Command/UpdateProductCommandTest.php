@@ -1,10 +1,9 @@
 <?php
 
-namespace app\Boundary\Command;
+namespace Relmans\Boundary\Command;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Enum\ProductStatus;
 
 class UpdateProductCommandTest extends TestCase
@@ -17,9 +16,9 @@ class UpdateProductCommandTest extends TestCase
         $this->assertEquals(ProductStatus::OUT_OF_SEASON(), $command->getStatus());
     }
 
-    public function test_InvalidArgumentException_is_thrown_if_status_provided_is_not_a_valid_enum_value()
+    public function test_UnexpectedValueException_is_thrown_if_status_provided_is_not_a_valid_enum_value()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage("Value 'INVALID' is not part of the enum Relmans\Domain\Enum\ProductStatus");
         new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', 'INVALID');
     }

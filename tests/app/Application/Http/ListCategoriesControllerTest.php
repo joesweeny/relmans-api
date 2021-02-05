@@ -1,13 +1,12 @@
 <?php
 
-namespace app\Application\Http;
+namespace Relmans\Application\Http;
 
 use League\Tactician\CommandBus;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use Relmans\Application\Http\ListCategoriesController;
 use Relmans\Boundary\Command\ListCategoriesCommand;
 
 class ListCategoriesControllerTest extends TestCase

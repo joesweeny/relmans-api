@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Application\Http;
+namespace Relmans\Application\Http;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use League\Tactician\CommandBus;
@@ -9,7 +9,6 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Ramsey\Uuid\Uuid;
-use Relmans\Application\Http\ListProductsController;
 use Relmans\Boundary\Command\ListProductsCommand;
 
 class ListProductsControllerTest extends TestCase

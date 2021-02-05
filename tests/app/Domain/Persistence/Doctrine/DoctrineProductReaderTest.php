@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Domain\Persistence\Doctrine;
+namespace Relmans\Domain\Persistence\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
@@ -9,8 +9,6 @@ use Relmans\Domain\Entity\Product;
 use Relmans\Domain\Entity\ProductPrice;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\ProductStatus;
-use Relmans\Domain\Persistence\Doctrine\DoctrineProductReader;
-use Relmans\Domain\Persistence\Doctrine\DoctrineProductWriter;
 use Relmans\Domain\Persistence\ProductReaderQuery;
 use Relmans\Traits\RunsMigrations;
 use Relmans\Traits\UsesContainer;

@@ -16,15 +16,12 @@ class UpdateProductCommand
      * @param string $productId
      * @param string|null $status
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      */
     public function __construct(string $productId, ?string $status)
     {
-        try {
-            $this->productId = Uuid::fromString($productId);
-            $this->status = $status !== null ? new ProductStatus($status) : $status;
-        } catch (\UnexpectedValueException $e) {
-            throw new \InvalidArgumentException($e->getMessage());
-        }
+        $this->productId = Uuid::fromString($productId);
+        $this->status = $status !== null ? new ProductStatus($status) : $status;
     }
 
     public function getProductId(): UuidInterface

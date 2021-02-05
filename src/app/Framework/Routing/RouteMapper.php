@@ -16,5 +16,6 @@ class RouteMapper
         $app->get('/category', ListCategoriesController::class);
         $app->post('/product', CreateProductController::class);
         $app->get('/product', ListProductsController::class);
+        $app->patch('/product/{id}', ListProductsController::class);
     }
 }

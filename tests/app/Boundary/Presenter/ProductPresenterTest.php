@@ -1,10 +1,9 @@
 <?php
 
-namespace app\Boundary\Presenter;
+namespace Relmans\Boundary\Presenter;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Relmans\Boundary\Presenter\ProductPresenter;
 use Relmans\Domain\Entity\Product;
 use Relmans\Domain\Entity\ProductPrice;
 use Relmans\Domain\Enum\Measurement;
