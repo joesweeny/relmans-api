@@ -22,9 +22,9 @@ class UpdateProductPriceCommandTest extends TestCase
         new UpdateProductPriceCommand('e', 100);
     }
 
-    public function test_InvalidArgumentExcpetion_is_thrown_if_value_provided_is_less_than_or_equal_to_zero()
+    public function test_UnexpectedValueException_is_thrown_if_value_provided_is_less_than_or_equal_to_zero()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage("'value' field cannot be zero or less");
         new UpdateProductPriceCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', -1);
     }

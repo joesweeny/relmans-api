@@ -12,8 +12,9 @@ class UpdateProductPriceCommand
 
     /**
      * @param string $priceId
-     * @param int $value
+     * @param ?int $value
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      */
     public function __construct(string $priceId, ?int $value)
     {
@@ -38,7 +39,7 @@ class UpdateProductPriceCommand
         }
 
         if ($value <= 0) {
-            throw new \InvalidArgumentException("'value' field cannot be zero or less");
+            throw new \UnexpectedValueException("'value' field cannot be zero or less");
         }
 
         return $value;

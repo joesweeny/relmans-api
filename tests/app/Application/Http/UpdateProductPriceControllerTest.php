@@ -10,11 +10,10 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
-use Relmans\Boundary\Command\UpdateProductCommand;
-use Relmans\Domain\Enum\ProductStatus;
+use Relmans\Boundary\Command\UpdateProductPriceCommand;
 use Relmans\Framework\Exception\NotFoundException;
 
-class UpdateProductControllerTest extends TestCase
+class UpdateProductPriceControllerTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -22,25 +21,25 @@ class UpdateProductControllerTest extends TestCase
      * @var CommandBus|ObjectProphecy
      */
     private $commandBus;
-    private UpdateProductController $controller;
+    private UpdateProductPriceController $controller;
 
     public function setUp(): void
     {
         $this->commandBus = $this->prophesize(CommandBus::class);
-        $this->controller = new UpdateProductController($this->commandBus->reveal());
+        $this->controller = new UpdateProductPriceController($this->commandBus->reveal());
     }
 
     public function test_invoke_returns_a_204_response()
     {
         $body = (object) [
-            'status' => 'IN_STOCK',
+            'value' => 100,
         ];
 
         $request = $this->request(json_encode($body));
 
-        $commandAssertion = Argument::that(function (UpdateProductCommand $command) {
-            $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getProductId());
-            $this->assertEquals(ProductStatus::IN_STOCK(), $command->getStatus());
+        $commandAssertion = Argument::that(function (UpdateProductPriceCommand $command) {
+            $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getPriceId());
+            $this->assertEquals(100, $command->getValue());
             return true;
         });
 
@@ -56,7 +55,7 @@ class UpdateProductControllerTest extends TestCase
     {
         $request = $this->request('{"invalidJson": "yes"');
 
-        $this->commandBus->handle(Argument::type(UpdateProductCommand::class))->shouldNotBeCalled();
+        $this->commandBus->handle(Argument::type(UpdateProductPriceCommand::class))->shouldNotBeCalled();
 
         $response = $this->controller->__invoke($request);
 
@@ -78,7 +77,7 @@ class UpdateProductControllerTest extends TestCase
     {
         $request = $this->request(null);
 
-        $this->commandBus->handle(Argument::type(UpdateProductCommand::class))->shouldNotBeCalled();
+        $this->commandBus->handle(Argument::type(UpdateProductPriceCommand::class))->shouldNotBeCalled();
 
         $response = $this->controller->__invoke($request);
 
@@ -99,12 +98,12 @@ class UpdateProductControllerTest extends TestCase
     public function test_invoke_returns_a_422_response_if_request_body_does_not_contain_the_expected_schema()
     {
         $body = (object) [
-            'status' => 'INVALID',
+            'value' => 0,
         ];
 
         $request = $this->request(json_encode($body));
 
-        $this->commandBus->handle(Argument::type(UpdateProductCommand::class))->shouldNotBeCalled();
+        $this->commandBus->handle(Argument::type(UpdateProductPriceCommand::class))->shouldNotBeCalled();
 
         $response = $this->controller->__invoke($request);
 
@@ -113,7 +112,7 @@ class UpdateProductControllerTest extends TestCase
             'errors' => [
                 (object) [
                     'code' => 1,
-                    'message' => "Value 'INVALID' is not part of the enum Relmans\Domain\Enum\ProductStatus",
+                    'message' => "'value' field cannot be zero or less",
                 ]
             ],
         ];
@@ -125,13 +124,13 @@ class UpdateProductControllerTest extends TestCase
     public function test_invoke_returns_a_404_response_if_id_path_parameter_is_not_a_valid_uuid_string()
     {
         $body = (object) [
-            'status' => 'OUT_OF_STOCK',
+            'value' => 10,
         ];
 
-        $request = new ServerRequest('POST', '/product', [], json_encode($body));
+        $request = new ServerRequest('PATCH', '', [], json_encode($body));
         $request = $request->withAttribute('id', '3');
 
-        $this->commandBus->handle(Argument::type(UpdateProductCommand::class))->shouldNotBeCalled();
+        $this->commandBus->handle(Argument::type(UpdateProductPriceCommand::class))->shouldNotBeCalled();
 
         $response = $this->controller->__invoke($request);
 
@@ -152,20 +151,20 @@ class UpdateProductControllerTest extends TestCase
     public function test_invoke_returns_a_404_response_if_product_resource_does_not_exist()
     {
         $body = (object) [
-            'status' => 'IN_STOCK',
+            'value' => 100,
         ];
 
         $request = $this->request(json_encode($body));
 
-        $commandAssertion = Argument::that(function (UpdateProductCommand $command) {
-            $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getProductId());
-            $this->assertEquals(ProductStatus::IN_STOCK(), $command->getStatus());
+        $commandAssertion = Argument::that(function (UpdateProductPriceCommand $command) {
+            $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getPriceId());
+            $this->assertEquals(100, $command->getValue());
             return true;
         });
 
         $this->commandBus->handle($commandAssertion)
             ->shouldBeCalled()
-            ->willThrow(new NotFoundException('Product does not exist'));
+            ->willThrow(new NotFoundException('Product price does not exist'));
 
         $response = $this->controller->__invoke($request);
 
@@ -174,7 +173,7 @@ class UpdateProductControllerTest extends TestCase
             'errors' => [
                 (object) [
                     'code' => 1,
-                    'message' => 'Product does not exist',
+                    'message' => 'Product price does not exist',
                 ]
             ],
         ];
