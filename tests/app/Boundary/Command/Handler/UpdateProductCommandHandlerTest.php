@@ -28,7 +28,7 @@ class UpdateProductCommandHandlerTest extends TestCase
         $this->handler = new UpdateProductCommandHandler($this->writer->reveal());
     }
 
-    public function test_handle_updates_a_product_status_via_ProductWriter()
+    public function test_handle_updates_a_product_status_via_the_ProductWriter()
     {
         $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', 'OUT_OF_SEASON');
 
