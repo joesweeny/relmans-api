@@ -14,8 +14,10 @@ use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
 use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
 use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
 use Relmans\Application\Console\Command\CategoryCreateCommand;
+use Relmans\Application\Console\Command\CategorySeedCommand;
 use Relmans\Application\Console\Command\HelloCommand;
 use Psr\Container\ContainerInterface;
+use Relmans\Application\Console\Command\ProductSeedCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,6 +47,8 @@ class Console
         $app->addCommands([
             new HelloCommand(),
             $this->container->get(CategoryCreateCommand::class),
+            $this->container->get(CategorySeedCommand::class),
+            $this->container->get(ProductSeedCommand::class),
             new DumpSchemaCommand($factory),
             new ExecuteCommand($factory),
             new GenerateCommand($factory),
