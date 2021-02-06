@@ -7,5 +7,5 @@ then
   # In daemon mode, provide some extra output
 
   echo "Running daemon mode:"
-  echo "    proxy:    https://"$(bin/docker-dev port nginx 80)
+  echo "    proxy:    http://"$(bin/docker-dev port nginx 80)
 fi
