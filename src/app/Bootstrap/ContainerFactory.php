@@ -4,6 +4,7 @@ namespace Relmans\Bootstrap;
 
 use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
+use Relmans\Application\Http\Middleware\CorsMiddleware;
 use Relmans\Bootstrap\Providers\CommandBusServiceProvider;
 use Relmans\Bootstrap\Providers\DoctrineServiceProvider;
 use Relmans\Bootstrap\Providers\PsrLogServiceProvider;
@@ -106,6 +107,8 @@ class ContainerFactory
                 );
 
                 $errorMiddleware->setDefaultErrorHandler(new JsendErrorHandler());
+
+                $app->add($container->get(CorsMiddleware::class));
 
                 return $app;
             }),
