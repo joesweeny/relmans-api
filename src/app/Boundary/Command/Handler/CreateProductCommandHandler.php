@@ -42,6 +42,7 @@ class CreateProductCommandHandler
             $command->getCategoryId(),
             $command->getName(),
             $command->getStatus(),
+            $command->isFeatured(),
             $prices,
             $this->clock->now(),
             $this->clock->now()

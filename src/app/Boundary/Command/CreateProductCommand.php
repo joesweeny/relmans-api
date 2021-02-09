@@ -13,21 +13,23 @@ class CreateProductCommand
     private string $name;
     private ProductStatus $status;
     private array $prices;
+    private bool $featured;
 
     /**
-     * CreateProductCommand constructor.
      * @param string $categoryId
      * @param string $name
      * @param string $status
+     * @param ?bool $featured
      * @param array|object[] $prices
      * @throws \UnexpectedValueException
      */
-    public function __construct(string $categoryId, string $name, string $status, array $prices)
+    public function __construct(string $categoryId, string $name, string $status, ?bool $featured, array $prices)
     {
         $this->validatePrices($prices);
         $this->categoryId = Uuid::fromString($categoryId);
         $this->name = $this->validateName($name);
         $this->status = new ProductStatus($status);
+        $this->featured = $this->validateFeatured($featured);
         $this->prices = $prices;
     }
 
@@ -44,6 +46,11 @@ class CreateProductCommand
     public function getStatus(): ProductStatus
     {
         return $this->status;
+    }
+
+    public function isFeatured(): bool
+    {
+        return $this->featured;
     }
 
     /**
@@ -83,5 +90,14 @@ class CreateProductCommand
                 throw new \UnexpectedValueException("'price->measurement' field is required");
             }
         }
+    }
+
+    private function validateFeatured(?bool $featured): bool
+    {
+        if (!is_bool($featured)) {
+            throw new \UnexpectedValueException("'featured' field is required");
+        }
+
+        return $featured;
     }
 }

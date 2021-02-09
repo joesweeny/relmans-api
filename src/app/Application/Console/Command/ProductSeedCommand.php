@@ -51,6 +51,7 @@ class ProductSeedCommand extends Command
                 Uuid::fromString($p->categoryId),
                 $p->name,
                 new ProductStatus($p->status),
+                $p->featured,
                 $prices,
                 $this->clock->now(),
                 $this->clock->now()
@@ -83,6 +84,7 @@ class ProductSeedCommand extends Command
                 'name' => 'Cauliflower',
                 'categoryId' => '893cf1e6-6751-4aa1-b8fe-7a22dad0b4e1',
                 'status' => 'IN_STOCK',
+                'featured' => true,
                 'prices' => [
                     (object) [
                         'id' => '7ef146d2-db7f-41c3-a9aa-bfae8306a3d2',
@@ -103,6 +105,7 @@ class ProductSeedCommand extends Command
                 'name' => 'Golden Delicious Apples',
                 'categoryId' => '85334e9f-338b-48f5-af00-782cb383a2d1',
                 'status' => 'IN_STOCK',
+                'featured' => true,
                 'prices' => [
                     (object) [
                         'id' => '29b0587f-8df5-496f-a60f-a7f25a97225d',
@@ -117,6 +120,7 @@ class ProductSeedCommand extends Command
                 'name' => 'Cucumber',
                 'categoryId' => '95e45a45-0bbd-455d-8575-5a4f00f857ce',
                 'status' => 'OUT_OF_STOCK',
+                'featured' => false,
                 'prices' => [
                     (object) [
                         'id' => '2beee823-b304-4d37-b8cc-5565f2ff94d0',
@@ -137,6 +141,7 @@ class ProductSeedCommand extends Command
                 'name' => 'Maris Piper',
                 'categoryId' => 'fbddcef1-0dcf-4f01-a990-2bab98d60959',
                 'status' => 'IN_STOCK',
+                'featured' => false,
                 'prices' => [
                     (object) [
                         'id' => 'a28127ec-5c9e-4a9e-8a89-3747630a28b1',
@@ -157,6 +162,7 @@ class ProductSeedCommand extends Command
                 'name' => 'King Edward',
                 'categoryId' => 'fbddcef1-0dcf-4f01-a990-2bab98d60959',
                 'status' => 'OUT_OF_SEASON',
+                'featured' => true,
                 'prices' => [
                     (object) [
                         'id' => 'bb52a495-f0b3-462d-b4cc-9994fcc40dba',
@@ -177,6 +183,7 @@ class ProductSeedCommand extends Command
                 'name' => 'Marijuana',
                 'categoryId' => 'cae5df51-6707-4281-9f25-16e147b9458d',
                 'status' => 'OUT_OF_SEASON',
+                'featured' => false,
                 'prices' => [
                     (object) [
                         'id' => '1e2bbdd0-b3e8-45cc-bdaf-fecd21c4e23b',
@@ -191,6 +198,7 @@ class ProductSeedCommand extends Command
                 'name' => 'Flat Mushrooms',
                 'categoryId' => '0fe95b87-3b14-4fdb-89f0-e628a1263872',
                 'status' => 'IN_STOCK',
+                'featured' => false,
                 'prices' => [
                     (object) [
                         'id' => 'f34e4cd4-1bd9-4607-b95d-296f5a0b85a6',

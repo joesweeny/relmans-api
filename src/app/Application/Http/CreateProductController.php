@@ -41,6 +41,7 @@ class CreateProductController
                 $body->categoryId ?? '',
                 $body->name ?? '',
                 $body->status ?? '',
+                $body->featured ?? null,
                 $body->prices ?? []
             );
         } catch (\UnexpectedValueException $e) {

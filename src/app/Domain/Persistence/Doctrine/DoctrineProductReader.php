@@ -89,6 +89,7 @@ class DoctrineProductReader implements ProductReader
             Uuid::fromString($row->category_id),
             $row->name,
             new ProductStatus($row->status),
+            (bool) $row->featured,
             $prices,
             \DateTimeImmutable::createFromFormat('U', $row->created_at),
             \DateTimeImmutable::createFromFormat('U', $row->updated_at)

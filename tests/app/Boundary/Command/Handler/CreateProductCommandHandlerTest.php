@@ -39,6 +39,7 @@ class CreateProductCommandHandlerTest extends TestCase
             '1d810936-56f2-4f4c-b25a-2c6fc8825757',
             'Bananas',
             'IN_STOCK',
+            true,
             [
                 (object) [
                     'value' => 100,
@@ -59,6 +60,7 @@ class CreateProductCommandHandlerTest extends TestCase
             $this->assertEquals(Uuid::fromString('1d810936-56f2-4f4c-b25a-2c6fc8825757'), $product->getCategoryId());
             $this->assertEquals('Bananas', $product->getName());
             $this->assertEquals(ProductStatus::IN_STOCK(), $product->getStatus());
+            $this->assertTrue($product->isFeatured());
             $this->assertEquals(new \DateTimeImmutable('2020-02-02T12:00:00+00:00'), $product->getCreatedAt());
             $this->assertEquals(new \DateTimeImmutable('2020-02-02T12:00:00+00:00'), $product->getUpdatedAt());
 

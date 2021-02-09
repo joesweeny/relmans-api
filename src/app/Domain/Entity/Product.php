@@ -18,12 +18,14 @@ class Product
     private array $prices;
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
+    private bool $isFeatured;
 
     public function __construct(
         UuidInterface $id,
         UuidInterface $categoryId,
         string $name,
         ProductStatus $status,
+        bool $isFeatured,
         array $prices,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt
@@ -32,6 +34,7 @@ class Product
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->status = $status;
+        $this->isFeatured = $isFeatured;
         $this->prices = $prices;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -55,6 +58,11 @@ class Product
     public function getStatus(): ProductStatus
     {
         return $this->status;
+    }
+
+    public function isFeatured(): bool
+    {
+        return $this->isFeatured;
     }
 
     /**

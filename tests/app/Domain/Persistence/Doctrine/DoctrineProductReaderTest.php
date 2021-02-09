@@ -115,6 +115,7 @@ class DoctrineProductReaderTest extends TestCase
             Uuid::fromString('c4f8fa24-4d63-4dd5-aa90-227aeda9d865'),
             'Fruit',
             ProductStatus::IN_STOCK(),
+            false,
             $prices1,
             new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
             new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
@@ -148,6 +149,7 @@ class DoctrineProductReaderTest extends TestCase
             Uuid::fromString('fbf48e7e-b48b-4589-8b93-e72c9b0fe7ef'),
             'Vegetables',
             ProductStatus::IN_STOCK(),
+            true,
             $prices2,
             new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
             new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
