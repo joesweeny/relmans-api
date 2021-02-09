@@ -3,11 +3,12 @@
 namespace Relmans\Domain\Persistence\Doctrine;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Entity\Product;
 use Relmans\Domain\Entity\ProductPrice;
-use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductWriter;
+use Relmans\Domain\Persistence\ProductWriterQuery;
 use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Framework\Time\Clock;
 
@@ -51,7 +52,7 @@ class DoctrineProductWriter implements ProductWriter
         }
     }
 
-    public function updateProductStatus(UuidInterface $id, ProductStatus $status): void
+    public function updateProduct(UuidInterface $id, ProductWriterQuery $query): void
     {
         $builder =  $this->connection->createQueryBuilder();
 
@@ -71,14 +72,22 @@ class DoctrineProductWriter implements ProductWriter
             throw new NotFoundException("Product {$id} does not exist");
         }
 
+        $builder = $builder
+            ->update('product')
+            ->set('updated_at', $this->clock->now()->getTimestamp())
+            ->where('id = :id')
+            ->setParameter(':id', (string) $id);
+
+        if ($query->getStatus() !== null) {
+            $builder->set('status', $builder->createNamedParameter((string) $query->getStatus()));
+        }
+
+        if ($query->getIsFeatured() !== null) {
+            $builder->set('featured', $builder->createNamedParameter($query->getIsFeatured(), ParameterType::BOOLEAN));
+        }
+
         try {
-            $builder
-                ->update('product')
-                ->set('status', $builder->createNamedParameter((string) $status))
-                ->set('updated_at', $this->clock->now()->getTimestamp())
-                ->where('id = :id')
-                ->setParameter(':id', (string) $id)
-                ->execute();
+            $builder->execute();
         } catch (\Exception $e) {
             throw new \RuntimeException("Error executing query: {$e->getMessage()}");
         }

@@ -4,7 +4,6 @@ namespace Relmans\Domain\Persistence;
 
 use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Entity\Product;
-use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Framework\Exception\NotFoundException;
 
 interface ProductWriter
@@ -13,11 +12,11 @@ interface ProductWriter
 
     /**
      * @param UuidInterface $id
-     * @param ProductStatus $status
+     * @param ProductWriterQuery $query
      * @return void
      * @throws NotFoundException
      */
-    public function updateProductStatus(UuidInterface $id, ProductStatus $status): void;
+    public function updateProduct(UuidInterface $id, ProductWriterQuery $query): void;
 
     /**
      * @param UuidInterface $priceId

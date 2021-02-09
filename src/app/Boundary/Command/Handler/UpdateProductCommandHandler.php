@@ -4,6 +4,7 @@ namespace Relmans\Boundary\Command\Handler;
 
 use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Persistence\ProductWriter;
+use Relmans\Domain\Persistence\ProductWriterQuery;
 use Relmans\Framework\Exception\NotFoundException;
 
 class UpdateProductCommandHandler
@@ -25,10 +26,10 @@ class UpdateProductCommandHandler
      */
     public function handle(UpdateProductCommand $command): void
     {
-        if ($command->getStatus() === null) {
-            return;
-        }
+        $query = (new ProductWriterQuery())
+            ->setStatus($command->getStatus())
+            ->setIsFeatured($command->getFeatured());
 
-        $this->productWriter->updateProductStatus($command->getProductId(), $command->getStatus());
+        $this->productWriter->updateProduct($command->getProductId(), $query);
     }
 }
