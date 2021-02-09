@@ -43,7 +43,8 @@ class UpdateProductController
         try {
             $command = new UpdateProductCommand(
                 $request->getAttribute('id', ''),
-                $body->status ?? null
+                $body->status ?? null,
+                $body->featured ?? null
             );
         } catch (\InvalidArgumentException $e) {
             return new JsendFailResponse([new JsendError($e->getMessage())], 404);

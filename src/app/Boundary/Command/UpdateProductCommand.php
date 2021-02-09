@@ -10,18 +10,21 @@ class UpdateProductCommand
 {
     private UuidInterface $productId;
     private ?ProductStatus $status;
+    private ?bool $featured;
 
     /**
      * UpdateProductCommand constructor.
      * @param string $productId
      * @param string|null $status
+     * @param ?bool $featured
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
-    public function __construct(string $productId, ?string $status)
+    public function __construct(string $productId, ?string $status, ?bool $featured)
     {
         $this->productId = Uuid::fromString($productId);
         $this->status = $status !== null ? new ProductStatus($status) : $status;
+        $this->featured = $featured;
     }
 
     public function getProductId(): UuidInterface
@@ -31,5 +34,10 @@ class UpdateProductCommand
     public function getStatus(): ?ProductStatus
     {
         return $this->status;
+    }
+
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
     }
 }

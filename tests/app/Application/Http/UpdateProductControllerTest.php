@@ -34,6 +34,7 @@ class UpdateProductControllerTest extends TestCase
     {
         $body = (object) [
             'status' => 'IN_STOCK',
+            'featured' => true,
         ];
 
         $request = $this->request(json_encode($body));
@@ -41,6 +42,7 @@ class UpdateProductControllerTest extends TestCase
         $commandAssertion = Argument::that(function (UpdateProductCommand $command) {
             $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getProductId());
             $this->assertEquals(ProductStatus::IN_STOCK(), $command->getStatus());
+            $this->assertTrue($command->getFeatured());
             return true;
         });
 
@@ -160,6 +162,7 @@ class UpdateProductControllerTest extends TestCase
         $commandAssertion = Argument::that(function (UpdateProductCommand $command) {
             $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getProductId());
             $this->assertEquals(ProductStatus::IN_STOCK(), $command->getStatus());
+            $this->assertNull($command->getFeatured());
             return true;
         });
 

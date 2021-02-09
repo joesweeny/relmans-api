@@ -10,6 +10,7 @@ use Ramsey\Uuid\Uuid;
 use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductWriter;
+use Relmans\Domain\Persistence\ProductWriterQuery;
 use Relmans\Framework\Exception\NotFoundException;
 
 class UpdateProductCommandHandlerTest extends TestCase
@@ -30,34 +31,38 @@ class UpdateProductCommandHandlerTest extends TestCase
 
     public function test_handle_updates_a_product_status_via_the_ProductWriter()
     {
-        $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', 'OUT_OF_SEASON');
+        $command = new UpdateProductCommand(
+            'ec9d126e-1ee6-4a5a-99f4-9c1748af1714',
+            'OUT_OF_SEASON',
+            true
+        );
 
-        $this->writer->updateProductStatus($command->getProductId(), $command->getStatus())->shouldBeCalled();
+        $queryAssertion = Argument::that(function (ProductWriterQuery $query) {
+            $this->assertEquals(ProductStatus::OUT_OF_SEASON(), $query->getStatus());
+            $this->assertTrue($query->getIsFeatured());
+            return true;
+        });
+
+        $this->writer->updateProduct($command->getProductId(), $queryAssertion)->shouldBeCalled();
 
         $this->handler->handle($command);
     }
 
     public function test_handle_throws_a_NotFoundException_if_product_does_not_exist()
     {
-        $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', 'OUT_OF_SEASON');
+        $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', 'OUT_OF_SEASON', null);
 
-        $this->writer->updateProductStatus($command->getProductId(), $command->getStatus())
+        $queryAssertion = Argument::that(function (ProductWriterQuery $query) {
+            $this->assertEquals(ProductStatus::OUT_OF_SEASON(), $query->getStatus());
+            $this->assertNull($query->getIsFeatured());
+            return true;
+        });
+
+        $this->writer->updateProduct($command->getProductId(), $queryAssertion)
             ->shouldBeCalled()
             ->willThrow(new NotFoundException('Not found'));
 
         $this->expectException(NotFoundException::class);
-        $this->handler->handle($command);
-    }
-
-    public function test_handle_does_not_call_ProductWriter_if_status_is_null()
-    {
-        $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', null);
-
-        $this->writer->updateProductStatus(
-            Argument::type(Uuid::class),
-            Argument::type(ProductStatus::class)
-        )->shouldNotBeCalled();
-
         $this->handler->handle($command);
     }
 }
