@@ -43,6 +43,7 @@ class DoctrineProductReader implements ProductReader
                 $rows = $priceBuilder
                     ->where('product_id = :product_id')
                     ->setParameter(':product_id', $row['id'])
+                    ->orderBy('measurement', 'ASC')
                     ->execute()
                     ->fetchAllAssociative();
             } catch (Exception $e) {

@@ -7,6 +7,14 @@ class ConfigFactory
     public static function create(array $overrides = []): Config
     {
         return new Config(array_merge([
+            'cors' => [
+                'allowed-origins' => [
+                    'http://localhost:3000',
+                    'https://admin.relmans.co.uk',
+                    'https://shop.relmans.co.uk',
+                ],
+            ],
+
             'database' => [
                 'default' => [
                     'name' => getenv('DB_NAME'),

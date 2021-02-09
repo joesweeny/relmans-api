@@ -91,6 +91,15 @@ class DoctrineProductReaderTest extends TestCase
 
         $prices1 = [
             new ProductPrice(
+                Uuid::fromString('eb3553bf-4e93-4a76-a9e2-85c37fe9d957'),
+                $product1Id,
+                1000,
+                500,
+                Measurement::GRAMS(),
+                new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
+                new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
+            ),
+            new ProductPrice(
                 Uuid::fromString('f09f19b8-8e1f-450d-86cc-2930ec3fa10f'),
                 $product1Id,
                 1000,
@@ -99,15 +108,6 @@ class DoctrineProductReaderTest extends TestCase
                 new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
                 new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
             ),
-            new ProductPrice(
-                Uuid::fromString('eb3553bf-4e93-4a76-a9e2-85c37fe9d957'),
-                $product1Id,
-                1000,
-                500,
-                Measurement::GRAMS(),
-                new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
-                new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
-            )
         ];
 
         $product1 = new Product(
@@ -124,6 +124,15 @@ class DoctrineProductReaderTest extends TestCase
 
         $prices2 = [
             new ProductPrice(
+                Uuid::fromString('c75a1d8f-c226-4d24-a532-355173811379'),
+                $product2Id,
+                1000,
+                500,
+                Measurement::GRAMS(),
+                new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
+                new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
+            ),
+            new ProductPrice(
                 Uuid::fromString('1b1a8c0e-c3a8-49fd-b2fc-e67230868a64'),
                 $product2Id,
                 1000,
@@ -132,15 +141,6 @@ class DoctrineProductReaderTest extends TestCase
                 new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
                 new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
             ),
-            new ProductPrice(
-                Uuid::fromString('c75a1d8f-c226-4d24-a532-355173811379'),
-                $product2Id,
-                1000,
-                500,
-                Measurement::GRAMS(),
-                new \DateTimeImmutable('2025-02-02T12:00:00+00:00'),
-                new \DateTimeImmutable('2025-02-02T12:00:00+00:00')
-            )
         ];
 
         $product2 = new Product(
