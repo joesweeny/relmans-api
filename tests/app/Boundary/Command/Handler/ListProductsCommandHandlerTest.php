@@ -62,6 +62,7 @@ class ListProductsCommandHandlerTest extends TestCase
                 'name' => 'Golden Delicious Apples',
                 'categoryId' => 'c4dd8587-66c5-47f1-8fb5-914aaef60a5b',
                 'status' => 'IN_STOCK',
+                'featured' => true,
                 'prices' => [
                     (object) [
                         'id' => '21c383d5-fa7c-44fb-a322-7ae581bbc895',
@@ -112,6 +113,7 @@ class ListProductsCommandHandlerTest extends TestCase
             Uuid::fromString('c4dd8587-66c5-47f1-8fb5-914aaef60a5b'),
             'Golden Delicious Apples',
             ProductStatus::IN_STOCK(),
+            true,
             $prices,
             new \DateTimeImmutable(),
             new \DateTimeImmutable()

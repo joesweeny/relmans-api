@@ -23,6 +23,7 @@ class ProductPresenter
             'name' => $product->getName(),
             'categoryId' => $product->getCategoryId()->toString(),
             'status' => $product->getStatus()->getValue(),
+            'featured' => $product->isFeatured(),
             'prices' => $prices,
         ];
     }

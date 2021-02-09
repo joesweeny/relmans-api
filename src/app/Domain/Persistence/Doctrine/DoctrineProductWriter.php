@@ -31,6 +31,7 @@ class DoctrineProductWriter implements ProductWriter
                 'category_id' => ':category_id',
                 'name' => ':name',
                 'status' => ':status',
+                'featured' => ':featured',
                 'created_at' => ':created_at',
                 'updated_at' => ':updated_at',
             ])
@@ -38,6 +39,7 @@ class DoctrineProductWriter implements ProductWriter
             ->setParameter(':category_id', (string) $product->getCategoryId())
             ->setParameter(':name', $product->getName())
             ->setParameter(':status', (string) $product->getStatus())
+            ->setParameter(':featured', $product->isFeatured(), \PDO::PARAM_BOOL)
             ->setParameter(':created_at', $product->getCreatedAt()->getTimestamp())
             ->setParameter(':updated_at', $product->getUpdatedAt()->getTimestamp());
 

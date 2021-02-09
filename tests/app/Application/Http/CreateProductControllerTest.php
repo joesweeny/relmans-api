@@ -34,6 +34,7 @@ class CreateProductControllerTest extends TestCase
             'categoryId' => '1b3cd5d3-54a3-48ed-824c-db2cdbf3cab9',
             'name' => 'Golden Delicious Apple',
             'status' => 'IN_STOCK',
+            'featured' => true,
             'prices' => [
                 (object) [
                     'value' => 100,
@@ -140,6 +141,7 @@ class CreateProductControllerTest extends TestCase
             'categoryId' => '1b3cd5d3-54a3-48ed-824c-db2cdbf3cab9',
             'name' => 'Golden Delicious Apple',
             'status' => 'IN_STOCK',
+            'featured' => true,
             'prices' => [
                 (object) [
                     'value' => 100,

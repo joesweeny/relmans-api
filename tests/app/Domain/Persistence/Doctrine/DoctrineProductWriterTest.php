@@ -63,6 +63,7 @@ class DoctrineProductWriterTest extends TestCase
             Uuid::uuid4(),
             'Fruit',
             ProductStatus::IN_STOCK(),
+            true,
             $prices,
             new \DateTimeImmutable(),
             new \DateTimeImmutable()
@@ -99,6 +100,7 @@ class DoctrineProductWriterTest extends TestCase
             Uuid::uuid4(),
             'Fruit',
             ProductStatus::OUT_OF_SEASON(),
+            false,
             $prices,
             new \DateTimeImmutable(),
             new \DateTimeImmutable()
@@ -131,6 +133,7 @@ class DoctrineProductWriterTest extends TestCase
             Uuid::uuid4(),
             'Fruit',
             ProductStatus::OUT_OF_SEASON(),
+            true,
             $prices,
             new \DateTimeImmutable(),
             new \DateTimeImmutable()
@@ -181,6 +184,7 @@ class DoctrineProductWriterTest extends TestCase
             Uuid::uuid4(),
             'Fruit',
             ProductStatus::OUT_OF_SEASON(),
+            false,
             $prices,
             new \DateTimeImmutable(),
             new \DateTimeImmutable()
