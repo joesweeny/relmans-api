@@ -29,6 +29,7 @@ jobs:
     machine:
       image: ubuntu-2004:202010-01
     steps:
+      - *attach_workspace
       - checkout
       - run:
           name: Install dependencies
