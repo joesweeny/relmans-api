@@ -24,7 +24,7 @@ workflows:
               only: main
 
 jobs:
-  build-test:
+  build-and-test:
     working_directory: ~/relmans-api
     machine:
       image: ubuntu-2004:202010-01
