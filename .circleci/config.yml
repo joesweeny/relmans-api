@@ -26,15 +26,18 @@ workflows:
 jobs:
   build-and-test:
     working_directory: ~/relmans-api
-    machine: true
+    machine:
+      image: ubuntu-2004:202010-01
     steps:
       - *attach_workspace
       - checkout
       - run:
           name: Install dependencies
           command: |
+            sudo apt-get update
             sudo add-apt-repository ppa:ondrej/php
             sudo apt-get update
+            sudo apt-get install php7.4
             curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
       - run:
           name: Build Release Image
