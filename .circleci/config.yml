@@ -26,8 +26,7 @@ workflows:
 jobs:
   build-and-test:
     working_directory: ~/relmans-api
-    machine:
-      image: ubuntu-2004:202010-01
+    machine: true
     steps:
       - *attach_workspace
       - checkout
