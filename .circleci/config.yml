@@ -1,10 +1,33 @@
 version: 2
+orbs:
+  aws-cli: circleci/aws-cli@0.1.20
+  aws-ecs: circleci/aws-ecs@1.1.0
+
+references:
+  workspace_root: &workspace_root
+                    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - build-and-test
+      - release-images:
+          context: aws
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: main
+
 jobs:
-  build:
+  build-test:
     working_directory: ~/relmans-api
     machine:
       image: ubuntu-2004:202010-01
-
     steps:
       - checkout
       - run:
@@ -15,16 +38,35 @@ jobs:
             sudo apt-get update
             sudo apt-get install php7.2
             curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-
       - run:
           name: Build Release Image
           command: |
             composer install --ignore-platform-reqs --no-dev --optimize-autoloader
             docker-compose -f docker-compose.build.yml up -d --build
-
       - run:
           name: Test Release Image
           command: |
             composer install --ignore-platform-reqs
             docker-compose -f docker-compose.build.yml run api src/vendor/bin/phpcs --runtime-set ignore_warnings_on_exit true --standard=PSR2 src/app/
             docker-compose -f docker-compose.build.yml run --rm api php /opt/src/vendor/bin/phpunit
+      - run:
+          name: Cache Built Images
+          command: |
+            chmod +x ./.circleci/deploy/docker-save.sh && ./.circleci/deploy/docker-save.sh
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - docker-cache
+
+  release-images:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - *attach_workspace
+      - setup_remote_docker
+      - aws-cli/setup
+      - run:
+          name: Push images to ECR
+          command: |
+            chmod +x ./.circleci/deploy/docker-load.sh && ./.circleci/deploy/docker-load.sh
+            chmod +x ./.circleci/deploy/docker-push.sh && ./.circleci/deploy/docker-push.sh
