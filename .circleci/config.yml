@@ -21,7 +21,7 @@ workflows:
             - build-and-test
           filters:
             branches:
-              only: main
+              only: fix/deploy-script
       - deploy-to-production:
           context: aws
           requires:
@@ -29,7 +29,7 @@ workflows:
             - release-images
           filters:
             branches:
-              only: main
+              only: fix/deploy-script
 
 jobs:
   build-and-test:
