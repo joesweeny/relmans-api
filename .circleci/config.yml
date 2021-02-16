@@ -22,6 +22,14 @@ workflows:
           filters:
             branches:
               only: main
+      - deploy-to-production:
+          context: aws
+          requires:
+            - build-and-test
+            - release-images
+          filters:
+            branches:
+              only: main
 
 jobs:
   build-and-test:
@@ -71,3 +79,14 @@ jobs:
           command: |
             chmod +x ./.circleci/deploy/docker-load.sh && ./.circleci/deploy/docker-load.sh
             chmod +x ./.circleci/deploy/docker-push.sh && ./.circleci/deploy/docker-push.sh
+
+  deploy-to-production:
+    executor: aws-cli/default
+    steps:
+      - aws-cli/setup
+      - aws-ecs/update-service:
+          family: 'relmans'
+          cluster-name: 'relmans-production'
+          container-image-name-updates: >
+            container=api,image-and-tag=${AWS_ECR_ACCOUNT_URL}/relmans-api:${CIRCLE_SHA1}
+            container=migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/relmans-api:${CIRCLE_SHA1}
