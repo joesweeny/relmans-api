@@ -19,15 +19,17 @@ class CreateCategoryCommandHandler
         $this->clock = $clock;
     }
 
-    public function handle(CreateCategoryCommand $command): void
+    public function handle(CreateCategoryCommand $command): string
     {
         $category = new Category(
-            Uuid::uuid4(),
+            $command->getId(),
             $command->getName(),
             $this->clock->now(),
             $this->clock->now(),
         );
 
         $this->repository->insert($category);
+
+        return $category->getId()->toString();
     }
 }

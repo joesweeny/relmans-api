@@ -2,6 +2,7 @@
 
 namespace Relmans\Framework\Routing;
 
+use Relmans\Application\Http\CreateCategoryController;
 use Relmans\Application\Http\CreateProductController;
 use Relmans\Application\Http\HealthCheckController;
 use Relmans\Application\Http\ListCategoriesController;
@@ -15,6 +16,7 @@ class RouteMapper
     public function map(App $app): void
     {
         $app->get('/health', HealthCheckController::class);
+        $app->post('/category', CreateCategoryController::class);
         $app->get('/category', ListCategoriesController::class);
         $app->post('/product', CreateProductController::class);
         $app->get('/product', ListProductsController::class);
