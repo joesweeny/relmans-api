@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Application\Http;
+namespace Relmans\Application\Http;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use League\Tactician\CommandBus;
@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use Relmans\Application\Http\CreateCategoryController;
 use Relmans\Boundary\Command\CreateCategoryCommand;
 
 class CreateCategoryControllerTest extends TestCase
