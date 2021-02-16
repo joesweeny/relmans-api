@@ -89,5 +89,5 @@ jobs:
           family: 'relmans'
           cluster-name: 'relmans-production'
           container-image-name-updates: >
-            container=api,image-and-tag=${AWS_ECR_ACCOUNT_URL}/relmans-api:${CIRCLE_SHA1}
+            container=api,image-and-tag=${AWS_ECR_ACCOUNT_URL}/relmans-api:${CIRCLE_SHA1},
             container=migrate,image-and-tag=${AWS_ECR_ACCOUNT_URL}/relmans-api:${CIRCLE_SHA1}
