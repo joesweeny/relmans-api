@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Relmans\Boundary\Command\CreateCategoryCommand;
 use Relmans\Domain\Entity\Category;
 use Relmans\Domain\Persistence\CategoryRepository;
@@ -30,11 +32,15 @@ class CreateCategoryCommandHandlerTest extends TestCase
         );
     }
 
-    public function test_handle_inserts_new_Category_record_via_repository()
+    public function test_handle_inserts_new_Category_record_via_repository_and_returns_category_id()
     {
-        $command = new CreateCategoryCommand('Fruit');
+        /** @var CreateCategoryCommand|ObjectProphecy $command */
+        $command = $this->prophesize(CreateCategoryCommand::class);
+        $command->getName()->willReturn('Fruit');
+        $command->getId()->willReturn(Uuid::fromString('40242cb7-ca07-4159-b180-8f8ccfb555c5'));
 
         $categoryAssertion = Argument::that(function (Category $category) {
+            $this->assertEquals(Uuid::fromString('40242cb7-ca07-4159-b180-8f8ccfb555c5'), $category->getId());
             $this->assertEquals('Fruit', $category->getName());
             $this->assertEquals(new \DateTimeImmutable('2020-03-12T12:00:00+00:00'), $category->getCreatedAt());
             $this->assertEquals(new \DateTimeImmutable('2020-03-12T12:00:00+00:00'), $category->getUpdatedAt());
@@ -43,6 +49,8 @@ class CreateCategoryCommandHandlerTest extends TestCase
 
         $this->repository->insert($categoryAssertion)->shouldBeCalled();
 
-        $this->handler->handle($command);
+        $id = $this->handler->handle($command->reveal());
+
+        $this->assertEquals('40242cb7-ca07-4159-b180-8f8ccfb555c5', $id);
     }
 }

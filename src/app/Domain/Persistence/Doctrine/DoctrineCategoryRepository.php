@@ -43,7 +43,8 @@ class DoctrineCategoryRepository implements CategoryRepository
     {
         $query = $this->connection->createQueryBuilder()
             ->select('*')
-            ->from('category');
+            ->from('category')
+            ->orderBy('created_at', 'ASC');
 
         try {
             $rows = $query->execute();
