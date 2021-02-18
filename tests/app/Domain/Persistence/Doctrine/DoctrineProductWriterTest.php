@@ -113,6 +113,53 @@ class DoctrineProductWriterTest extends TestCase
         $this->assertEquals(4, $this->tableRowCount('product_price'));
     }
 
+    public function test_delete_decreases_table_count()
+    {
+        $productId = Uuid::uuid4();
+
+        $prices = [
+            new ProductPrice(
+                Uuid::uuid4(),
+                $productId,
+                1000,
+                1.5,
+                Measurement::KILOGRAMS(),
+                new \DateTimeImmutable(),
+                new \DateTimeImmutable()
+            ),
+            new ProductPrice(
+                Uuid::uuid4(),
+                $productId,
+                1000,
+                500,
+                Measurement::GRAMS(),
+                new \DateTimeImmutable(),
+                new \DateTimeImmutable()
+            )
+        ];
+
+        $product = new Product(
+            $productId,
+            Uuid::uuid4(),
+            'Fruit',
+            ProductStatus::IN_STOCK(),
+            true,
+            $prices,
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
+        );
+
+        $this->writer->insert($product);
+
+        $this->assertEquals(1, $this->tableRowCount('product'));
+        $this->assertEquals(2, $this->tableRowCount('product_price'));
+
+        $this->writer->delete($productId);
+
+        $this->assertEquals(0, $this->tableRowCount('product'));
+        $this->assertEquals(0, $this->tableRowCount('product_price'));
+    }
+
     public function test_updateProduct_updates_the_name_column_for_a_product_record()
     {
         $productId = Uuid::uuid4();

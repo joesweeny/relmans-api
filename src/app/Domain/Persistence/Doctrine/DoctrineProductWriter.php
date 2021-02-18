@@ -130,6 +130,29 @@ class DoctrineProductWriter implements ProductWriter
         }
     }
 
+    public function delete(UuidInterface $productId): void
+    {
+        try {
+            $this->connection->createQueryBuilder()
+                ->delete('product')
+                ->where('id = :id')
+                ->setParameter(':id', (string) $productId)
+                ->execute();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        try {
+            $this->connection->createQueryBuilder()
+                ->delete('product_price')
+                ->where('product_id = :product_id')
+                ->setParameter(':product_id', (string) $productId)
+                ->execute();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+    }
+
     /**
      * @param array|ProductPrice[] $prices
      * @return void

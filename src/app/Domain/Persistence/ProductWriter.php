@@ -25,4 +25,6 @@ interface ProductWriter
      * @throws NotFoundException
      */
     public function updateProductPrice(UuidInterface $priceId, int $value): void;
+
+    public function delete(UuidInterface $productId): void;
 }
