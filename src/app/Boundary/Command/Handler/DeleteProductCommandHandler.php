@@ -14,7 +14,7 @@ class DeleteProductCommandHandler
         $this->productWriter = $productWriter;
     }
 
-    public function __invoke(DeleteProductCommand $command): void
+    public function handle(DeleteProductCommand $command): void
     {
         $this->productWriter->delete($command->getProductId());
     }
