@@ -27,6 +27,7 @@ class UpdateProductCommandHandler
     public function handle(UpdateProductCommand $command): void
     {
         $query = (new ProductWriterQuery())
+            ->setName($command->getName())
             ->setStatus($command->getStatus())
             ->setIsFeatured($command->getFeatured());
 

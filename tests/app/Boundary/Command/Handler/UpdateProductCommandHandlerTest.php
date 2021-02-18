@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use Ramsey\Uuid\Uuid;
 use Relmans\Boundary\Command\UpdateProductCommand;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductWriter;
@@ -33,11 +32,13 @@ class UpdateProductCommandHandlerTest extends TestCase
     {
         $command = new UpdateProductCommand(
             'ec9d126e-1ee6-4a5a-99f4-9c1748af1714',
+            'Wild Mushrooms',
             'OUT_OF_SEASON',
             true
         );
 
         $queryAssertion = Argument::that(function (ProductWriterQuery $query) {
+            $this->assertEquals('Wild Mushrooms', $query->getName());
             $this->assertEquals(ProductStatus::OUT_OF_SEASON(), $query->getStatus());
             $this->assertTrue($query->getIsFeatured());
             return true;
@@ -50,7 +51,12 @@ class UpdateProductCommandHandlerTest extends TestCase
 
     public function test_handle_throws_a_NotFoundException_if_product_does_not_exist()
     {
-        $command = new UpdateProductCommand('ec9d126e-1ee6-4a5a-99f4-9c1748af1714', 'OUT_OF_SEASON', null);
+        $command = new UpdateProductCommand(
+            'ec9d126e-1ee6-4a5a-99f4-9c1748af1714',
+            '',
+            'OUT_OF_SEASON',
+            null
+        );
 
         $queryAssertion = Argument::that(function (ProductWriterQuery $query) {
             $this->assertEquals(ProductStatus::OUT_OF_SEASON(), $query->getStatus());

@@ -113,6 +113,49 @@ class DoctrineProductWriterTest extends TestCase
         $this->assertEquals(4, $this->tableRowCount('product_price'));
     }
 
+    public function test_updateProduct_updates_the_name_column_for_a_product_record()
+    {
+        $productId = Uuid::uuid4();
+
+        $prices = [
+            new ProductPrice(
+                Uuid::uuid4(),
+                $productId,
+                1000,
+                1.5,
+                Measurement::KILOGRAMS(),
+                new \DateTimeImmutable(),
+                new \DateTimeImmutable()
+            ),
+        ];
+
+        $product = new Product(
+            $productId,
+            Uuid::uuid4(),
+            'Fruit',
+            ProductStatus::OUT_OF_SEASON(),
+            true,
+            $prices,
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
+        );
+
+        $this->writer->insert($product);
+
+        $row = $this->fetchRecord($productId, 'product');
+
+        $this->assertEquals('OUT_OF_SEASON', $row->status);
+
+        $query = (new ProductWriterQuery())->setName('Wild Mushrooms');
+
+        $this->writer->updateProduct($productId, $query);
+
+        $row = $this->fetchRecord($productId, 'product');
+
+        $this->assertEquals('Wild Mushrooms', $row->name);
+        $this->assertEquals(1738497600, $row->updated_at);
+    }
+
     public function test_updateProduct_updates_the_status_column_for_a_product_record()
     {
         $productId = Uuid::uuid4();

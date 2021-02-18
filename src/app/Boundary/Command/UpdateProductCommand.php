@@ -9,6 +9,7 @@ use Relmans\Domain\Enum\ProductStatus;
 class UpdateProductCommand
 {
     private UuidInterface $productId;
+    private ?string $name;
     private ?ProductStatus $status;
     private ?bool $featured;
 
@@ -20,11 +21,17 @@ class UpdateProductCommand
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException
      */
-    public function __construct(string $productId, ?string $status, ?bool $featured)
+    public function __construct(string $productId, ?string $name, ?string $status, ?bool $featured)
     {
+        $this->name = $name ?: null;
         $this->productId = Uuid::fromString($productId);
         $this->status = $status !== null ? new ProductStatus($status) : $status;
         $this->featured = $featured;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 
     public function getProductId(): UuidInterface
