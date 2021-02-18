@@ -43,6 +43,7 @@ class UpdateProductController
         try {
             $command = new UpdateProductCommand(
                 $request->getAttribute('id', ''),
+                $body->name ?? null,
                 $body->status ?? null,
                 $body->featured ?? null
             );

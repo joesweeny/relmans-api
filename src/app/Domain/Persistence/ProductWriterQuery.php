@@ -6,8 +6,20 @@ use Relmans\Domain\Enum\ProductStatus;
 
 class ProductWriterQuery
 {
+    private ?string $name;
     private ?ProductStatus $status;
     private ?bool $isFeatured;
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name ?? null;
+    }
 
     public function setStatus(?ProductStatus $status): self
     {

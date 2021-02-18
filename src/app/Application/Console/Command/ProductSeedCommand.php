@@ -3,7 +3,6 @@
 namespace Relmans\Application\Console\Command;
 
 use Ramsey\Uuid\Uuid;
-use Relmans\Domain\Entity\Category;
 use Relmans\Domain\Entity\Product;
 use Relmans\Domain\Entity\ProductPrice;
 use Relmans\Domain\Enum\Measurement;
@@ -82,7 +81,7 @@ class ProductSeedCommand extends Command
             (object) [
                 'id' => '1d38394c-02d2-4688-98f4-58e8c33ba952',
                 'name' => 'Cauliflower',
-                'categoryId' => '893cf1e6-6751-4aa1-b8fe-7a22dad0b4e1',
+                'categoryId' => 'efa199a2-85c0-4d52-a270-0f11c7034cb9',
                 'status' => 'IN_STOCK',
                 'featured' => true,
                 'prices' => [
@@ -103,7 +102,7 @@ class ProductSeedCommand extends Command
             (object) [
                 'id' => '5e4988d6-09f3-4d30-8be9-1006aa50ff53',
                 'name' => 'Golden Delicious Apples',
-                'categoryId' => '85334e9f-338b-48f5-af00-782cb383a2d1',
+                'categoryId' => '3570a561-fc51-4ff6-ab7e-474e0c2a1190',
                 'status' => 'IN_STOCK',
                 'featured' => true,
                 'prices' => [
@@ -111,14 +110,14 @@ class ProductSeedCommand extends Command
                         'id' => '29b0587f-8df5-496f-a60f-a7f25a97225d',
                         'value' => 100,
                         'size' => 1,
-                        'measurement' => 'BAG',
+                        'measurement' => 'EACH',
                     ],
                 ],
             ],
             (object) [
                 'id' => '71d582f9-cf71-48b6-bed1-30e0cf46823b',
                 'name' => 'Cucumber',
-                'categoryId' => '95e45a45-0bbd-455d-8575-5a4f00f857ce',
+                'categoryId' => '00f3062b-24d4-476e-8f78-fa41bd0c696a',
                 'status' => 'OUT_OF_STOCK',
                 'featured' => false,
                 'prices' => [
@@ -139,7 +138,7 @@ class ProductSeedCommand extends Command
             (object) [
                 'id' => 'a350a799-8802-41f9-b8a0-89ab62ccb9e4',
                 'name' => 'Maris Piper',
-                'categoryId' => 'fbddcef1-0dcf-4f01-a990-2bab98d60959',
+                'categoryId' => 'd6d5655c-d95a-4c2c-bc8a-f39b80ee38c3',
                 'status' => 'IN_STOCK',
                 'featured' => false,
                 'prices' => [
@@ -153,14 +152,14 @@ class ProductSeedCommand extends Command
                         'id' => 'da0e96e1-6b33-4e44-8e20-23f243663cae',
                         'value' => 200,
                         'size' => 1,
-                        'measurement' => 'BAG',
+                        'measurement' => 'EACH',
                     ],
                 ],
             ],
             (object) [
                 'id' => '7b45e57b-5f20-4555-9c62-3e9db3da6d44',
                 'name' => 'King Edward',
-                'categoryId' => 'fbddcef1-0dcf-4f01-a990-2bab98d60959',
+                'categoryId' => 'd6d5655c-d95a-4c2c-bc8a-f39b80ee38c3',
                 'status' => 'OUT_OF_SEASON',
                 'featured' => true,
                 'prices' => [
@@ -174,14 +173,14 @@ class ProductSeedCommand extends Command
                         'id' => '2f979bf2-acf2-44d2-ac88-360823523f3a',
                         'value' => 200,
                         'size' => 1,
-                        'measurement' => 'BAG',
+                        'measurement' => 'EACH',
                     ],
                 ],
             ],
             (object) [
                 'id' => '9e374fbb-58e0-44f1-8eda-da03c877f99a',
                 'name' => 'Marijuana',
-                'categoryId' => 'cae5df51-6707-4281-9f25-16e147b9458d',
+                'categoryId' => '10d640b4-b07a-482f-8fec-44047cb6a006',
                 'status' => 'OUT_OF_SEASON',
                 'featured' => false,
                 'prices' => [
@@ -196,7 +195,7 @@ class ProductSeedCommand extends Command
             (object) [
                 'id' => '231ff439-98fc-4756-8810-1d9187086072',
                 'name' => 'Flat Mushrooms',
-                'categoryId' => '0fe95b87-3b14-4fdb-89f0-e628a1263872',
+                'categoryId' => '317c4c6b-081a-4fb3-be86-95fdc8b8c337',
                 'status' => 'IN_STOCK',
                 'featured' => false,
                 'prices' => [

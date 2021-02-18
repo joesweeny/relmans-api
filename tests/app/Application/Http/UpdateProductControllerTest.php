@@ -33,6 +33,7 @@ class UpdateProductControllerTest extends TestCase
     public function test_invoke_returns_a_204_response()
     {
         $body = (object) [
+            'name' => 'Wild Mushrooms',
             'status' => 'IN_STOCK',
             'featured' => true,
         ];
@@ -40,6 +41,7 @@ class UpdateProductControllerTest extends TestCase
         $request = $this->request(json_encode($body));
 
         $commandAssertion = Argument::that(function (UpdateProductCommand $command) {
+            $this->assertEquals('Wild Mushrooms', $command->getName());
             $this->assertEquals(Uuid::fromString('3e478e96-8851-4474-8def-4a5027a7d272'), $command->getProductId());
             $this->assertEquals(ProductStatus::IN_STOCK(), $command->getStatus());
             $this->assertTrue($command->getFeatured());

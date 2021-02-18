@@ -78,6 +78,10 @@ class DoctrineProductWriter implements ProductWriter
             ->where('id = :id')
             ->setParameter(':id', (string) $id);
 
+        if ($query->getName() !== null) {
+            $builder->set('name', $builder->createNamedParameter($query->getName()));
+        }
+
         if ($query->getStatus() !== null) {
             $builder->set('status', $builder->createNamedParameter((string) $query->getStatus()));
         }
