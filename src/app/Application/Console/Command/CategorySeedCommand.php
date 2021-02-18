@@ -58,36 +58,36 @@ class CategorySeedCommand extends Command
     {
         return [
             (object) [
-                'id' => '893cf1e6-6751-4aa1-b8fe-7a22dad0b4e1',
-                'name' => 'Vegetables'
-            ],
-            (object) [
-                'id' => '85334e9f-338b-48f5-af00-782cb383a2d1',
+                'id' => '3570a561-fc51-4ff6-ab7e-474e0c2a1190',
                 'name' => 'Fruit'
             ],
             (object) [
-                'id' => '95e45a45-0bbd-455d-8575-5a4f00f857ce',
+                'id' => 'efa199a2-85c0-4d52-a270-0f11c7034cb9',
+                'name' => 'Vegetables'
+            ],
+            (object) [
+                'id' => '00f3062b-24d4-476e-8f78-fa41bd0c696a',
                 'name' => 'Salad'
             ],
             (object) [
-                'id' => '94f40ad5-e674-4318-a95d-4127be2110fd',
-                'name' => 'Milk and Eggs'
+                'id' => 'd6d5655c-d95a-4c2c-bc8a-f39b80ee38c3',
+                'name' => 'Potatoes'
             ],
             (object) [
-                'id' => '35cd86a8-e3cd-42b7-ae94-7b63e08e6878',
-                'name' => 'Fresh Herbs'
-            ],
-            (object) [
-                'id' => 'cae5df51-6707-4281-9f25-16e147b9458d',
-                'name' => 'Exotic Produce'
-            ],
-            (object) [
-                'id' => '66c68eef-8ede-4574-9e10-bab7a2115100',
+                'id' => '317c4c6b-081a-4fb3-be86-95fdc8b8c337',
                 'name' => 'Mushrooms'
             ],
             (object) [
-                'id' => 'fbddcef1-0dcf-4f01-a990-2bab98d60959',
-                'name' => 'Potatoes'
+                'id' => '5d15468b-a1cb-447e-bf42-9abc4abaedf1',
+                'name' => 'Milk and Eggs'
+            ],
+            (object) [
+                'id' => '10d640b4-b07a-482f-8fec-44047cb6a006',
+                'name' => 'Fresh Herbs'
+            ],
+            (object) [
+                'id' => 'f765244e-0905-459a-8994-87239a25d742',
+                'name' => 'Exotic Produce'
             ],
         ];
     }
