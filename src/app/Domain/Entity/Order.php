@@ -10,31 +10,34 @@ class Order
 {
     private UuidInterface $id;
     private string $externalId;
+    private string $transactionId;
     private Customer $customer;
     /**
      * @var array|OrderItem[]
      */
     private array $items;
     private OrderStatus $status;
-    private OrderValue $value;
+    private OrderMethod $method;
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
 
     public function __construct(
         UuidInterface $id,
         string $externalId,
+        string $transactionId,
         Customer $customer,
         OrderStatus $status,
-        OrderValue $value,
+        OrderMethod $method,
         array $items,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt
     ) {
         $this->id = $id;
         $this->externalId = $externalId;
+        $this->transactionId = $transactionId;
         $this->customer = $customer;
         $this->status = $status;
-        $this->value = $value;
+        $this->method = $method;
         $this->items = $items;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -50,6 +53,11 @@ class Order
         return $this->externalId;
     }
 
+    public function getTransactionId(): string
+    {
+        return $this->transactionId;
+    }
+
     public function getCustomer(): Customer
     {
         return $this->customer;
@@ -60,17 +68,17 @@ class Order
         return $this->status;
     }
 
+    public function getMethod(): OrderMethod
+    {
+        return $this->method;
+    }
+
     /**
      * @return array|OrderItem[]
      */
     public function getItems(): array
     {
         return $this->items;
-    }
-
-    public function getValue(): OrderValue
-    {
-        return $this->value;
     }
 
     public function getCreatedAt(): DateTimeImmutable

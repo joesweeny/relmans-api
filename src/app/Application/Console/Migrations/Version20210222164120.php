@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Relmans\Application\Console\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\Migrations\AbstractMigration;
 
@@ -22,12 +21,18 @@ final class Version20210222164120 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         $table = $schema->getTable('order');
-        $table->addColumn('delivery', Types::INTEGER)->setNotnull(false);
+
+        $table->addColumn('method', Types::JSON)->setNotnull(false);
+        $table->addColumn('transaction_id', Types::STRING);
+        $table->dropColumn('total');
     }
 
     public function down(Schema $schema) : void
     {
         $table = $schema->getTable('order');
-        $table->dropColumn('delivery');
+
+        $table->dropColumn('method');
+        $table->dropColumn('transaction_id');
+        $table->addColumn('total', Types::INTEGER)->setNotnull(false);
     }
 }

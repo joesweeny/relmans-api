@@ -8,6 +8,7 @@ use Relmans\Domain\Entity\Address;
 use Relmans\Domain\Entity\Customer;
 use Relmans\Domain\Entity\Order;
 use Relmans\Domain\Entity\OrderItem;
+use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Entity\OrderValue;
 use Relmans\Domain\Enum\OrderStatus;
 
@@ -17,6 +18,7 @@ class OrderTest extends TestCase
     {
         $id = Uuid::uuid4();
         $externalId = '12345678';
+        $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
         'Templetown',
@@ -32,11 +34,13 @@ class OrderTest extends TestCase
             '07939843048'
         );
         $status = OrderStatus::CONFIRMED();
-        $value = new OrderValue(10000, 20);
+        $method = new OrderMethod('delivery', new \DateTimeImmutable(), 250);
         $item = new OrderItem(
             Uuid::uuid4(),
-            Uuid::uuid4(),
-            40,
+            'Cabbage',
+            1,
+            'each',
+            100,
             5
         );
         $createdAt = new \DateTimeImmutable();
@@ -45,9 +49,10 @@ class OrderTest extends TestCase
         $order = new Order(
             $id,
             $externalId,
+            $transactionId,
             $customer,
             $status,
-            $value,
+            $method,
             [$item],
             $createdAt,
             $updatedAt
@@ -55,9 +60,10 @@ class OrderTest extends TestCase
 
         $this->assertEquals($id, $order->getId());
         $this->assertEquals($externalId, $order->getExternalId());
+        $this->assertEquals($transactionId, $order->getTransactionId());
         $this->assertEquals($customer, $order->getCustomer());
         $this->assertEquals($status, $order->getStatus());
-        $this->assertEquals($value, $order->getValue());
+        $this->assertEquals($method, $order->getMethod());
         $this->assertEquals([$item], $order->getItems());
         $this->assertEquals($createdAt, $order->getCreatedAt());
         $this->assertEquals($updatedAt, $order->getUpdatedAt());
