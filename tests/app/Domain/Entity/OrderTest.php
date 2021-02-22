@@ -37,6 +37,7 @@ class OrderTest extends TestCase
         $method = new OrderMethod('delivery', new \DateTimeImmutable(), 250);
         $item = new OrderItem(
             Uuid::uuid4(),
+            Uuid::uuid4(),
             'Cabbage',
             1,
             'each',

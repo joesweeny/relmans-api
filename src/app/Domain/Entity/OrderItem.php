@@ -7,6 +7,7 @@ use Ramsey\Uuid\UuidInterface;
 class OrderItem implements \JsonSerializable
 {
     private UuidInterface $productId;
+    private UuidInterface $priceId;
     private string $name;
     private int $size;
     private string $measurement;
@@ -15,6 +16,7 @@ class OrderItem implements \JsonSerializable
 
     public function __construct(
         UuidInterface $productId,
+        UuidInterface $priceId,
         string $name,
         int $size,
         string $measurement,
@@ -22,6 +24,7 @@ class OrderItem implements \JsonSerializable
         int $quantity
     ) {
         $this->productId = $productId;
+        $this->priceId = $priceId;
         $this->name = $name;
         $this->size = $size;
         $this->measurement = $measurement;
@@ -32,6 +35,11 @@ class OrderItem implements \JsonSerializable
     public function getProductId(): UuidInterface
     {
         return $this->productId;
+    }
+
+    public function getPriceId(): UuidInterface
+    {
+        return $this->priceId;
     }
 
     public function getName(): string
@@ -63,6 +71,7 @@ class OrderItem implements \JsonSerializable
     {
         return (object) [
             'productId' => $this->productId->toString(),
+            'priceId' => $this->priceId->toString(),
             'name' => $this->name,
             'size' => $this->size,
             'measurement' => $this->measurement,
