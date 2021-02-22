@@ -1,14 +1,9 @@
 <?php
 
-namespace app\Domain\Entity;
+namespace Relmans\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
-use Relmans\Domain\Entity\Address;
-use Relmans\Domain\Entity\Customer;
-use Relmans\Domain\Entity\Order;
-use Relmans\Domain\Entity\OrderItem;
-use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Entity\OrderValue;
 use Relmans\Domain\Enum\OrderStatus;
 
