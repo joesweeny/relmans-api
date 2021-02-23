@@ -14,4 +14,10 @@ interface OrderReader
      * @throws NotFoundException
      */
     public function getById(UuidInterface $orderId): Order;
+
+    /**
+     * @param OrderReaderQuery $query
+     * @return array|Order[]
+     */
+    public function get(OrderReaderQuery $query): array;
 }

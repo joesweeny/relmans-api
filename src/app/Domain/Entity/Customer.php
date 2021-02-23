@@ -42,7 +42,7 @@ class Customer implements \JsonSerializable
         return (object) [
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
-            'address' => json_encode($this->address),
+            'address' => $this->address->jsonSerialize(),
             'phoneNumber' => $this->phoneNumber,
         ];
     }
