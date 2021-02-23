@@ -2,20 +2,22 @@
 
 namespace Relmans\Domain\Entity;
 
+use Relmans\Domain\Enum\FulfilmentType;
+
 class OrderMethod
 {
-    private string $type;
+    private FulfilmentType $type;
     private \DateTimeImmutable $date;
     private ?int $fee;
 
-    public function __construct(string $type, \DateTimeImmutable $date, ?int $fee)
+    public function __construct(FulfilmentType $type, \DateTimeImmutable $date, ?int $fee)
     {
         $this->type = $type;
         $this->date = $date;
         $this->fee = $fee;
     }
 
-    public function getType(): string
+    public function getFulfilmentType(): FulfilmentType
     {
         return $this->type;
     }

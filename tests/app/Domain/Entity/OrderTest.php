@@ -5,6 +5,7 @@ namespace Relmans\Domain\Entity;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Relmans\Domain\Entity\OrderValue;
+use Relmans\Domain\Enum\FulfilmentType;
 use Relmans\Domain\Enum\OrderStatus;
 
 class OrderTest extends TestCase
@@ -29,7 +30,7 @@ class OrderTest extends TestCase
             '07939843048'
         );
         $status = OrderStatus::CONFIRMED();
-        $method = new OrderMethod('delivery', new \DateTimeImmutable(), 250);
+        $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
         $item = new OrderItem(
             Uuid::uuid4(),
             Uuid::uuid4(),
