@@ -13,7 +13,6 @@ use Relmans\Domain\Entity\OrderItem;
 use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Enum\FulfilmentType;
 use Relmans\Domain\Enum\OrderStatus;
-use Relmans\Domain\Persistence\Doctrine\DoctrineOrderWriter;
 use Relmans\Domain\Persistence\OrderWriterQuery;
 use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Framework\Time\FixedClock;
