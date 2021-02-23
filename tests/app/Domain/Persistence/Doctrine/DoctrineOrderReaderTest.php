@@ -12,6 +12,7 @@ use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Enum\FulfilmentType;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\OrderStatus;
+use Relmans\Domain\Persistence\OrderReaderQuery;
 use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Traits\RunsMigrations;
 use Relmans\Traits\UsesContainer;
@@ -51,7 +52,7 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals('DH87UJ', $order->getCustomer()->getAddress()->getPostCode());
         $this->assertEquals(OrderStatus::CONFIRMED(), $order->getStatus());
         $this->assertEquals(FulfilmentType::DELIVERY(), $order->getMethod()->getFulfilmentType());
-        $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getMethod()->getDate());
+        $this->assertEquals(new \DateTimeImmutable('2021-03-12T11:00:51+00:00'), $order->getMethod()->getDate());
         $this->assertEquals(250, $order->getMethod()->getFee());
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getCreatedAt());
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getUpdatedAt());
@@ -88,6 +89,115 @@ class DoctrineOrderReaderTest extends TestCase
         $this->reader->getById($orderId);
     }
 
+    public function test_get_returns_an_array_of_all_Order_resources()
+    {
+        $this->seedOrders();
+
+        $fetched = $this->reader->get(new OrderReaderQuery());
+
+        $this->assertCount(2, $fetched);
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[1]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_objects_filtered_by_customer_post_code()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setPostCode('DH87UJ');
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_objects_filtered_by_order_number()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setOrderNumber('12345678');
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_object_filtered_by_delivery_date_from()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setDeliveryDateFrom(new \DateTimeImmutable('2021-03-12T10:00:51+00:00'));
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_object_filtered_by_delivery_date_to()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setDeliveryDateTo(new \DateTimeImmutable('2021-02-28T10:00:51+00:00'));
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[0]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_object_filtered_by_order_date_from()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setOrderDateFrom(new \DateTimeImmutable('2021-05-23T11:00:51+00:00'));
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[0]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_object_filtered_by_order_date_to()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setOrderDateTo(new \DateTimeImmutable('2021-04-23T11:00:51+00:00'));
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_objects_ordered_by_created_at_date_asc()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setOrderBy('created_at_asc');
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(2, $fetched);
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[1]->getId());
+    }
+
+    public function test_get_returns_an_array_of_Order_objects_ordered_by_created_at_date_desc()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setOrderBy('created_at_desc');
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(2, $fetched);
+        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[0]->getId());
+        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[1]->getId());
+    }
+
     private function seedOrders(): void
     {
         $orderId = Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86');
@@ -110,7 +220,7 @@ class DoctrineOrderReaderTest extends TestCase
         $status = OrderStatus::CONFIRMED();
         $method = new OrderMethod(
             FulfilmentType::DELIVERY(),
-            new \DateTimeImmutable('2021-02-23T11:06:51+00:00'),
+            new \DateTimeImmutable('2021-03-12T11:00:51+00:00'),
             250
         );
         $items = [
@@ -157,15 +267,15 @@ class DoctrineOrderReaderTest extends TestCase
         $this->writer->insert($order);
 
         $orderId = Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7');
-        $externalId = '12345678';
+        $externalId = '123455555';
         $transactionId = 'ID9991111';
         $address = new Address(
-            '58 Holwick Close',
-            'Templetown',
-            'In the ghetto',
-            'Consett',
-            'Durham',
-            'DH87UJ'
+            '35 Beechfield Gardens',
+            'Crow Lane',
+            'Edge of Dagenham',
+            'Romford',
+            'Essex',
+            'RM7 0EJ'
         );
         $customer = new Customer(
             'Joe',
@@ -174,7 +284,7 @@ class DoctrineOrderReaderTest extends TestCase
             '07939843048'
         );
         $status = OrderStatus::CONFIRMED();
-        $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
+        $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), 250);
         $items = [
             new OrderItem(
                 Uuid::fromString('a270e34b-4c89-4727-a9ff-c96991eaedff'),
@@ -189,8 +299,8 @@ class DoctrineOrderReaderTest extends TestCase
                 new \DateTimeImmutable('2021-02-23T11:06:51+00:00'),
             ),
         ];
-        $createdAt = new \DateTimeImmutable('2021-02-23T11:06:51+00:00');
-        $updatedAt = new \DateTimeImmutable('2021-02-23T11:06:51+00:00');
+        $createdAt = new \DateTimeImmutable('2021-05-23T11:06:51+00:00');
+        $updatedAt = new \DateTimeImmutable('2021-05-23T11:06:51+00:00');
 
         $order = new Order(
             $orderId,

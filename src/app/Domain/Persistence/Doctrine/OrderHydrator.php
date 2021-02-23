@@ -57,7 +57,7 @@ class OrderHydrator
     private function hydrateCustomer(string $customer): Customer
     {
         $customer = json_decode($customer);
-        $address = json_decode($customer->address);
+        $address = $customer->address;
 
         return new Customer(
             $customer->firstName,
