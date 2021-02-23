@@ -12,6 +12,7 @@ use Relmans\Domain\Entity\Order;
 use Relmans\Domain\Entity\OrderItem;
 use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Enum\FulfilmentType;
+use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\OrderStatus;
 use Relmans\Domain\Persistence\OrderWriterQuery;
 use Relmans\Framework\Exception\NotFoundException;
@@ -66,7 +67,7 @@ class DoctrineOrderWriterTest extends TestCase
                 'Cabbage',
                 10,
                 1,
-                'each',
+                Measurement::EACH(),
                 100,
                 new \DateTimeImmutable(),
                 new \DateTimeImmutable(),
@@ -78,7 +79,7 @@ class DoctrineOrderWriterTest extends TestCase
                 'Cabbage',
                 10,
                 1,
-                'each',
+                Measurement::EACH(),
                 100,
                 new \DateTimeImmutable(),
                 new \DateTimeImmutable(),
@@ -131,7 +132,7 @@ class DoctrineOrderWriterTest extends TestCase
                 'Cabbage',
                 10,
                 1,
-                'each',
+                Measurement::EACH(),
                 100,
                 new \DateTimeImmutable(),
                 new \DateTimeImmutable(),
@@ -143,7 +144,7 @@ class DoctrineOrderWriterTest extends TestCase
                 'Cabbage',
                 10,
                 1,
-                'each',
+                Measurement::EACH(),
                 100,
                 new \DateTimeImmutable(),
                 new \DateTimeImmutable(),

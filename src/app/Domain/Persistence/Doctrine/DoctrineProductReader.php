@@ -54,7 +54,7 @@ class DoctrineProductReader implements ProductReader
                 return $this->hydratePrice((object) $price);
             }, $rows);
 
-                return $this->hydrateProduct((object) $row, $prices);
+            return $this->hydrateProduct((object) $row, $prices);
         }, $rows->fetchAllAssociative());
     }
 

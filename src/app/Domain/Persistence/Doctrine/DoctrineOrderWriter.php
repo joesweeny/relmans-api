@@ -25,7 +25,9 @@ class DoctrineOrderWriter implements OrderWriter
 
     public function insert(Order $order): void
     {
-        $query = $this->connection->createQueryBuilder()
+        $builder = $this->connection->createQueryBuilder();
+
+        $query = $builder
             ->insert("customer_order")
             ->values([
                 'id' => ':id',
@@ -40,9 +42,9 @@ class DoctrineOrderWriter implements OrderWriter
             ->setParameter(':id', (string) $order->getId())
             ->setParameter(':external_id', $order->getExternalId())
             ->setParameter(':transaction_id', $order->getTransactionId())
-            ->setParameter(':customer_details', json_encode($order->getCustomer()), Types::JSON)
+            ->setParameter(':customer_details', $order->getCustomer()->jsonSerialize(), Types::JSON)
             ->setParameter(':status', (string) $order->getStatus())
-            ->setParameter(':method', json_encode($order->getMethod()), Types::JSON)
+            ->setParameter(':method', $order->getMethod()->jsonSerialize(), Types::JSON)
             ->setParameter(':created_at', $order->getCreatedAt()->getTimestamp())
             ->setParameter(':updated_at', $order->getUpdatedAt()->getTimestamp());
 
@@ -118,7 +120,7 @@ class DoctrineOrderWriter implements OrderWriter
                 ->setParameter(':name', $item->getName())
                 ->setParameter(':price', $item->getPrice())
                 ->setParameter(':size', $item->getSize())
-                ->setParameter(':measurement', $item->getMeasurement())
+                ->setParameter(':measurement', (string) $item->getMeasurement())
                 ->setParameter(':quantity', $item->getQuantity())
                 ->setParameter(':created_at', $item->getCreatedAt()->getTimestamp())
                 ->setParameter(':updated_at', $item->getUpdatedAt()->getTimestamp());
