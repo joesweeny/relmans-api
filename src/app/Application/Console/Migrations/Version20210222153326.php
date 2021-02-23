@@ -20,14 +20,14 @@ final class Version20210222153326 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $table = $schema->createTable('order');
+        $table = $schema->createTable('customer_order');
 
         $table->addColumn('id', Types::STRING);
         $table->addColumn('external_id', Types::STRING)->setNotnull(true);
         $table->addColumn('customer_details', Types::JSON)->setNotnull(true);
         $table->addColumn('status', Types::STRING)->setNotnull(true);
-        $table->addColumn('items', Types::JSON)->setNotnull(true);
-        $table->addColumn('total', Types::INTEGER)->setNotnull(true);
+        $table->addColumn('method', Types::JSON)->setNotnull(true);
+        $table->addColumn('transaction_id', Types::STRING);
         $table->addColumn('created_at', Types::INTEGER)->setNotnull(true);
         $table->addColumn('updated_at', Types::INTEGER)->setNotnull(true);
         $table->setPrimaryKey(['id']);

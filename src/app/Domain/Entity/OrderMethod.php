@@ -4,7 +4,7 @@ namespace Relmans\Domain\Entity;
 
 use Relmans\Domain\Enum\FulfilmentType;
 
-class OrderMethod
+class OrderMethod implements \JsonSerializable
 {
     private FulfilmentType $type;
     private \DateTimeImmutable $date;
@@ -30,5 +30,14 @@ class OrderMethod
     public function getFee(): ?int
     {
         return $this->fee;
+    }
+
+    public function jsonSerialize()
+    {
+        return (object) [
+            'type' => $this->type->getValue(),
+            'date' => $this->date->getTimestamp(),
+            'fee' => $this->fee,
+        ];
     }
 }

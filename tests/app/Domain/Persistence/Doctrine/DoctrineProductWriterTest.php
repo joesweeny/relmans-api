@@ -34,7 +34,7 @@ class DoctrineProductWriterTest extends TestCase
         );
     }
 
-    public function test_insert_increases_product_table_and_produce_prices_table_counts()
+    public function test_insert_increases_product_table_and_product_price_table_counts()
     {
         $productId = Uuid::uuid4();
 

@@ -20,21 +20,14 @@ final class Version20210222164120 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $table = $schema->getTable('order');
-
-        $table->addColumn('method', Types::JSON)->setNotnull(true);
-        $table->addColumn('transaction_id', Types::STRING);
-        $table->dropColumn('total');
-        $table->dropColumn('items');
-
-        $table = $schema->createTable('order_item');
+        $table = $schema->createTable('customer_order_item');
 
         $table->addColumn('id', Types::STRING);
         $table->addColumn('order_id', Types::STRING)->setNotnull(true);
         $table->addColumn('product_id', Types::STRING)->setNotnull(true);
         $table->addColumn('name', Types::STRING)->setNotnull(true);
         $table->addColumn('price', Types::INTEGER)->setNotnull(true);
-        $table->addColumn('size', Types::STRING)->setNotnull(true);
+        $table->addColumn('size', Types::INTEGER)->setNotnull(true);
         $table->addColumn('measurement', Types::STRING)->setNotnull(true);
         $table->addColumn('quantity', Types::INTEGER)->setNotnull(true);
         $table->addColumn('created_at', Types::INTEGER)->setNotnull(true);
@@ -44,13 +37,6 @@ final class Version20210222164120 extends AbstractMigration
 
     public function down(Schema $schema) : void
     {
-        $table = $schema->getTable('order');
-
-        $table->dropColumn('method');
-        $table->dropColumn('transaction_id');
-        $table->addColumn('total', Types::INTEGER)->setNotnull(true);
-        $table->addColumn('items', Types::JSON)->setNotnull(true);
-
-        $schema->dropTable('order_item');
+        $schema->dropTable('customer_order_item');
     }
 }
