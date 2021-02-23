@@ -4,6 +4,7 @@
     "license": "proprietary",
     "type": "project",
     "require": {
+        "aws/aws-sdk-php": "^3.173",
         "doctrine/migrations": "^3.0",
         "josegonzalez/dotenv": "^3.2",
         "laminas/laminas-diactoros": "^2.5",

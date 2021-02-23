@@ -8,13 +8,20 @@ class Customer implements \JsonSerializable
     private string $lastName;
     private Address $address;
     private string $phoneNumber;
+    private string $email;
 
-    public function __construct(string $firstName, string $lastName, Address $address, string $phoneNumber)
-    {
+    public function __construct(
+        string $firstName,
+        string $lastName,
+        Address $address,
+        string $phoneNumber,
+        string $email
+    ) {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->address = $address;
         $this->phoneNumber = $phoneNumber;
+        $this->email = $email;
     }
 
     public function getFirstName(): string
@@ -37,13 +44,19 @@ class Customer implements \JsonSerializable
         return $this->phoneNumber;
     }
 
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
     public function jsonSerialize()
     {
         return (object) [
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'address' => $this->address->jsonSerialize(),
-            'phoneNumber' => $this->phoneNumber,
+            'phone' => $this->phoneNumber,
+            'email' => $this->email,
         ];
     }
 }

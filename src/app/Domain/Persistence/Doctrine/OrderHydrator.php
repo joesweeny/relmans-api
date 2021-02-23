@@ -70,7 +70,8 @@ class OrderHydrator
                 $address->county,
                 $address->postCode
             ),
-            $customer->phoneNumber
+            $customer->phone,
+            $customer->email
         );
     }
 

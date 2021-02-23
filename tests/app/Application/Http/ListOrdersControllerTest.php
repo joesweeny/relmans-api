@@ -44,7 +44,8 @@ class ListOrdersControllerTest extends TestCase
                         'county' => 'Durham',
                         'postCode' => 'DH87UJ',
                     ],
-                    'phoneNumber' => '07939843048',
+                    'phone' => '07939843048',
+                    'email' => 'joe@email.com',
                 ],
                 'status' => 'CONFIRMED',
                 'method' => (object) [
