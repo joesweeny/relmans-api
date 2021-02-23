@@ -20,7 +20,7 @@ class ListOrdersCommand
      * @param string|null $orderDateFrom
      * @param string|null $orderDateTo
      * @param string|null $orderBy
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      */
     public function __construct(
         ?string $postCode,
@@ -33,10 +33,16 @@ class ListOrdersCommand
     ) {
         $this->postCode = $postCode;
         $this->orderNumber = $orderNumber;
-        $this->deliveryFrom = $deliveryFrom !== null ? new \DateTimeImmutable($deliveryFrom) : null;
-        $this->deliveryTo = $deliveryTo !== null ? new \DateTimeImmutable($deliveryTo) : null;
-        $this->orderDateFrom = $orderDateFrom !== null ? new \DateTimeImmutable($orderDateFrom) : null;
-        $this->orderDateTo = $orderDateTo !== null ? new \DateTimeImmutable($orderDateTo) : null;
+
+        try {
+            $this->deliveryFrom = $deliveryFrom !== null ? new \DateTimeImmutable($deliveryFrom) : null;
+            $this->deliveryTo = $deliveryTo !== null ? new \DateTimeImmutable($deliveryTo) : null;
+            $this->orderDateFrom = $orderDateFrom !== null ? new \DateTimeImmutable($orderDateFrom) : null;
+            $this->orderDateTo = $orderDateTo !== null ? new \DateTimeImmutable($orderDateTo) : null;
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException('Date provided is not a valid RFC3339 valid date');
+        }
+
         $this->orderBy = $orderBy;
     }
 
