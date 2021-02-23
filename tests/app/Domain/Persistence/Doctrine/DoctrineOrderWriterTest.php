@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Domain\Persistence\Doctrine;
+namespace Relmans\Domain\Persistence\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
