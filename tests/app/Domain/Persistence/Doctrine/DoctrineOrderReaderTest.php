@@ -12,6 +12,7 @@ use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Enum\FulfilmentType;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\OrderStatus;
+use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Traits\RunsMigrations;
 use Relmans\Traits\UsesContainer;
 
@@ -76,6 +77,15 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals(100, $order->getItems()[1]->getQuantity());
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getItems()[1]->getCreatedAt());
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getItems()[1]->getUpdatedAt());
+    }
+
+    public function test_getById_throws_a_NotFoundException_if_order_resource_does_not_exist()
+    {
+        $orderId = Uuid::uuid4();
+
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("Order {$orderId} does not exist");
+        $this->reader->getById($orderId);
     }
 
     private function seedOrders(): void
