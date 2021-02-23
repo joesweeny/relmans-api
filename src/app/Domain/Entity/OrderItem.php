@@ -4,6 +4,7 @@ namespace Relmans\Domain\Entity;
 
 use DateTimeImmutable;
 use Ramsey\Uuid\UuidInterface;
+use Relmans\Domain\Enum\Measurement;
 
 class OrderItem
 {
@@ -13,7 +14,7 @@ class OrderItem
     private string $name;
     private int $price;
     private int $size;
-    private string $measurement;
+    private Measurement $measurement;
     private int $quantity;
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $updatedAt;
@@ -25,7 +26,7 @@ class OrderItem
         string $name,
         int $price,
         int $size,
-        string $measurement,
+        Measurement $measurement,
         int $quantity,
         DateTimeImmutable $createdAt,
         DateTimeImmutable $updatedAt
@@ -67,7 +68,7 @@ class OrderItem
         return $this->size;
     }
 
-    public function getMeasurement(): string
+    public function getMeasurement(): Measurement
     {
         return $this->measurement;
     }

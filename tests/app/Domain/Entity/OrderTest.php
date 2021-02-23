@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Relmans\Domain\Entity\OrderValue;
 use Relmans\Domain\Enum\FulfilmentType;
+use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\OrderStatus;
 
 class OrderTest extends TestCase
@@ -38,7 +39,7 @@ class OrderTest extends TestCase
             'Cabbage',
             10,
             1,
-            'each',
+            Measurement::EACH(),
             100,
             new \DateTimeImmutable(),
             new \DateTimeImmutable(),
