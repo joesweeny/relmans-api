@@ -9,6 +9,10 @@ class GetOrderCommand
 {
     private UuidInterface $orderId;
 
+    /**
+     * @param string $orderId
+     * @throws \InvalidArgumentException
+     */
     public function __construct(string $orderId)
     {
         $this->orderId = Uuid::fromString($orderId);
