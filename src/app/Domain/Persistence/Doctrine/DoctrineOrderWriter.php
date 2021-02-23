@@ -4,9 +4,12 @@ namespace Relmans\Domain\Persistence\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Types;
+use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Entity\Order;
 use Relmans\Domain\Entity\OrderItem;
 use Relmans\Domain\Persistence\OrderWriter;
+use Relmans\Domain\Persistence\OrderWriterQuery;
+use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Framework\Time\Clock;
 
 class DoctrineOrderWriter implements OrderWriter
@@ -46,6 +49,43 @@ class DoctrineOrderWriter implements OrderWriter
         try {
             $query->execute();
             $this->insertOrderItems($order->getItems());
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+    }
+
+    public function update(UuidInterface $orderId, OrderWriterQuery $query): void
+    {
+        $builder =  $this->connection->createQueryBuilder();
+
+        try {
+            $row = $builder
+                ->select('1')
+                ->from('customer_order')
+                ->where('id = :id')
+                ->setParameter(':id', (string) $orderId)
+                ->execute()
+                ->fetchOne();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        if (!$row) {
+            throw new NotFoundException("Order {$orderId} does not exist");
+        }
+
+        $builder = $builder
+            ->update('customer_order')
+            ->set('updated_at', $this->clock->now()->getTimestamp())
+            ->where('id = :id')
+            ->setParameter(':id', (string) $orderId);
+
+        if ($query->getStatus() !== null) {
+            $builder->set('status', $builder->createNamedParameter((string) $query->getStatus()));
+        }
+
+        try {
+            $builder->execute();
         } catch (\Exception $e) {
             throw new \RuntimeException("Error executing query: {$e->getMessage()}");
         }

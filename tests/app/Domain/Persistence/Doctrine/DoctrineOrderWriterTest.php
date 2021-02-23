@@ -1,10 +1,11 @@
 <?php
 
-namespace app\Domain\Persistence\Doctrine;
+namespace Relmans\Domain\Persistence\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Entity\Address;
 use Relmans\Domain\Entity\Customer;
 use Relmans\Domain\Entity\Order;
@@ -12,7 +13,8 @@ use Relmans\Domain\Entity\OrderItem;
 use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Enum\FulfilmentType;
 use Relmans\Domain\Enum\OrderStatus;
-use Relmans\Domain\Persistence\Doctrine\DoctrineOrderWriter;
+use Relmans\Domain\Persistence\OrderWriterQuery;
+use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Framework\Time\FixedClock;
 use Relmans\Traits\RunsMigrations;
 use Relmans\Traits\UsesContainer;
@@ -168,6 +170,66 @@ class DoctrineOrderWriterTest extends TestCase
         $this->assertEquals(4, $this->tableRowCount('customer_order_item'));
     }
 
+    public function test_update_updates_the_status_column_for_an_order_record()
+    {
+        $orderId = Uuid::uuid4();
+        $externalId = '12345678';
+        $transactionId = 'ID9991111';
+        $address = new Address(
+            '58 Holwick Close',
+            'Templetown',
+            'In the ghetto',
+            'Consett',
+            'Durham',
+            'DH87UJ'
+        );
+        $customer = new Customer(
+            'Joe',
+            'Sweeny',
+            $address,
+            '07939843048'
+        );
+        $status = OrderStatus::PENDING();
+        $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
+        $createdAt = new \DateTimeImmutable();
+        $updatedAt = new \DateTimeImmutable();
+
+        $order = new Order(
+            $orderId,
+            $externalId,
+            $transactionId,
+            $customer,
+            $status,
+            $method,
+            [],
+            $createdAt,
+            $updatedAt
+        );
+
+        $this->writer->insert($order);
+
+        $row = $this->fetchRecord($orderId, 'customer_order');
+
+        $this->assertEquals('PENDING', $row->status);
+
+        $query = (new OrderWriterQuery())->setStatus(OrderStatus::CONFIRMED());
+
+        $this->writer->update($orderId, $query);
+
+        $row = $this->fetchRecord($orderId, 'customer_order');
+
+        $this->assertEquals('CONFIRMED', $row->status);
+    }
+
+    public function test_order_throws_a_NotFoundException_if_order_record_does_not_exist()
+    {
+        $orderId = Uuid::uuid4();
+
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("Order {$orderId} does not exist");
+        $this->writer->update($orderId, new OrderWriterQuery());
+    }
+
     private function tableRowCount(string $table): int
     {
         return $this->connection->createQueryBuilder()
@@ -175,5 +237,16 @@ class DoctrineOrderWriterTest extends TestCase
             ->from($table)
             ->execute()
             ->rowCount();
+    }
+
+    private function fetchRecord(UuidInterface $id, string $table): object
+    {
+        return (object) $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from($table)
+            ->where('id = :id')
+            ->setParameter(':id', (string) $id)
+            ->execute()
+            ->fetchAssociative();
     }
 }
