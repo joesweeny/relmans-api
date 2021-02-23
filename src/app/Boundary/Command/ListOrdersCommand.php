@@ -30,8 +30,7 @@ class ListOrdersCommand
         ?string $orderDateFrom,
         ?string $orderDateTo,
         ?string $orderBy
-    )
-    {
+    ) {
         $this->postCode = $postCode;
         $this->orderNumber = $orderNumber;
         $this->deliveryFrom = $deliveryFrom !== null ? new \DateTimeImmutable($deliveryFrom) : null;
