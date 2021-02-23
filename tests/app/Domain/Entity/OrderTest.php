@@ -33,11 +33,14 @@ class OrderTest extends TestCase
         $item = new OrderItem(
             Uuid::uuid4(),
             Uuid::uuid4(),
+            Uuid::uuid4(),
             'Cabbage',
+            10,
             1,
             'each',
             100,
-            5
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable(),
         );
         $createdAt = new \DateTimeImmutable();
         $updatedAt = new \DateTimeImmutable();

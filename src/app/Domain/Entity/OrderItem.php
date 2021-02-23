@@ -2,44 +2,59 @@
 
 namespace Relmans\Domain\Entity;
 
+use DateTimeImmutable;
 use Ramsey\Uuid\UuidInterface;
 
-class OrderItem implements \JsonSerializable
+class OrderItem
 {
+    private UuidInterface $id;
+    private UuidInterface $orderId;
     private UuidInterface $productId;
-    private UuidInterface $priceId;
     private string $name;
+    private int $price;
     private int $size;
     private string $measurement;
-    private int $price;
     private int $quantity;
+    private DateTimeImmutable $createdAt;
+    private DateTimeImmutable $updatedAt;
 
     public function __construct(
+        UuidInterface $id,
+        UuidInterface $orderId,
         UuidInterface $productId,
-        UuidInterface $priceId,
         string $name,
+        int $price,
         int $size,
         string $measurement,
-        int $price,
-        int $quantity
+        int $quantity,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt
     ) {
+        $this->id = $id;
+        $this->orderId = $orderId;
         $this->productId = $productId;
-        $this->priceId = $priceId;
         $this->name = $name;
+        $this->price = $price;
         $this->size = $size;
         $this->measurement = $measurement;
-        $this->price = $price;
         $this->quantity = $quantity;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getId(): UuidInterface
+    {
+        return $this->id;
+    }
+
+    public function getOrderId(): UuidInterface
+    {
+        return $this->orderId;
     }
 
     public function getProductId(): UuidInterface
     {
         return $this->productId;
-    }
-
-    public function getPriceId(): UuidInterface
-    {
-        return $this->priceId;
     }
 
     public function getName(): string
@@ -67,16 +82,13 @@ class OrderItem implements \JsonSerializable
         return $this->quantity;
     }
 
-    public function jsonSerialize()
+    public function getCreatedAt(): DateTimeImmutable
     {
-        return (object) [
-            'productId' => $this->productId->toString(),
-            'priceId' => $this->priceId->toString(),
-            'name' => $this->name,
-            'size' => $this->size,
-            'measurement' => $this->measurement,
-            'price' => $this->price,
-            'quantity' => $this->quantity,
-        ];
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }
