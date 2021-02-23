@@ -8,6 +8,7 @@ use Relmans\Application\Http\DeleteProductController;
 use Relmans\Application\Http\GetOrderController;
 use Relmans\Application\Http\HealthCheckController;
 use Relmans\Application\Http\ListCategoriesController;
+use Relmans\Application\Http\ListOrdersController;
 use Relmans\Application\Http\ListProductsController;
 use Relmans\Application\Http\UpdateProductController;
 use Relmans\Application\Http\UpdateProductPriceController;
@@ -25,6 +26,7 @@ class RouteMapper
         $app->delete('/product/{id}', DeleteProductController::class);
         $app->patch('/product/{id}', UpdateProductController::class);
         $app->patch('/price/{id}', UpdateProductPriceController::class);
+        $app->get('/order', ListOrdersController::class);
         $app->get('/order/{id}', GetOrderController::class);
     }
 }
