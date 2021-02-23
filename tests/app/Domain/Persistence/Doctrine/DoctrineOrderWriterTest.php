@@ -55,7 +55,8 @@ class DoctrineOrderWriterTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
         $status = OrderStatus::CONFIRMED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
@@ -120,7 +121,8 @@ class DoctrineOrderWriterTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
         $status = OrderStatus::CONFIRMED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
@@ -188,7 +190,8 @@ class DoctrineOrderWriterTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
         $status = OrderStatus::PENDING();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);

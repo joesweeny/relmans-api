@@ -44,7 +44,8 @@ class OrderHydratorTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
 
         $method = new OrderMethod(

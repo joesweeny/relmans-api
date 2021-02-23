@@ -215,7 +215,8 @@ class DoctrineOrderReaderTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
         $status = OrderStatus::CONFIRMED();
         $method = new OrderMethod(
@@ -281,7 +282,8 @@ class DoctrineOrderReaderTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
         $status = OrderStatus::CONFIRMED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), 250);

@@ -7,6 +7,12 @@ class ConfigFactory
     public static function create(array $overrides = []): Config
     {
         return new Config(array_merge([
+            'aws' => [
+                'key' => getenv('AWS_KEY'),
+                'secret' => getenv('AWS_SECRET'),
+                'region' => 'eu-west-2',
+            ],
+
             'cors' => [
                 'allowed-origins' => [
                     'http://localhost:3000',
@@ -23,6 +29,10 @@ class ConfigFactory
                     'host' => getenv('DB_HOST'),
                     'driver' => getenv('DB_DRIVER'),
                 ],
+            ],
+
+            'email' => [
+                'driver' => getenv('EMAIL_DRIVER') ?: 'log',
             ],
 
             'log' => [

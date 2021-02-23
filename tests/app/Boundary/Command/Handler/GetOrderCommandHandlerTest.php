@@ -63,7 +63,8 @@ class GetOrderCommandHandlerTest extends TestCase
                     'county' => 'Durham',
                     'postCode' => 'DH87UJ',
                 ],
-                'phoneNumber' => '07939843048',
+                'phone' => '07939843048',
+                'email' => 'joe@email.com',
             ],
             'status' => 'CONFIRMED',
             'method' => (object) [
@@ -121,7 +122,8 @@ class GetOrderCommandHandlerTest extends TestCase
             'Joe',
             'Sweeny',
             $address,
-            '07939843048'
+            '07939843048',
+            'joe@email.com'
         );
         $status = OrderStatus::CONFIRMED();
         $method = new OrderMethod(

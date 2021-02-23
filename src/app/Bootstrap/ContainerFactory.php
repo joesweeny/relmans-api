@@ -7,6 +7,7 @@ use DI\Definition\Helper\DefinitionHelper;
 use Relmans\Application\Http\Middleware\CorsMiddleware;
 use Relmans\Bootstrap\Providers\CommandBusServiceProvider;
 use Relmans\Bootstrap\Providers\DoctrineServiceProvider;
+use Relmans\Bootstrap\Providers\EmailServiceProvider;
 use Relmans\Bootstrap\Providers\PsrLogServiceProvider;
 use Relmans\Bootstrap\Providers\ReaderServiceProvider;
 use Relmans\Bootstrap\Providers\RepositoryServiceProvider;
@@ -28,6 +29,7 @@ class ContainerFactory
     private const PROVIDERS = [
         CommandBusServiceProvider::class,
         DoctrineServiceProvider::class,
+        EmailServiceProvider::class,
         PsrLogServiceProvider::class,
         ReaderServiceProvider::class,
         RepositoryServiceProvider::class,
