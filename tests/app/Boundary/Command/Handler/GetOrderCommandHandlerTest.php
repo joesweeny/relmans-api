@@ -17,6 +17,7 @@ use Relmans\Domain\Enum\FulfilmentType;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\OrderStatus;
 use Relmans\Domain\Persistence\OrderReader;
+use Relmans\Framework\Exception\NotFoundException;
 
 class GetOrderCommandHandlerTest extends TestCase
 {
@@ -89,6 +90,18 @@ class GetOrderCommandHandlerTest extends TestCase
         ];
 
         $this->assertEquals($expected, $order);
+    }
+
+    public function test_handle_throws_a_NotFoundException_if_thrown_by_the_order_reader()
+    {
+        $command = new GetOrderCommand('9af64fc1-6168-4859-99ba-a8173fab472c');
+
+        $this->reader->getById($command->getOrderId())
+            ->shouldBeCalled()
+            ->willThrow(new NotFoundException());
+
+        $this->expectException(NotFoundException::class);
+        $this->handler->handle($command);
     }
 
     private function order(): Order
