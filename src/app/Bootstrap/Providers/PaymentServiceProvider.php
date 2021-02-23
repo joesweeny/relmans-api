@@ -2,6 +2,7 @@
 
 namespace Relmans\Bootstrap\Providers;
 
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
 use PayPalCheckoutSdk\Core\ProductionEnvironment;
 use PayPalCheckoutSdk\Core\SandboxEnvironment;
 use PayPalHttp\HttpClient;
@@ -39,15 +40,15 @@ class PaymentServiceProvider implements ServiceProvider
     private function createPayPalPaymentClient(Config $config): HttpClient
     {
         if ($config->get('paypal.environment') === 'sandbox') {
-            $env = new SandboxEnvironment($config->get('paypal.client_id'), $config->get('paypal-secret'));
+            $env = new SandboxEnvironment($config->get('paypal.client_id'), $config->get('paypal.secret'));
 
-            return new HttpClient($env);
+            return new PayPalHttpClient($env);
         }
 
         if ($config->get('paypal.environment') === 'production') {
-            $env = new ProductionEnvironment($config->get('paypal.client_id'), $config->get('paypal-secret'));
+            $env = new ProductionEnvironment($config->get('paypal.client_id'), $config->get('paypal.secret'));
 
-            return new HttpClient($env);
+            return new PayPalHttpClient($env);
         }
 
         throw new \RuntimeException("Paypal environment {$config->get('paypal.environment')} is not supported");

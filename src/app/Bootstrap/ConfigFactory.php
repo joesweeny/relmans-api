@@ -49,6 +49,16 @@ class ConfigFactory
                     'level' => getenv('SENTRY_LOG_LEVEL') ?: \Monolog\Logger::DEBUG,
                 ],
             ],
+
+            'payment' => [
+                'driver' => getenv('PAYMENT_DRIVER') ?: 'log',
+            ],
+
+            'paypal' => [
+                'environment' => getenv('PAYMENT_ENVIRONMENT'),
+                'client_id' => getenv('PAYPAL_CLIENT_ID'),
+                'secret' => getenv('PAYPAL_SECRET'),
+            ]
         ], $overrides));
     }
 }

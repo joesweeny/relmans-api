@@ -2,6 +2,8 @@
 
 namespace Relmans\Domain\Service\Payment;
 
+use Relmans\Framework\Exception\NotFoundException;
+
 interface PaymentService
 {
     /**
@@ -9,6 +11,7 @@ interface PaymentService
      * @return string
      * @return string
      * @throws PaymentServiceException
+     * @throws NotFoundException
      */
     public function getTransactionId(string $orderId): string;
 }
