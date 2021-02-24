@@ -11,6 +11,7 @@ use Relmans\Application\Http\HealthCheckController;
 use Relmans\Application\Http\ListCategoriesController;
 use Relmans\Application\Http\ListOrdersController;
 use Relmans\Application\Http\ListProductsController;
+use Relmans\Application\Http\UpdateOrderController;
 use Relmans\Application\Http\UpdateProductController;
 use Relmans\Application\Http\UpdateProductPriceController;
 use Slim\App;
@@ -32,5 +33,6 @@ class RouteMapper
         $app->post('/order', CreateOrderController::class);
         $app->get('/order', ListOrdersController::class);
         $app->get('/order/{id}', GetOrderController::class);
+        $app->patch('/order/{id}', UpdateOrderController::class);
     }
 }
