@@ -36,7 +36,7 @@ class AwsEmailServiceTest extends TestCase
 
     public function test_sendReceivedEmail_sends_an_email_via_aws_ses_client()
     {
-        $this->service->sendReceivedEmail('ORDER123', 'orders@relmans.co.uk');
+        $this->service->sendReceivedEmail('YU9KAJSAKJ3', 'orders@relmans.co.uk');
     }
 
     public function test_sendDeliveryConfirmation_sends_an_email_via_aws_ses_client()
@@ -51,8 +51,7 @@ class AwsEmailServiceTest extends TestCase
 
     private function order(): Order
     {
-        $id = Uuid::uuid4();
-        $externalId = '12345678';
+        $orderId = 'YU9KAJSAKJ3';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -77,7 +76,7 @@ class AwsEmailServiceTest extends TestCase
         );
         $item = new OrderItem(
             Uuid::uuid4(),
-            Uuid::uuid4(),
+            $orderId,
             Uuid::uuid4(),
             'Cabbage',
             10,
@@ -91,8 +90,7 @@ class AwsEmailServiceTest extends TestCase
         $updatedAt = new \DateTimeImmutable();
 
         return new Order(
-            $id,
-            $externalId,
+            $orderId,
             $transactionId,
             $customer,
             $status,

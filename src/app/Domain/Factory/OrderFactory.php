@@ -1,6 +1,6 @@
 <?php
 
-namespace Relmans\Domain;
+namespace Relmans\Domain\Factory;
 
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
@@ -68,7 +68,9 @@ class OrderFactory
         try {
             $transactionId = $this->paymentService->getTransactionId($orderNumber);
         } catch (NotFoundException $e) {
-            throw new ValidationException("Unable to validate order number");
+            $this->logger->error("Error fetching order from payment service: {$e->getMessage()}");
+
+            throw new ValidationException('Unable to validate order number');
         } catch (PaymentServiceException $e) {
             $this->logger->error($e->getMessage());
         }
@@ -97,8 +99,8 @@ class OrderFactory
                 throw new ValidationException($e->getMessage());
             }
 
-            if ($price->getProductId() !== $product->getId()) {
-                throw new ValidationException("Price {$item->getPriceId()} is not associated to product {$item->getProductId()}}");
+            if (!$price->getProductId()->equals($product->getId())) {
+                throw new ValidationException("Price {$item->getPriceId()} is not associated to product {$item->getProductId()}");
             }
 
             if ($price->getValue() !== $item->getPrice()) {
