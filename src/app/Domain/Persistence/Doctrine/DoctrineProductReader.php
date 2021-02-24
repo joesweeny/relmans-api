@@ -6,12 +6,14 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Entity\Product;
 use Relmans\Domain\Entity\ProductPrice;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductReader;
 use Relmans\Domain\Persistence\ProductReaderQuery;
+use Relmans\Framework\Exception\NotFoundException;
 
 class DoctrineProductReader implements ProductReader
 {
@@ -28,34 +30,61 @@ class DoctrineProductReader implements ProductReader
             ->select('*')
             ->from('product');
 
-        $priceBuilder = $this->connection->createQueryBuilder()
-            ->select('*')
-            ->from('product_price');
-
         try {
             $rows = $this->buildQuery($productBuilder, $query)->execute();
         } catch (Exception $e) {
             throw new \RuntimeException("Error executing query: {$e->getMessage()}");
         }
 
-        return array_map(function (array $row) use ($priceBuilder) {
-            try {
-                $rows = $priceBuilder
-                    ->where('product_id = :product_id')
-                    ->setParameter(':product_id', $row['id'])
-                    ->orderBy('measurement', 'ASC')
-                    ->execute()
-                    ->fetchAllAssociative();
-            } catch (Exception $e) {
-                throw new \RuntimeException("Error executing query: {$e->getMessage()}");
-            }
-
-            $prices = array_map(function (array $price) {
-                return $this->hydratePrice((object) $price);
-            }, $rows);
-
-            return $this->hydrateProduct((object) $row, $prices);
+        return array_map(function (array $row) {
+            return $this->hydrateProduct((object) $row, $this->hydratePrices($row['id']));
         }, $rows->fetchAllAssociative());
+    }
+
+    public function getById(UuidInterface $productId): Product
+    {
+        $builder =  $this->connection->createQueryBuilder();
+
+        try {
+            $row = $builder
+                ->select('*')
+                ->from('product')
+                ->where('id = :id')
+                ->setParameter(':id', (string) $productId)
+                ->execute()
+                ->fetchAssociative();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        if (!$row) {
+            throw new NotFoundException("Product {$productId} does not exist");
+        }
+
+        return $this->hydrateProduct((object) $row, $this->hydratePrices($row['id']));
+    }
+
+    public function getPriceById(UuidInterface $priceId): ProductPrice
+    {
+        $builder =  $this->connection->createQueryBuilder();
+
+        try {
+            $row = $builder
+                ->select('*')
+                ->from('product_price')
+                ->where('id = :id')
+                ->setParameter(':id', (string) $priceId)
+                ->execute()
+                ->fetchAssociative();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        if (!$row) {
+            throw new NotFoundException("Product price {$priceId} does not exist");
+        }
+        
+        return $this->hydratePrice((object) $row);
     }
 
     private function buildQuery(QueryBuilder $builder, ProductReaderQuery $query): QueryBuilder
@@ -94,6 +123,32 @@ class DoctrineProductReader implements ProductReader
             \DateTimeImmutable::createFromFormat('U', $row->created_at),
             \DateTimeImmutable::createFromFormat('U', $row->updated_at)
         );
+    }
+
+    /**
+     * @param string $productId
+     * @return array|ProductPrice[]
+     */
+    private function hydratePrices(string $productId): array
+    {
+        $priceBuilder = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('product_price');
+
+        try {
+            $rows = $priceBuilder
+                ->where('product_id = :product_id')
+                ->setParameter(':product_id', $productId)
+                ->orderBy('measurement', 'ASC')
+                ->execute()
+                ->fetchAllAssociative();
+        } catch (Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        return array_map(function (array $row) {
+            return $this->hydratePrice((object) $row);
+        }, $rows);
     }
 
     private function hydratePrice(object $row): ProductPrice
