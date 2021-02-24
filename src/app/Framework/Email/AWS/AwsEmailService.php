@@ -46,7 +46,7 @@ class AwsEmailService implements EmailService
         $address = array_filter((array) $customer->getAddress()->jsonSerialize());
 
         $data = (object) [
-            'orderID' => $order->getExternalId(),
+            'orderID' => $order->getId(),
             'date' => $order->getMethod()->getDate()->format('l jS F Y'),
             'address' => implode('<br>', $address),
         ];
@@ -72,7 +72,7 @@ class AwsEmailService implements EmailService
         $customer = $order->getCustomer();
 
         $data = (object) [
-            'orderID' => $order->getExternalId(),
+            'orderID' => $order->getId(),
             'date' => $order->getMethod()->getDate()->format('l jS F Y'),
             'time' => $order->getMethod()->getDate()->format('g:iA'),
         ];
