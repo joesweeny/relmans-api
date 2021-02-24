@@ -27,7 +27,6 @@ class ListOrdersCommandHandler
     {
         $query = (new OrderReaderQuery())
             ->setPostCode($command->getPostCode())
-            ->setOrderNumber($command->getOrderNumber())
             ->setDeliveryDateFrom($command->getDeliveryFrom())
             ->setDeliveryDateTo($command->getDeliveryTo())
             ->setOrderDateFrom($command->getOrderDateFrom())

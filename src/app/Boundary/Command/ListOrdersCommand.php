@@ -14,7 +14,6 @@ class ListOrdersCommand
 
     /**
      * @param string|null $postCode
-     * @param string|null $orderNumber
      * @param string|null $deliveryFrom
      * @param string|null $deliveryTo
      * @param string|null $orderDateFrom
@@ -24,7 +23,6 @@ class ListOrdersCommand
      */
     public function __construct(
         ?string $postCode,
-        ?string $orderNumber,
         ?string $deliveryFrom,
         ?string $deliveryTo,
         ?string $orderDateFrom,
@@ -32,7 +30,6 @@ class ListOrdersCommand
         ?string $orderBy
     ) {
         $this->postCode = $postCode;
-        $this->orderNumber = $orderNumber;
 
         try {
             $this->deliveryFrom = $deliveryFrom !== null ? new \DateTimeImmutable($deliveryFrom) : null;
@@ -49,11 +46,6 @@ class ListOrdersCommand
     public function getPostCode(): ?string
     {
         return $this->postCode;
-    }
-
-    public function getOrderNumber(): ?string
-    {
-        return $this->orderNumber;
     }
 
     public function getDeliveryFrom(): ?\DateTimeImmutable
