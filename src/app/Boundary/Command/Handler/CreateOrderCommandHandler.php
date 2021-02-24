@@ -2,20 +2,31 @@
 
 namespace Relmans\Boundary\Command\Handler;
 
+use Psr\Log\LoggerInterface;
 use Relmans\Boundary\Command\CreateOrderCommand;
 use Relmans\Domain\Factory\OrderFactory;
 use Relmans\Domain\Persistence\OrderWriter;
+use Relmans\Framework\Email\EmailService;
+use Relmans\Framework\Exception\EmailException;
 use Relmans\Framework\Exception\ValidationException;
 
 class CreateOrderCommandHandler
 {
     private OrderFactory $factory;
     private OrderWriter $writer;
+    private EmailService $emailService;
+    private LoggerInterface $logger;
 
-    public function __construct(OrderFactory $factory, OrderWriter $writer)
-    {
+    public function __construct(
+        OrderFactory $factory,
+        OrderWriter $writer,
+        EmailService $emailService,
+        LoggerInterface $logger
+    ) {
         $this->factory = $factory;
         $this->writer = $writer;
+        $this->emailService = $emailService;
+        $this->logger = $logger;
     }
 
     /**
@@ -33,6 +44,12 @@ class CreateOrderCommandHandler
         );
 
         $this->writer->insert($order);
+
+        try {
+            $this->emailService->sendReceivedEmail($order->getId(), $order->getCustomer()->getEmail());
+        } catch (EmailException $e) {
+            $this->logger->error("Error sending customer order confirmation email: {$e->getMessage()}");
+        }
 
         return $order->getId();
     }
