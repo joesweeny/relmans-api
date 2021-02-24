@@ -34,6 +34,11 @@ class AwsEmailServiceTest extends TestCase
         $this->service = $container->get(EmailService::class);
     }
 
+    public function test_sendAdminOrderReceivedEmail_sends_an_email_via_aws_ses_client()
+    {
+        $this->service->sendAdminOrderReceivedEmail($this->order());
+    }
+
     public function test_sendReceivedEmail_sends_an_email_via_aws_ses_client()
     {
         $this->service->sendReceivedEmail('YU9KAJSAKJ3', 'orders@relmans.co.uk');
@@ -74,18 +79,6 @@ class AwsEmailServiceTest extends TestCase
             new \DateTimeImmutable('2021-03-12T15:00:00+00'),
             250
         );
-        $item = new OrderItem(
-            Uuid::uuid4(),
-            $orderId,
-            Uuid::uuid4(),
-            'Cabbage',
-            10,
-            1,
-            Measurement::EACH(),
-            100,
-            new \DateTimeImmutable(),
-            new \DateTimeImmutable(),
-        );
         $createdAt = new \DateTimeImmutable();
         $updatedAt = new \DateTimeImmutable();
 
@@ -95,7 +88,32 @@ class AwsEmailServiceTest extends TestCase
             $customer,
             $status,
             $method,
-            [$item],
+            [
+                new OrderItem(
+                    Uuid::uuid4(),
+                    $orderId,
+                    Uuid::uuid4(),
+                    'Cabbage',
+                    100,
+                    1,
+                    Measurement::EACH(),
+                    100,
+                    new \DateTimeImmutable(),
+                    new \DateTimeImmutable(),
+                ),
+                new OrderItem(
+                    Uuid::uuid4(),
+                    $orderId,
+                    Uuid::uuid4(),
+                    'Cabbage',
+                    500,
+                    1,
+                    Measurement::EACH(),
+                    100,
+                    new \DateTimeImmutable(),
+                    new \DateTimeImmutable(),
+                )
+            ],
             $createdAt,
             $updatedAt
         );
