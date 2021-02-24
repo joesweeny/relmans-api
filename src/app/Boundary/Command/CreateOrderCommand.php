@@ -108,8 +108,10 @@ class CreateOrderCommand
                 new \DateTimeImmutable($method->date),
                 $method->fee ?? null
             );
-        } catch (\Exception $e) {
+        } catch (\UnexpectedValueException $e) {
             throw new \InvalidArgumentException($e->getMessage());
+        } catch (\Exception $e) {
+            throw new \InvalidArgumentException('Date provided is not a valid RFC3339 date');
         }
 
         return $method;
@@ -118,6 +120,7 @@ class CreateOrderCommand
     /**
      * @param array|object[] $items
      * @return array|OrderItemData[]
+     * @throws \InvalidArgumentException
      */
     private function validateItems(array $items): array
     {
