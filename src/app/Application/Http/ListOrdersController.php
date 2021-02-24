@@ -26,7 +26,6 @@ class ListOrdersController
         try {
             $command = new ListOrdersCommand(
                 $params->postCode ?? null,
-                $params->orderNumber ?? null,
                 $params->deliveryFrom ?? null,
                 $params->deliveryTo ?? null,
                 $params->orderFrom ?? null,
