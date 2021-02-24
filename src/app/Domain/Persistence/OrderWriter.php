@@ -11,10 +11,10 @@ interface OrderWriter
     public function insert(Order $order): void;
 
     /**
-     * @param UuidInterface $orderId
+     * @param string $orderId
      * @param OrderWriterQuery $query
      * @return void
      * @throws NotFoundException
      */
-    public function update(UuidInterface $orderId, OrderWriterQuery $query): void;
+    public function update(string $orderId, OrderWriterQuery $query): void;
 }

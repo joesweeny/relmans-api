@@ -9,7 +9,7 @@ use Relmans\Domain\Enum\Measurement;
 class OrderItem
 {
     private UuidInterface $id;
-    private UuidInterface $orderId;
+    private string $orderId;
     private UuidInterface $productId;
     private string $name;
     private int $price;
@@ -21,7 +21,7 @@ class OrderItem
 
     public function __construct(
         UuidInterface $id,
-        UuidInterface $orderId,
+        string $orderId,
         UuidInterface $productId,
         string $name,
         int $price,
@@ -48,7 +48,7 @@ class OrderItem
         return $this->id;
     }
 
-    public function getOrderId(): UuidInterface
+    public function getOrderId(): string
     {
         return $this->orderId;
     }

@@ -36,10 +36,9 @@ class DoctrineOrderReaderTest extends TestCase
     {
         $this->seedOrders();
 
-        $order = $this->reader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'));
+        $order = $this->reader->getById('12345678');
 
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $order->getId());
-        $this->assertEquals('12345678', $order->getExternalId());
+        $this->assertEquals('12345678', $order->getId());
         $this->assertEquals('ID9991111', $order->getTransactionId());
         $this->assertEquals('Joe', $order->getCustomer()->getFirstName());
         $this->assertEquals('Sweeny', $order->getCustomer()->getLastName());
@@ -58,7 +57,7 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getUpdatedAt());
 
         $this->assertEquals(Uuid::fromString('c0c4ad12-f315-4e5e-96ec-97ca9dbd975e'), $order->getItems()[0]->getId());
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $order->getItems()[0]->getOrderId());
+        $this->assertEquals('12345678', $order->getItems()[0]->getOrderId());
         $this->assertEquals(Uuid::fromString('105804ae-0a60-4a9e-9695-37ae5375dfc4'), $order->getItems()[0]->getProductId());
         $this->assertEquals('Cabbage', $order->getItems()[0]->getName());
         $this->assertEquals(10, $order->getItems()[0]->getPrice());
@@ -69,7 +68,7 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), $order->getItems()[0]->getUpdatedAt());
 
         $this->assertEquals(Uuid::fromString('a7f212ae-8c40-46e1-8b82-dfc4e6f522c5'), $order->getItems()[1]->getId());
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $order->getItems()[1]->getOrderId());
+        $this->assertEquals('12345678', $order->getItems()[1]->getOrderId());
         $this->assertEquals(Uuid::fromString('1e66340e-b1fd-4950-8e48-c0269f6f9705'), $order->getItems()[1]->getProductId());
         $this->assertEquals('Fennel', $order->getItems()[1]->getName());
         $this->assertEquals(10, $order->getItems()[1]->getPrice());
@@ -96,8 +95,8 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get(new OrderReaderQuery());
 
         $this->assertCount(2, $fetched);
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
-        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[1]->getId());
+        $this->assertEquals('12345678', $fetched[0]->getId());
+        $this->assertEquals('123455555', $fetched[1]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_objects_filtered_by_customer_post_code()
@@ -109,19 +108,7 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(1, $fetched);
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
-    }
-
-    public function test_get_returns_an_array_of_Order_objects_filtered_by_order_number()
-    {
-        $this->seedOrders();
-
-        $query = (new OrderReaderQuery())->setOrderNumber('12345678');
-
-        $fetched = $this->reader->get($query);
-
-        $this->assertCount(1, $fetched);
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+        $this->assertEquals('12345678', $fetched[0]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_object_filtered_by_delivery_date_from()
@@ -133,7 +120,7 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(1, $fetched);
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+        $this->assertEquals('12345678', $fetched[0]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_object_filtered_by_delivery_date_to()
@@ -145,7 +132,7 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(1, $fetched);
-        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[0]->getId());
+        $this->assertEquals('123455555', $fetched[0]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_object_filtered_by_order_date_from()
@@ -157,7 +144,7 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(1, $fetched);
-        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[0]->getId());
+        $this->assertEquals('123455555', $fetched[0]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_object_filtered_by_order_date_to()
@@ -169,7 +156,7 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(1, $fetched);
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
+        $this->assertEquals('12345678', $fetched[0]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_objects_ordered_by_created_at_date_asc()
@@ -181,8 +168,8 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(2, $fetched);
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[0]->getId());
-        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[1]->getId());
+        $this->assertEquals('12345678', $fetched[0]->getId());
+        $this->assertEquals('123455555', $fetched[1]->getId());
     }
 
     public function test_get_returns_an_array_of_Order_objects_ordered_by_created_at_date_desc()
@@ -194,14 +181,13 @@ class DoctrineOrderReaderTest extends TestCase
         $fetched = $this->reader->get($query);
 
         $this->assertCount(2, $fetched);
-        $this->assertEquals(Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7'), $fetched[0]->getId());
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $fetched[1]->getId());
+        $this->assertEquals('123455555', $fetched[0]->getId());
+        $this->assertEquals('12345678', $fetched[1]->getId());
     }
 
     private function seedOrders(): void
     {
-        $orderId = Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86');
-        $externalId = '12345678';
+        $orderId = '12345678';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -255,7 +241,6 @@ class DoctrineOrderReaderTest extends TestCase
 
         $order = new Order(
             $orderId,
-            $externalId,
             $transactionId,
             $customer,
             $status,
@@ -267,8 +252,7 @@ class DoctrineOrderReaderTest extends TestCase
 
         $this->writer->insert($order);
 
-        $orderId = Uuid::fromString('c9a16e3d-d1c8-4e93-8412-ff0d6a9c44a7');
-        $externalId = '123455555';
+        $orderId = '123455555';
         $transactionId = 'ID9991111';
         $address = new Address(
             '35 Beechfield Gardens',
@@ -306,7 +290,6 @@ class DoctrineOrderReaderTest extends TestCase
 
         $order = new Order(
             $orderId,
-            $externalId,
             $transactionId,
             $customer,
             $status,

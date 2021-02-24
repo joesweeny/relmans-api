@@ -8,8 +8,7 @@ use Relmans\Domain\Enum\OrderStatus;
 
 class Order
 {
-    private UuidInterface $id;
-    private string $externalId;
+    private string $id;
     private string $transactionId;
     private Customer $customer;
     /**
@@ -22,8 +21,7 @@ class Order
     private DateTimeImmutable $updatedAt;
 
     public function __construct(
-        UuidInterface $id,
-        string $externalId,
+        string $id,
         string $transactionId,
         Customer $customer,
         OrderStatus $status,
@@ -33,7 +31,6 @@ class Order
         DateTimeImmutable $updatedAt
     ) {
         $this->id = $id;
-        $this->externalId = $externalId;
         $this->transactionId = $transactionId;
         $this->customer = $customer;
         $this->status = $status;
@@ -43,14 +40,9 @@ class Order
         $this->updatedAt = $updatedAt;
     }
 
-    public function getId(): UuidInterface
+    public function getId(): string
     {
         return $this->id;
-    }
-
-    public function getExternalId(): string
-    {
-        return $this->externalId;
     }
 
     public function getTransactionId(): string

@@ -22,7 +22,7 @@ class DoctrineOrderReader implements OrderReader
         $this->hydrator = $hydrator;
     }
 
-    public function getById(UuidInterface $orderId): Order
+    public function getById(string $orderId): Order
     {
         $builder =  $this->connection->createQueryBuilder();
 
@@ -31,7 +31,7 @@ class DoctrineOrderReader implements OrderReader
                 ->select('*')
                 ->from('customer_order')
                 ->where('id = :id')
-                ->setParameter(':id', (string) $orderId)
+                ->setParameter(':id', $orderId)
                 ->execute()
                 ->fetchAssociative();
         } catch (\Exception $e) {
@@ -91,12 +91,6 @@ class DoctrineOrderReader implements OrderReader
             $builder
                 ->andWhere("customer_details->'address'->>'postCode' = :post_code")
                 ->setParameter(':post_code', strtoupper($query->getPostCode()));
-        }
-
-        if ($query->getOrderNumber() !== null) {
-            $builder
-                ->andWhere('external_id = :external_id')
-                ->setParameter(':external_id', $query->getOrderNumber());
         }
 
         if ($query->getDeliveryDateFrom() !== null) {

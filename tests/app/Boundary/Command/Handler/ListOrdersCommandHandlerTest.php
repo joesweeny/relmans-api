@@ -43,7 +43,6 @@ class ListOrdersCommandHandlerTest extends TestCase
     {
         $command = new ListOrdersCommand(
             'DH87UJ',
-            'ORDER111',
             '2020-03-12T12:00:00+00:00',
             '2020-03-13T12:00:00+00:00',
             '2020-03-14T12:00:00+00:00',
@@ -53,7 +52,6 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         $queryAssertion = Argument::that(function (OrderReaderQuery $query) {
             $this->assertEquals('DH87UJ', $query->getPostCode());
-            $this->assertEquals('ORDER111', $query->getOrderNumber());
             $this->assertEquals(new \DateTimeImmutable('2020-03-12T12:00:00+00:00'), $query->getDeliveryDateFrom());
             $this->assertEquals(new \DateTimeImmutable('2020-03-13T12:00:00+00:00'), $query->getDeliveryDateTo());
             $this->assertEquals(new \DateTimeImmutable('2020-03-14T12:00:00+00:00'), $query->getOrderDateFrom());
@@ -70,8 +68,7 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         $expected = [
             (object) [
-                'id' => '9af64fc1-6168-4859-99ba-a8173fab472c',
-                'externalId' => '12345678',
+                'id' => '12345678',
                 'transactionId' => 'ID9991111',
                 'customer' => (object) [
                     'firstName' => 'Joe',
@@ -96,7 +93,7 @@ class ListOrdersCommandHandlerTest extends TestCase
                 'items' => [
                     (object) [
                         'id' => '34a4c42c-ea99-4500-aa14-4851cbe9e790',
-                        'orderId' => '9af64fc1-6168-4859-99ba-a8173fab472c',
+                        'orderId' => '12345678',
                         'productId' => '4c9dd4ce-f8b0-4a24-b2ea-f29295dc8552',
                         'name' => 'Cabbage',
                         'price' => 10,
@@ -123,13 +120,11 @@ class ListOrdersCommandHandlerTest extends TestCase
             null,
             null,
             null,
-            null,
             null
         );
 
         $queryAssertion = Argument::that(function (OrderReaderQuery $query) {
             $this->assertNull($query->getPostCode());
-            $this->assertNull($query->getOrderNumber());
             $this->assertNull($query->getDeliveryDateFrom());
             $this->assertNull($query->getDeliveryDateTo());
             $this->assertNull($query->getOrderDateFrom());
@@ -146,8 +141,7 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         $expected = [
             (object) [
-                'id' => '9af64fc1-6168-4859-99ba-a8173fab472c',
-                'externalId' => '12345678',
+                'id' => '12345678',
                 'transactionId' => 'ID9991111',
                 'customer' => (object) [
                     'firstName' => 'Joe',
@@ -172,7 +166,7 @@ class ListOrdersCommandHandlerTest extends TestCase
                 'items' => [
                     (object) [
                         'id' => '34a4c42c-ea99-4500-aa14-4851cbe9e790',
-                        'orderId' => '9af64fc1-6168-4859-99ba-a8173fab472c',
+                        'orderId' => '12345678',
                         'productId' => '4c9dd4ce-f8b0-4a24-b2ea-f29295dc8552',
                         'name' => 'Cabbage',
                         'price' => 10,
@@ -193,8 +187,7 @@ class ListOrdersCommandHandlerTest extends TestCase
 
     private function order(): Order
     {
-        $id = Uuid::fromString('9af64fc1-6168-4859-99ba-a8173fab472c');
-        $externalId = '12345678';
+        $id = '12345678';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -234,7 +227,6 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         return new Order(
             $id,
-            $externalId,
             $transactionId,
             $customer,
             $status,
