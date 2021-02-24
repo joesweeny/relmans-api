@@ -8,6 +8,7 @@ use Relmans\Application\Http\Middleware\CorsMiddleware;
 use Relmans\Bootstrap\Providers\CommandBusServiceProvider;
 use Relmans\Bootstrap\Providers\DoctrineServiceProvider;
 use Relmans\Bootstrap\Providers\EmailServiceProvider;
+use Relmans\Bootstrap\Providers\PaymentServiceProvider;
 use Relmans\Bootstrap\Providers\PsrLogServiceProvider;
 use Relmans\Bootstrap\Providers\ReaderServiceProvider;
 use Relmans\Bootstrap\Providers\RepositoryServiceProvider;
@@ -30,6 +31,7 @@ class ContainerFactory
         CommandBusServiceProvider::class,
         DoctrineServiceProvider::class,
         EmailServiceProvider::class,
+        PaymentServiceProvider::class,
         PsrLogServiceProvider::class,
         ReaderServiceProvider::class,
         RepositoryServiceProvider::class,
