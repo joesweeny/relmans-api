@@ -39,14 +39,18 @@ class PaymentServiceProvider implements ServiceProvider
 
     private function createPayPalPaymentClient(Config $config): HttpClient
     {
-        if ($config->get('paypal.environment') === 'sandbox') {
-            $env = new SandboxEnvironment($config->get('paypal.client_id'), $config->get('paypal.secret'));
+        $environment = $config->get('paypal.environment');
+        $clientId = $config->get('paypal.client_id');
+        $secret = $config->get('paypal.secret');
+
+        if ($environment === 'sandbox') {
+            $env = new SandboxEnvironment($clientId, $secret);
 
             return new PayPalHttpClient($env);
         }
 
-        if ($config->get('paypal.environment') === 'production') {
-            $env = new ProductionEnvironment($config->get('paypal.client_id'), $config->get('paypal.secret'));
+        if ($environment === 'production') {
+            $env = new ProductionEnvironment($clientId, $secret);
 
             return new PayPalHttpClient($env);
         }

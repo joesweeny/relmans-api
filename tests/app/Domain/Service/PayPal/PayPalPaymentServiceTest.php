@@ -21,7 +21,7 @@ class PayPalPaymentServiceTest extends TestCase
         if ($driver !== 'paypal') {
             $this->markTestSkipped('Driver is not configured for paypal processing');
         }
-        
+
         $this->service = $container->get(PaymentService::class);
     }
 

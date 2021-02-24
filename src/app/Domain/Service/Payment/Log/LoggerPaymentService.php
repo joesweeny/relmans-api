@@ -20,6 +20,6 @@ class LoggerPaymentService implements PaymentService
     public function getTransactionId(string $orderId): string
     {
         $this->logger->info("Generating random string in logger payment service");
-        return random_bytes(8);
+        return uniqid('ORDER', true);
     }
 }
