@@ -24,7 +24,7 @@ class AwsEmailService implements EmailService
 
         $address = array_filter((array) $customer->getAddress()->jsonSerialize());
 
-        $total = array_reduce($order->getItems(), static function($carry, OrderItem $item) {
+        $total = array_reduce($order->getItems(), static function ($carry, OrderItem $item) {
             return $carry + ($item->getPrice() / 100);
         });
 
