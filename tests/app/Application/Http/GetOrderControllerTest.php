@@ -31,8 +31,7 @@ class GetOrderControllerTest extends TestCase
     public function test_invoke_returns_a_200_response_containing_order_data()
     {
         $order = (object) [
-            'id' => '9af64fc1-6168-4859-99ba-a8173fab472c',
-            'externalId' => '12345678',
+            'id' => '12345678',
             'transactionId' => 'ID9991111',
             'customer' => (object) [
                 'firstName' => 'Joe',

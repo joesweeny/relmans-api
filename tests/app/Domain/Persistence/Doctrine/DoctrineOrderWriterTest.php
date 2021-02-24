@@ -40,8 +40,7 @@ class DoctrineOrderWriterTest extends TestCase
 
     public function test_insert_increases_order_and_order_item_table_counts()
     {
-        $orderId = Uuid::uuid4();
-        $externalId = '12345678';
+        $orderId = '12345678';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -91,7 +90,6 @@ class DoctrineOrderWriterTest extends TestCase
 
         $order = new Order(
             $orderId,
-            $externalId,
             $transactionId,
             $customer,
             $status,
@@ -106,8 +104,7 @@ class DoctrineOrderWriterTest extends TestCase
         $this->assertEquals(1, $this->tableRowCount('customer_order'));
         $this->assertEquals(2, $this->tableRowCount('customer_order_item'));
 
-        $orderId = Uuid::uuid4();
-        $externalId = '12345678';
+        $orderId = '1234567890';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -157,7 +154,6 @@ class DoctrineOrderWriterTest extends TestCase
 
         $order = new Order(
             $orderId,
-            $externalId,
             $transactionId,
             $customer,
             $status,
@@ -175,8 +171,7 @@ class DoctrineOrderWriterTest extends TestCase
 
     public function test_update_updates_the_status_column_for_an_order_record()
     {
-        $orderId = Uuid::uuid4();
-        $externalId = '12345678';
+        $orderId = '12345678';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -200,7 +195,6 @@ class DoctrineOrderWriterTest extends TestCase
 
         $order = new Order(
             $orderId,
-            $externalId,
             $transactionId,
             $customer,
             $status,
@@ -243,13 +237,13 @@ class DoctrineOrderWriterTest extends TestCase
             ->rowCount();
     }
 
-    private function fetchRecord(UuidInterface $id, string $table): object
+    private function fetchRecord(string $id, string $table): object
     {
         return (object) $this->connection->createQueryBuilder()
             ->select('*')
             ->from($table)
             ->where('id = :id')
-            ->setParameter(':id', (string) $id)
+            ->setParameter(':id', $id)
             ->execute()
             ->fetchAssociative();
     }

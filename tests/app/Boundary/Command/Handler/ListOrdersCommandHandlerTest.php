@@ -70,8 +70,7 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         $expected = [
             (object) [
-                'id' => '9af64fc1-6168-4859-99ba-a8173fab472c',
-                'externalId' => '12345678',
+                'id' => '12345678',
                 'transactionId' => 'ID9991111',
                 'customer' => (object) [
                     'firstName' => 'Joe',
@@ -96,7 +95,7 @@ class ListOrdersCommandHandlerTest extends TestCase
                 'items' => [
                     (object) [
                         'id' => '34a4c42c-ea99-4500-aa14-4851cbe9e790',
-                        'orderId' => '9af64fc1-6168-4859-99ba-a8173fab472c',
+                        'orderId' => '12345678',
                         'productId' => '4c9dd4ce-f8b0-4a24-b2ea-f29295dc8552',
                         'name' => 'Cabbage',
                         'price' => 10,
@@ -146,8 +145,7 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         $expected = [
             (object) [
-                'id' => '9af64fc1-6168-4859-99ba-a8173fab472c',
-                'externalId' => '12345678',
+                'id' => '12345678',
                 'transactionId' => 'ID9991111',
                 'customer' => (object) [
                     'firstName' => 'Joe',
@@ -172,7 +170,7 @@ class ListOrdersCommandHandlerTest extends TestCase
                 'items' => [
                     (object) [
                         'id' => '34a4c42c-ea99-4500-aa14-4851cbe9e790',
-                        'orderId' => '9af64fc1-6168-4859-99ba-a8173fab472c',
+                        'orderId' => '12345678',
                         'productId' => '4c9dd4ce-f8b0-4a24-b2ea-f29295dc8552',
                         'name' => 'Cabbage',
                         'price' => 10,
@@ -193,8 +191,7 @@ class ListOrdersCommandHandlerTest extends TestCase
 
     private function order(): Order
     {
-        $id = Uuid::fromString('9af64fc1-6168-4859-99ba-a8173fab472c');
-        $externalId = '12345678';
+        $id = '12345678';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -234,7 +231,6 @@ class ListOrdersCommandHandlerTest extends TestCase
 
         return new Order(
             $id,
-            $externalId,
             $transactionId,
             $customer,
             $status,

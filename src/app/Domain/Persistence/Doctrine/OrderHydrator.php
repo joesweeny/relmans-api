@@ -26,8 +26,7 @@ class OrderHydrator
         }, $items);
 
         return new Order(
-            Uuid::fromString($row->id),
-            $row->external_id,
+            $row->id,
             $row->transaction_id,
             $this->hydrateCustomer($row->customer_details),
             new OrderStatus($row->status),
@@ -42,7 +41,7 @@ class OrderHydrator
     {
         return new OrderItem(
             Uuid::fromString($row->id),
-            Uuid::fromString($row->order_id),
+            $row->order_id,
             Uuid::fromString($row->product_id),
             $row->name,
             $row->price,

@@ -19,7 +19,7 @@ class OrderHydratorTest extends TestCase
         $items = [
             [
                 'id' => '4ba37855-8d91-4f1b-9213-c525ba87767f',
-                'order_id' => '68f6b89b-e203-43e1-86ef-51a1d961312e',
+                'order_id' => '12345678',
                 'product_id' => '0c4b8f56-5359-4639-af37-cc146dd170ed',
                 'name' => 'Kiwi Fruit',
                 'price' => 100,
@@ -55,8 +55,7 @@ class OrderHydratorTest extends TestCase
         );
 
         $row = (object) [
-            'id' => '68f6b89b-e203-43e1-86ef-51a1d961312e',
-            'external_id' => '98765431',
+            'id' => '12345678',
             'transaction_id' => 'TRAN1',
             'customer_details' => json_encode($customer),
             'status' => 'CONFIRMED',
@@ -67,8 +66,7 @@ class OrderHydratorTest extends TestCase
 
         $order = (new OrderHydrator())->hydrateOrder($row, $items);
 
-        $this->assertEquals(Uuid::fromString('68f6b89b-e203-43e1-86ef-51a1d961312e'), $order->getId());
-        $this->assertEquals('98765431', $order->getExternalId());
+        $this->assertEquals('12345678', $order->getId());
         $this->assertEquals('TRAN1', $order->getTransactionId());
         $this->assertEquals($customer, $order->getCustomer());
         $this->assertEquals(OrderStatus::CONFIRMED(), $order->getStatus());
@@ -77,7 +75,7 @@ class OrderHydratorTest extends TestCase
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:53+00:00'), $order->getUpdatedAt());
 
         $this->assertEquals(Uuid::fromString('4ba37855-8d91-4f1b-9213-c525ba87767f'), $order->getItems()[0]->getId());
-        $this->assertEquals(Uuid::fromString('68f6b89b-e203-43e1-86ef-51a1d961312e'), $order->getItems()[0]->getOrderId());
+        $this->assertEquals(12345678, $order->getItems()[0]->getOrderId());
         $this->assertEquals(Uuid::fromString('0c4b8f56-5359-4639-af37-cc146dd170ed'), $order->getItems()[0]->getProductId());
         $this->assertEquals('Kiwi Fruit', $order->getItems()[0]->getName());
         $this->assertEquals(100, $order->getItems()[0]->getPrice());
@@ -92,7 +90,7 @@ class OrderHydratorTest extends TestCase
     {
         $row = (object) [
             'id' => '4ba37855-8d91-4f1b-9213-c525ba87767f',
-            'order_id' => '68f6b89b-e203-43e1-86ef-51a1d961312e',
+            'order_id' => '12345678',
             'product_id' => '0c4b8f56-5359-4639-af37-cc146dd170ed',
             'name' => 'Kiwi Fruit',
             'price' => 100,
@@ -106,7 +104,7 @@ class OrderHydratorTest extends TestCase
         $item = (new OrderHydrator())->hydrateOrderItem($row);
 
         $this->assertEquals(Uuid::fromString('4ba37855-8d91-4f1b-9213-c525ba87767f'), $item->getId());
-        $this->assertEquals(Uuid::fromString('68f6b89b-e203-43e1-86ef-51a1d961312e'), $item->getOrderId());
+        $this->assertEquals('12345678', $item->getOrderId());
         $this->assertEquals(Uuid::fromString('0c4b8f56-5359-4639-af37-cc146dd170ed'), $item->getProductId());
         $this->assertEquals('Kiwi Fruit', $item->getName());
         $this->assertEquals(100, $item->getPrice());
