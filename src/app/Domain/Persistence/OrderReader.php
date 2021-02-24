@@ -9,11 +9,11 @@ use Relmans\Framework\Exception\NotFoundException;
 interface OrderReader
 {
     /**
-     * @param UuidInterface $orderId
+     * @param string $orderId
      * @return Order
      * @throws NotFoundException
      */
-    public function getById(UuidInterface $orderId): Order;
+    public function getById(string $orderId): Order;
 
     /**
      * @param OrderReaderQuery $query

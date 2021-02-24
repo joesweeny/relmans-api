@@ -13,8 +13,7 @@ class OrderTest extends TestCase
 {
     public function test_order_class_can_be_instantiated()
     {
-        $id = Uuid::uuid4();
-        $externalId = '12345678';
+        $id = '12345678';
         $transactionId = 'ID9991111';
         $address = new Address(
             '58 Holwick Close',
@@ -50,7 +49,6 @@ class OrderTest extends TestCase
 
         $order = new Order(
             $id,
-            $externalId,
             $transactionId,
             $customer,
             $status,
@@ -61,7 +59,6 @@ class OrderTest extends TestCase
         );
 
         $this->assertEquals($id, $order->getId());
-        $this->assertEquals($externalId, $order->getExternalId());
         $this->assertEquals($transactionId, $order->getTransactionId());
         $this->assertEquals($customer, $order->getCustomer());
         $this->assertEquals($status, $order->getStatus());

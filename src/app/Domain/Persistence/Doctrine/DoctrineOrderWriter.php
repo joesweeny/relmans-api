@@ -31,7 +31,6 @@ class DoctrineOrderWriter implements OrderWriter
             ->insert("customer_order")
             ->values([
                 'id' => ':id',
-                'external_id' => ':external_id',
                 'transaction_id' => ':transaction_id',
                 'customer_details' => ':customer_details',
                 'status' => ':status',
@@ -39,8 +38,7 @@ class DoctrineOrderWriter implements OrderWriter
                 'created_at' => ':created_at',
                 'updated_at' => ':updated_at',
             ])
-            ->setParameter(':id', (string) $order->getId())
-            ->setParameter(':external_id', $order->getExternalId())
+            ->setParameter(':id', $order->getId())
             ->setParameter(':transaction_id', $order->getTransactionId())
             ->setParameter(':customer_details', $order->getCustomer()->jsonSerialize(), Types::JSON)
             ->setParameter(':status', (string) $order->getStatus())
@@ -56,7 +54,7 @@ class DoctrineOrderWriter implements OrderWriter
         }
     }
 
-    public function update(UuidInterface $orderId, OrderWriterQuery $query): void
+    public function update(string $orderId, OrderWriterQuery $query): void
     {
         $builder =  $this->connection->createQueryBuilder();
 
@@ -65,7 +63,7 @@ class DoctrineOrderWriter implements OrderWriter
                 ->select('1')
                 ->from('customer_order')
                 ->where('id = :id')
-                ->setParameter(':id', (string) $orderId)
+                ->setParameter(':id', $orderId)
                 ->execute()
                 ->fetchOne();
         } catch (\Exception $e) {

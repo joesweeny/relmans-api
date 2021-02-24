@@ -10,8 +10,7 @@ class OrderPresenter
     public function toObject(Order $order): object
     {
         return (object) [
-            'id' => $order->getId()->toString(),
-            'externalId' => $order->getExternalId(),
+            'id' => $order->getId(),
             'transactionId' => $order->getTransactionId(),
             'customer' => $order->getCustomer()->jsonSerialize(),
             'status' => $order->getStatus()->getValue(),
@@ -32,7 +31,7 @@ class OrderPresenter
     {
         return (object) [
             'id' => $item->getId()->toString(),
-            'orderId' => $item->getOrderId()->toString(),
+            'orderId' => $item->getOrderId(),
             'productId' => $item->getProductId()->toString(),
             'name' => $item->getName(),
             'price' => $item->getPrice(),
