@@ -3,7 +3,6 @@
 namespace Relmans\Domain\Entity;
 
 use DateTimeImmutable;
-use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Enum\OrderStatus;
 
 class Order

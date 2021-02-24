@@ -10,6 +10,7 @@ use Relmans\Domain\Entity\ProductPrice;
 use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\ProductStatus;
 use Relmans\Domain\Persistence\ProductReaderQuery;
+use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Traits\RunsMigrations;
 use Relmans\Traits\UsesContainer;
 
@@ -76,6 +77,42 @@ class DoctrineProductReaderTest extends TestCase
 
         $this->assertCount(1, $fetched);
         $this->assertEquals(Uuid::fromString('951af4b9-ce31-4ec9-bb00-fa34b6ed06a8'), $fetched[0]->getId());
+    }
+
+    public function test_getById_returns_a_Product_object()
+    {
+        $this->seedProducts();
+
+        $fetched = $this->reader->getById(Uuid::fromString('951af4b9-ce31-4ec9-bb00-fa34b6ed06a8'));
+
+        $this->assertEquals(Uuid::fromString('951af4b9-ce31-4ec9-bb00-fa34b6ed06a8'), $fetched->getId());
+    }
+
+    public function test_getById_throws_a_NotFoundException_if_product_resource_does_not_exist()
+    {
+        $productId = Uuid::uuid4();
+
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("Product {$productId} does not exist");
+        $this->reader->getById($productId);
+    }
+
+    public function test_getPriceById_returns_a_ProductPrice_object()
+    {
+        $this->seedProducts();
+
+        $fetched = $this->reader->getPriceById(Uuid::fromString('eb3553bf-4e93-4a76-a9e2-85c37fe9d957'));
+
+        $this->assertEquals(Uuid::fromString('eb3553bf-4e93-4a76-a9e2-85c37fe9d957'), $fetched->getId());
+    }
+
+    public function test_getPriceById_throws_a_NotFoundException_if_product_resource_does_not_exist()
+    {
+        $priceId = Uuid::uuid4();
+
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("Product price {$priceId} does not exist");
+        $this->reader->getPriceById($priceId);
     }
 
     private function seedProducts(): void
