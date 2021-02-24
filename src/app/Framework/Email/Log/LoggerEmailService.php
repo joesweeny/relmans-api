@@ -15,6 +15,11 @@ class LoggerEmailService implements EmailService
         $this->logger = $logger;
     }
 
+    public function sendAdminOrderReceivedEmail(Order $order): void
+    {
+        $this->logger->info("Pretending to send order confirmed to {$order->getCustomer()->getEmail()}");
+    }
+
     public function sendReceivedEmail(string $orderNumber, string $emailAddress): void
     {
         $this->logger->info("Pretending to send order {$orderNumber} received to {$emailAddress}");

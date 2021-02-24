@@ -8,6 +8,12 @@ use Relmans\Framework\Exception\EmailException;
 interface EmailService
 {
     /**
+     * @param Order $order
+     * @return void
+     * @throws EmailException
+     */
+    public function sendAdminOrderReceivedEmail(Order $order): void;
+    /**
      * @param string $orderNumber
      * @param string $emailAddress
      * @return void
