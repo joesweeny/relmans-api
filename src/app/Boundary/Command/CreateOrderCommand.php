@@ -124,6 +124,10 @@ class CreateOrderCommand
      */
     private function validateItems(array $items): array
     {
+        if (count($items) === 0) {
+            throw new \InvalidArgumentException("Order does not contain order items");
+        }
+
         return array_map(function (object $item) {
             return new OrderItemData(
                 Uuid::fromString($item->productId ?? ''),
