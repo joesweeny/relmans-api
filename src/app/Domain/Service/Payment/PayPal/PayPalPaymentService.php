@@ -69,4 +69,3 @@ class PayPalPaymentService implements PaymentService
         return $result->purchase_units[0]->payments->captures[0]->id;
     }
 }
-
