@@ -22,16 +22,18 @@ class AwsEmailService implements EmailService
     {
         $customer = $order->getCustomer();
 
-        $address = array_filter((array) $customer->getAddress()->jsonSerialize());
+        $address = $customer->getAddress() !== null
+            ? array_filter((array) $customer->getAddress()->jsonSerialize())
+            : null;
 
         $total = array_reduce($order->getItems(), static function ($carry, OrderItem $item) {
-            return $carry + ($item->getPrice() / 100);
+            return $carry + ($item->getPrice() * $item->getQuantity() / 100);
         });
 
         $data = (object) [
             'orderID' => $order->getId(),
             'date' => $order->getMethod()->getDate()->format('l jS F Y'),
-            'address' => implode('<br>', $address),
+            'address' => $address !== null ? implode('<br>', $address) : null,
             'method' => $order->getMethod()->getFulfilmentType()->getValue(),
             'total' => number_format($total, 2),
         ];
@@ -60,7 +62,7 @@ class AwsEmailService implements EmailService
 
         $config = [
             'Destination' => [
-                'ToAddresses' => [$emailAddress],
+                'ToAddresses' => [$emailAddress, 'orders@relmans.co.uk'],
             ],
             'Source' => 'Relmans <orders@relmans.co.uk>',
             'Template' => 'OrderReceived',
@@ -78,12 +80,14 @@ class AwsEmailService implements EmailService
     {
         $customer = $order->getCustomer();
 
-        $address = array_filter((array) $customer->getAddress()->jsonSerialize());
+        $address = $customer->getAddress() !== null
+            ? array_filter((array) $customer->getAddress()->jsonSerialize())
+            : null;
 
         $data = (object) [
             'orderID' => $order->getId(),
             'date' => $order->getMethod()->getDate()->format('l jS F Y'),
-            'address' => implode('<br>', $address),
+            'address' => $address !== null ? implode('<br>', $address) : null,
         ];
 
         $config = [

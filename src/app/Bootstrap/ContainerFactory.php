@@ -112,7 +112,7 @@ class ContainerFactory
 
                 $errorMiddleware->setDefaultErrorHandler(new JsendErrorHandler());
 
-                $app->add($container->get(CorsMiddleware::class));
+                $app->addMiddleware($container->get(CorsMiddleware::class));
 
                 return $app;
             }),

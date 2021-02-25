@@ -56,21 +56,29 @@ class OrderHydrator
     private function hydrateCustomer(string $customer): Customer
     {
         $customer = json_decode($customer);
-        $address = $customer->address;
 
         return new Customer(
             $customer->firstName,
             $customer->lastName,
-            new Address(
-                $address->line1,
-                $address->line2,
-                $address->line3,
-                $address->town,
-                $address->county,
-                $address->postCode
-            ),
+            $this->hydrateAddress($customer->address),
             $customer->phone,
             $customer->email
+        );
+    }
+
+    private function hydrateAddress(?object $address): ?Address
+    {
+        if ($address === null) {
+            return null;
+        }
+
+        return new Address(
+            $address->line1,
+            $address->line2,
+            $address->line3,
+            $address->town,
+            $address->county,
+            $address->postCode
         );
     }
 

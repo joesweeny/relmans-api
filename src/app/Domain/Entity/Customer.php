@@ -6,14 +6,14 @@ class Customer implements \JsonSerializable
 {
     private string $firstName;
     private string $lastName;
-    private Address $address;
+    private ?Address $address;
     private string $phoneNumber;
     private string $email;
 
     public function __construct(
         string $firstName,
         string $lastName,
-        Address $address,
+        ?Address $address,
         string $phoneNumber,
         string $email
     ) {
@@ -34,7 +34,7 @@ class Customer implements \JsonSerializable
         return $this->lastName;
     }
 
-    public function getAddress(): Address
+    public function getAddress(): ?Address
     {
         return $this->address;
     }
@@ -54,7 +54,7 @@ class Customer implements \JsonSerializable
         return (object) [
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
-            'address' => $this->address->jsonSerialize(),
+            'address' => $this->address !== null ? $this->address->jsonSerialize() : null,
             'phone' => $this->phoneNumber,
             'email' => $this->email,
         ];
