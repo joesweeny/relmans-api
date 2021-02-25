@@ -103,7 +103,6 @@ class CreateOrderCommandHandlerTest extends TestCase
         $this->writer->insert($order)->shouldBeCalled();
 
         $this->emailService->sendReceivedEmail('ORDER101091', 'joe@email.com')->shouldBeCalled();
-        $this->emailService->sendAdminOrderReceivedEmail($order)->shouldBeCalled();
 
         $id = $this->handler->handle($command);
 
@@ -158,7 +157,6 @@ class CreateOrderCommandHandlerTest extends TestCase
 
         $this->writer->insert(Argument::type(Order::class))->shouldNotBeCalled();
         $this->emailService->sendReceivedEmail('ORDER101091', 'joe@email.com')->shouldNotBeCalled();
-        $this->emailService->sendAdminOrderReceivedEmail(Argument::type(Order::class))->shouldNotBeCalled();
 
         $this->expectException(ValidationException::class);
         $this->handler->handle($command);
@@ -218,9 +216,7 @@ class CreateOrderCommandHandlerTest extends TestCase
         $this->emailService->sendReceivedEmail('ORDER101091', 'joe@email.com')
             ->shouldBeCalled()
             ->willThrow(new EmailException('Cannot send email'));
-
-        $this->emailService->sendAdminOrderReceivedEmail($order)->shouldNotBeCalled();
-
+        
         $this->logger->error('Error sending customer order confirmation email: Cannot send email')->shouldBeCalled();
 
         $id = $this->handler->handle($command);
