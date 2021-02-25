@@ -113,7 +113,7 @@ class DoctrineOrderWriter implements OrderWriter
                     'updated_at' => ':updated_at',
                 ])
                 ->setParameter(':id', (string) $item->getId())
-                ->setParameter(':order_id', (string) $item->getOrderId())
+                ->setParameter(':order_id', $item->getOrderId())
                 ->setParameter(':product_id', (string) $item->getProductId())
                 ->setParameter(':name', $item->getName())
                 ->setParameter(':price', $item->getPrice())

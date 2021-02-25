@@ -14,7 +14,7 @@ class CreateOrderCommand
     private string $orderNumber;
     private string $firstName;
     private string $lastName;
-    private Address $address;
+    private ?Address $address;
     private string $phone;
     private string $email;
     private OrderMethod $method;
@@ -34,12 +34,12 @@ class CreateOrderCommand
         array $items
     ) {
         $this->orderNumber = $this->validateInput($orderNumber, 'orderNumber');
+        $this->method = $this->validateMethod($method);
         $this->firstName = $this->validateInput($firstName, 'firstName');
         $this->lastName = $this->validateInput($lastName, 'lastName');
         $this->address = $this->validateAddress($address);
         $this->phone = $this->validateInput($phone, 'phone');
         $this->email = $this->validateInput($email, 'email');
-        $this->method = $this->validateMethod($method);
         $this->items = $this->validateItems($items);
     }
 
@@ -74,11 +74,15 @@ class CreateOrderCommand
 
     /**
      * @param object $address
-     * @return Address
+     * @return ?Address
      * @throws \InvalidArgumentException
      */
-    private function validateAddress(object $address): Address
+    private function validateAddress(object $address): ?Address
     {
+        if ($this->method->getFulfilmentType()->equals(FulfilmentType::COLLECTION())) {
+            return null;
+        }
+
         $this->validateInput($address->line1 ?? '', 'address->line1');
         $this->validateInput($address->postCode ?? '', 'address->postCode');
 

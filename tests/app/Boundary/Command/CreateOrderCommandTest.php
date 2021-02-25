@@ -180,7 +180,7 @@ class CreateOrderCommandTest extends TestCase
             (object) [],
             '07939843048',
             'joe@email.com',
-            (object) [],
+            (object) ['type' => 'COLLECTION', 'date' => 'today'],
             []
         );
     }
@@ -196,7 +196,7 @@ class CreateOrderCommandTest extends TestCase
             (object) [],
             '07939843048',
             'joe@email.com',
-            (object) [],
+            (object) ['type' => 'COLLECTION', 'date' => 'today'],
             []
         );
     }
@@ -214,7 +214,7 @@ class CreateOrderCommandTest extends TestCase
             ],
             '07939843048',
             'joe@email.com',
-            (object) [],
+            (object) ['type' => 'DELIVERY', 'date' => 'today'],
             []
         );
     }
@@ -237,7 +237,7 @@ class CreateOrderCommandTest extends TestCase
             ],
             '',
             'joe@email.com',
-            (object) [],
+            (object) ['type' => 'COLLECTION', 'date' => 'today'],
             []
         );
     }
@@ -260,7 +260,7 @@ class CreateOrderCommandTest extends TestCase
             ],
             '07939843048',
             '',
-            (object) [],
+            (object) ['type' => 'COLLECTION', 'date' => 'today'],
             []
         );
     }
