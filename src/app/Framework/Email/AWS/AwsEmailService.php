@@ -62,7 +62,7 @@ class AwsEmailService implements EmailService
 
         $config = [
             'Destination' => [
-                'ToAddresses' => [$emailAddress, 'orders@relmans.co.uk'],
+                'ToAddresses' => [$emailAddress],
             ],
             'Source' => 'Relmans <orders@relmans.co.uk>',
             'Template' => 'OrderReceived',
