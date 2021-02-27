@@ -43,7 +43,7 @@ class UpdateOrderCommandHandler
 
         $this->writer->update($command->getId(), $query);
 
-        if ($command->getStatus() !== null && $command->getStatus()->equals(OrderStatus::CONFIRMED())) {
+        if ($command->getStatus() !== null && $command->getStatus()->equals(OrderStatus::ACCEPTED())) {
             $order = $this->reader->getById($command->getId());
 
             try {

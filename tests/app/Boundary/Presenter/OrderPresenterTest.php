@@ -35,7 +35,7 @@ class OrderPresenterTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(
             FulfilmentType::DELIVERY(),
             new \DateTimeImmutable('2020-03-12T12:00:00+00:00'),
@@ -108,7 +108,7 @@ class OrderPresenterTest extends TestCase
         $this->assertEquals('12345678', $scalar->id);
         $this->assertEquals('ID9991111', $scalar->transactionId);
         $this->assertEquals($customer, $scalar->customer);
-        $this->assertEquals('CONFIRMED', $scalar->status);
+        $this->assertEquals('ACCEPTED', $scalar->status);
         $this->assertEquals($method, $scalar->method);
         $this->assertEquals($items, $scalar->items);
         $this->assertEquals('2020-03-12T12:00:00+00:00', $scalar->createdAt);

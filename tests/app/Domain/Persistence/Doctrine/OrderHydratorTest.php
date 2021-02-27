@@ -58,7 +58,7 @@ class OrderHydratorTest extends TestCase
             'id' => '12345678',
             'transaction_id' => 'TRAN1',
             'customer_details' => json_encode($customer),
-            'status' => 'CONFIRMED',
+            'status' => 'ACCEPTED',
             'method' => json_encode($method),
             'created_at' => 1614078413,
             'updated_at' => 1614078413,
@@ -69,7 +69,7 @@ class OrderHydratorTest extends TestCase
         $this->assertEquals('12345678', $order->getId());
         $this->assertEquals('TRAN1', $order->getTransactionId());
         $this->assertEquals($customer, $order->getCustomer());
-        $this->assertEquals(OrderStatus::CONFIRMED(), $order->getStatus());
+        $this->assertEquals(OrderStatus::ACCEPTED(), $order->getStatus());
         $this->assertEquals($method, $order->getMethod());
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:53+00:00'), $order->getCreatedAt());
         $this->assertEquals(new \DateTimeImmutable('2021-02-23T11:06:53+00:00'), $order->getUpdatedAt());

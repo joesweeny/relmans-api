@@ -65,7 +65,7 @@ class GetOrderCommandHandlerTest extends TestCase
                 'phone' => '07939843048',
                 'email' => 'joe@email.com',
             ],
-            'status' => 'CONFIRMED',
+            'status' => 'ACCEPTED',
             'method' => (object) [
                 'type' => 'DELIVERY',
                 'date' => '2020-03-12T12:00:00+00:00',
@@ -123,7 +123,7 @@ class GetOrderCommandHandlerTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(
             FulfilmentType::DELIVERY(),
             new \DateTimeImmutable('2020-03-12T12:00:00+00:00'),

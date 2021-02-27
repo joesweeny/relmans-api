@@ -32,14 +32,14 @@ class UpdateOrderControllerTest extends TestCase
     public function test_invoke_returns_a_204_response()
     {
         $body = (object) [
-            'status' => 'CONFIRMED',
+            'status' => 'ACCEPTED',
         ];
 
         $request = $this->request(json_encode($body));
 
         $commandAssertion = Argument::that(function (UpdateOrderCommand $command) {
             $this->assertEquals('ORD7890', $command->getId());
-            $this->assertEquals(OrderStatus::CONFIRMED(), $command->getStatus());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $command->getStatus());
             return true;
         });
 
@@ -124,14 +124,14 @@ class UpdateOrderControllerTest extends TestCase
     public function test_invoke_returns_a_404_response_if_order_resource_does_not_exist()
     {
         $body = (object) [
-            'status' => 'CONFIRMED',
+            'status' => 'ACCEPTED',
         ];
 
         $request = $this->request(json_encode($body));
 
         $commandAssertion = Argument::that(function (UpdateOrderCommand $command) {
             $this->assertEquals('ORD7890', $command->getId());
-            $this->assertEquals(OrderStatus::CONFIRMED(), $command->getStatus());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $command->getStatus());
             return true;
         });
 

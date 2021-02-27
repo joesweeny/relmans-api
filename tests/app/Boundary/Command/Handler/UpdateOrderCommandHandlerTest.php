@@ -57,10 +57,10 @@ class UpdateOrderCommandHandlerTest extends TestCase
 
     public function test_handle_update_order_status_and_sends_delivery_confirmation_email()
     {
-        $command = new UpdateOrderCommand('ORD1234', 'CONFIRMED');
+        $command = new UpdateOrderCommand('ORD1234', 'ACCEPTED');
 
         $queryAssertion = Argument::that(function (OrderWriterQuery $query) {
-            $this->assertEquals(OrderStatus::CONFIRMED(), $query->getStatus());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $query->getStatus());
             return true;
         });
 
@@ -81,10 +81,10 @@ class UpdateOrderCommandHandlerTest extends TestCase
 
     public function test_handle_update_order_status_and_sends_collection_confirmation_email()
     {
-        $command = new UpdateOrderCommand('ORD1234', 'CONFIRMED');
+        $command = new UpdateOrderCommand('ORD1234', 'ACCEPTED');
 
         $queryAssertion = Argument::that(function (OrderWriterQuery $query) {
-            $this->assertEquals(OrderStatus::CONFIRMED(), $query->getStatus());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $query->getStatus());
             return true;
         });
 
@@ -105,10 +105,10 @@ class UpdateOrderCommandHandlerTest extends TestCase
 
     public function test_handle_throws_a_NotFoundException_if_thrown_by_order_writer()
     {
-        $command = new UpdateOrderCommand('ORD1234', 'CONFIRMED');
+        $command = new UpdateOrderCommand('ORD1234', 'ACCEPTED');
 
         $queryAssertion = Argument::that(function (OrderWriterQuery $query) {
-            $this->assertEquals(OrderStatus::CONFIRMED(), $query->getStatus());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $query->getStatus());
             return true;
         });
 
@@ -127,10 +127,10 @@ class UpdateOrderCommandHandlerTest extends TestCase
 
     public function test_handle_logs_an_error_if_exception_thrown_by_email_service()
     {
-        $command = new UpdateOrderCommand('ORD1234', 'CONFIRMED');
+        $command = new UpdateOrderCommand('ORD1234', 'ACCEPTED');
 
         $queryAssertion = Argument::that(function (OrderWriterQuery $query) {
-            $this->assertEquals(OrderStatus::CONFIRMED(), $query->getStatus());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $query->getStatus());
             return true;
         });
 
