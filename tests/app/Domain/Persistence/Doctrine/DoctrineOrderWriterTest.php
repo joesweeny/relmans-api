@@ -57,7 +57,7 @@ class DoctrineOrderWriterTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
         $items = [
             new OrderItem(
@@ -121,7 +121,7 @@ class DoctrineOrderWriterTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
         $items = [
             new OrderItem(
@@ -210,13 +210,13 @@ class DoctrineOrderWriterTest extends TestCase
 
         $this->assertEquals('PENDING', $row->status);
 
-        $query = (new OrderWriterQuery())->setStatus(OrderStatus::CONFIRMED());
+        $query = (new OrderWriterQuery())->setStatus(OrderStatus::ACCEPTED());
 
         $this->writer->update($orderId, $query);
 
         $row = $this->fetchRecord($orderId, 'customer_order');
 
-        $this->assertEquals('CONFIRMED', $row->status);
+        $this->assertEquals('ACCEPTED', $row->status);
     }
 
     public function test_order_throws_a_NotFoundException_if_order_record_does_not_exist()

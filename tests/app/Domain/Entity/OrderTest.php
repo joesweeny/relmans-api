@@ -30,7 +30,7 @@ class OrderTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
         $item = new OrderItem(
             Uuid::uuid4(),

@@ -49,7 +49,7 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals('Consett', $order->getCustomer()->getAddress()->getTown());
         $this->assertEquals('Durham', $order->getCustomer()->getAddress()->getCounty());
         $this->assertEquals('DH87UJ', $order->getCustomer()->getAddress()->getPostCode());
-        $this->assertEquals(OrderStatus::CONFIRMED(), $order->getStatus());
+        $this->assertEquals(OrderStatus::ACCEPTED(), $order->getStatus());
         $this->assertEquals(FulfilmentType::DELIVERY(), $order->getMethod()->getFulfilmentType());
         $this->assertEquals(new \DateTimeImmutable('2021-03-12T11:00:51+00:00'), $order->getMethod()->getDate());
         $this->assertEquals(250, $order->getMethod()->getFee());
@@ -204,7 +204,7 @@ class DoctrineOrderReaderTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(
             FulfilmentType::DELIVERY(),
             new \DateTimeImmutable('2021-03-12T11:00:51+00:00'),
@@ -269,7 +269,7 @@ class DoctrineOrderReaderTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), 250);
         $items = [
             new OrderItem(
