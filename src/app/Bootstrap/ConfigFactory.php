@@ -55,7 +55,7 @@ class ConfigFactory
             ],
 
             'paypal' => [
-                'environment' => getenv('PAYMENT_ENVIRONMENT') ?: 'sandbox',
+                'environment' => getenv('PAYPAL_ENVIRONMENT') ?: 'sandbox',
                 'client_id' => getenv('PAYPAL_CLIENT_ID'),
                 'secret' => getenv('PAYPAL_SECRET'),
             ]
