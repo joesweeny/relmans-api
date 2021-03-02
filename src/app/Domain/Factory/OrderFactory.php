@@ -68,11 +68,17 @@ class OrderFactory
         try {
             $transactionId = $this->paymentService->getTransactionId($orderNumber);
         } catch (NotFoundException $e) {
-            $this->logger->error("Error fetching order from payment service: {$e->getMessage()}");
+            $this->logger->error("Error fetching order from payment service: {$e->getMessage()}", [
+                'exception' => $e,
+                'message' => $e->getMessage(),
+            ]);
 
             throw new ValidationException('Unable to validate order number');
         } catch (PaymentServiceException $e) {
-            $this->logger->error($e->getMessage());
+            $this->logger->error($e->getMessage(), [
+                'exception' => $e,
+                'message' => $e->getMessage(),
+            ]);
         }
 
         return $transactionId ?? '';

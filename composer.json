@@ -15,7 +15,7 @@
         "php-di/php-di": "^6.3",
         "ramsey/uuid": "^4.1",
         "sentry/sdk": "^3.1",
-        "sentry/sentry": "^3.1",
+        "sentry/sentry": "3.1.5",
         "slim/slim": "4.*",
         "symfony/console": "^5.2"
     },

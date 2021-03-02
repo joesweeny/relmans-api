@@ -29,7 +29,7 @@ class PayPalPaymentService implements PaymentService
                 throw new NotFoundException("Order {$orderId} does not exist");
             }
 
-            throw new PaymentServiceException("Error: {$error->name}: Message: {$error->message}");
+            throw new PaymentServiceException("Error: {$error->name}: Message: {$error->message}: Payload: {$e->getMessage()}");
         }
 
         return $this->parseTransactionId((object) $response->result);

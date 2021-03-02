@@ -3,6 +3,7 @@
 namespace Relmans\Domain\Factory;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
@@ -157,7 +158,7 @@ class OrderFactoryTest extends TestCase
             ->shouldBeCalled()
             ->willThrow(new NotFoundException('Not found'));
 
-        $this->logger->error('Error fetching order from payment service: Not found')->shouldBeCalled();
+        $this->logger->error('Error fetching order from payment service: Not found', Argument::type('array'))->shouldBeCalled();
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Unable to validate order number');
@@ -200,7 +201,7 @@ class OrderFactoryTest extends TestCase
             ->shouldBeCalled()
             ->willThrow(new PaymentServiceException('Error making request'));
 
-        $this->logger->error('Error making request')->shouldBeCalled();
+        $this->logger->error('Error making request', Argument::type('array'))->shouldBeCalled();
 
         $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
             ->shouldBeCalled()
