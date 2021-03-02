@@ -27,6 +27,7 @@ class PsrLogServiceProvider implements ServiceProvider
 
                 $options = [
                     'dsn' => $config->get('log.sentry.dsn'),
+                    'attach_stacktrace' => true,
                 ];
 
 
