@@ -219,7 +219,7 @@ class CreateOrderCommandHandlerTest extends TestCase
             ->shouldBeCalled()
             ->willThrow(new EmailException('Cannot send email'));
 
-        $this->logger->error('Error sending customer order confirmation email: Cannot send email')->shouldBeCalled();
+        $this->logger->error('Error sending customer order confirmation email: Cannot send email', Argument::type('array'))->shouldBeCalled();
         $this->emailService->sendAdminOrderReceivedEmail($order)->shouldNotBeCalled();
 
         $id = $this->handler->handle($command);

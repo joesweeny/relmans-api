@@ -49,7 +49,13 @@ class CreateOrderCommandHandler
             $this->emailService->sendReceivedEmail($order->getId(), $order->getCustomer()->getEmail());
             $this->emailService->sendAdminOrderReceivedEmail($order);
         } catch (EmailException $e) {
-            $this->logger->error("Error sending customer order confirmation email: {$e->getMessage()}");
+            $this->logger->error(
+                "Error sending customer order confirmation email: {$e->getMessage()}",
+                [
+                    'exception' => $e,
+                    'message' => $e->getMessage(),
+                ]
+            );
         }
 
         return $order->getId();
