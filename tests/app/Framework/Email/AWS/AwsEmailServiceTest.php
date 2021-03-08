@@ -73,7 +73,7 @@ class AwsEmailServiceTest extends TestCase
             '07939843048',
             'orders@relmans.co.uk'
         );
-        $status = OrderStatus::CONFIRMED();
+        $status = OrderStatus::ACCEPTED();
         $method = new OrderMethod(
             FulfilmentType::DELIVERY(),
             new \DateTimeImmutable('2021-03-12T15:00:00+00'),
