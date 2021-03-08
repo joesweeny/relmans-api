@@ -43,6 +43,16 @@ class UpdateOrderCommandHandler
 
         $this->writer->update($command->getId(), $query);
 
+        if ($command->getStatus() !== null && $command->getStatus()->equals(OrderStatus::PAYMENT_RECEIVED())) {
+            $order = $this->reader->getById($command->getId());
+
+            try {
+                $this->emailService->sendReceivedEmail($order->getId(), $order->getCustomer()->getEmail());
+            } catch (EmailException $e) {
+                $this->logger->error("Error sending customer confirmation email: {$e->getMessage()}");
+            }
+        }
+
         if ($command->getStatus() !== null && $command->getStatus()->equals(OrderStatus::ACCEPTED())) {
             $order = $this->reader->getById($command->getId());
 
