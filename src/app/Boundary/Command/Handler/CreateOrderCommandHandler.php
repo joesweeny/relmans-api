@@ -46,7 +46,6 @@ class CreateOrderCommandHandler
         $this->writer->insert($order);
 
         try {
-            $this->emailService->sendReceivedEmail($order->getId(), $order->getCustomer()->getEmail());
             $this->emailService->sendAdminOrderReceivedEmail($order);
         } catch (EmailException $e) {
             $this->logger->error(
