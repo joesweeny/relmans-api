@@ -97,7 +97,7 @@ class OrderReaderQuery
         $this->status = $status;
         return $this;
     }
-    
+
     public function getStatus(): ?OrderStatus
     {
         return $this->status ?? null;

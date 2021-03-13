@@ -185,6 +185,18 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals('12345678', $fetched[1]->getId());
     }
 
+    public function test_get_returns_an_array_of_Order_objects_filtered_by_status()
+    {
+        $this->seedOrders();
+
+        $query = (new OrderReaderQuery())->setStatus(OrderStatus::PENDING());
+
+        $fetched = $this->reader->get($query);
+
+        $this->assertCount(1, $fetched);
+        $this->assertEquals('123455555', $fetched[0]->getId());
+    }
+
     private function seedOrders(): void
     {
         $orderId = '12345678';
@@ -269,7 +281,7 @@ class DoctrineOrderReaderTest extends TestCase
             '07939843048',
             'joe@email.com'
         );
-        $status = OrderStatus::ACCEPTED();
+        $status = OrderStatus::PENDING();
         $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable('2021-02-23T11:06:51+00:00'), 250);
         $items = [
             new OrderItem(
