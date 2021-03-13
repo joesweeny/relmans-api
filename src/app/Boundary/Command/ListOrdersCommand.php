@@ -2,6 +2,8 @@
 
 namespace Relmans\Boundary\Command;
 
+use Relmans\Domain\Enum\OrderStatus;
+
 class ListOrdersCommand
 {
     private ?string $postCode;
@@ -11,6 +13,7 @@ class ListOrdersCommand
     private ?\DateTimeImmutable $orderDateFrom;
     private ?\DateTimeImmutable $orderDateTo;
     private ?string $orderBy;
+    private ?OrderStatus $status;
 
     /**
      * @param string|null $postCode
@@ -19,6 +22,7 @@ class ListOrdersCommand
      * @param string|null $orderDateFrom
      * @param string|null $orderDateTo
      * @param string|null $orderBy
+     * @param string|null $status
      * @throws \InvalidArgumentException
      */
     public function __construct(
@@ -27,7 +31,8 @@ class ListOrdersCommand
         ?string $deliveryTo,
         ?string $orderDateFrom,
         ?string $orderDateTo,
-        ?string $orderBy
+        ?string $orderBy,
+        ?string $status
     ) {
         $this->postCode = $postCode;
 
@@ -36,6 +41,7 @@ class ListOrdersCommand
             $this->deliveryTo = $deliveryTo !== null ? new \DateTimeImmutable($deliveryTo) : null;
             $this->orderDateFrom = $orderDateFrom !== null ? new \DateTimeImmutable($orderDateFrom) : null;
             $this->orderDateTo = $orderDateTo !== null ? new \DateTimeImmutable($orderDateTo) : null;
+            $this->status = $status !== null ? new OrderStatus($status) : null;
         } catch (\Exception $e) {
             throw new \InvalidArgumentException('Date provided is not a valid RFC3339 valid date');
         }
@@ -71,5 +77,10 @@ class ListOrdersCommand
     public function getOrderBy(): ?string
     {
         return $this->orderBy;
+    }
+
+    public function getStatus(): ?OrderStatus
+    {
+        return $this->status;
     }
 }
