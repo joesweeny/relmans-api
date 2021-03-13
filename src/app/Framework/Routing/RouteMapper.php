@@ -5,6 +5,7 @@ namespace Relmans\Framework\Routing;
 use Relmans\Application\Http\CreateCategoryController;
 use Relmans\Application\Http\CreateOrderController;
 use Relmans\Application\Http\CreateProductController;
+use Relmans\Application\Http\DeleteOrderController;
 use Relmans\Application\Http\DeleteProductController;
 use Relmans\Application\Http\GetOrderController;
 use Relmans\Application\Http\HealthCheckController;
@@ -34,5 +35,6 @@ class RouteMapper
         $app->get('/order', ListOrdersController::class);
         $app->get('/order/{id}', GetOrderController::class);
         $app->patch('/order/{id}', UpdateOrderController::class);
+        $app->delete('/order/{id}', DeleteOrderController::class);
     }
 }
