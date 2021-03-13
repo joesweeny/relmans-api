@@ -31,7 +31,8 @@ class ListOrdersCommandHandler
             ->setDeliveryDateTo($command->getDeliveryTo())
             ->setOrderDateFrom($command->getOrderDateFrom())
             ->setOrderDateTo($command->getOrderDateTo())
-            ->setOrderBy($command->getOrderBy());
+            ->setOrderBy($command->getOrderBy())
+            ->setStatus($command->getStatus());
 
         $orders = $this->reader->get($query);
 

@@ -2,6 +2,8 @@
 
 namespace Relmans\Domain\Persistence;
 
+use Relmans\Domain\Enum\OrderStatus;
+
 class OrderReaderQuery
 {
     private ?string $postCode;
@@ -11,6 +13,7 @@ class OrderReaderQuery
     private ?\DateTimeImmutable $orderFrom;
     private ?\DateTimeImmutable $orderTo;
     private ?string $orderBy;
+    private ?OrderStatus $status;
 
     public function setPostCode(?string $postCode): self
     {
@@ -87,5 +90,16 @@ class OrderReaderQuery
     public function getOrderBy(): ?string
     {
         return $this->orderBy ?? null;
+    }
+
+    public function setStatus(?OrderStatus $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    public function getStatus(): ?OrderStatus
+    {
+        return $this->status ?? null;
     }
 }

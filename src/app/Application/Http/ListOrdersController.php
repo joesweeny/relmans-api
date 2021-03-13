@@ -31,6 +31,7 @@ class ListOrdersController
                 $params->orderFrom ?? null,
                 $params->orderTo ?? null,
                 $params->orderBy ?? null,
+                $params->status ?? null
             );
         } catch (\InvalidArgumentException $e) {
             return new JsendFailResponse([new JsendError($e->getMessage())], 422);

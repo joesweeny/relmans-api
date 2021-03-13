@@ -127,6 +127,11 @@ class DoctrineOrderReader implements OrderReader
             }
         }
 
+        if ($query->getStatus() !== null) {
+            $builder->andWhere('status = :status')
+                ->setParameter(':status', $query->getStatus()->getValue());
+        }
+
         return $builder;
     }
 }

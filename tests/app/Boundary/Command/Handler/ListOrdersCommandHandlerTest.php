@@ -47,7 +47,8 @@ class ListOrdersCommandHandlerTest extends TestCase
             '2020-03-13T12:00:00+00:00',
             '2020-03-14T12:00:00+00:00',
             '2020-03-15T12:00:00+00:00',
-            'created_at_desc'
+            'created_at_desc',
+            'ACCEPTED'
         );
 
         $queryAssertion = Argument::that(function (OrderReaderQuery $query) {
@@ -57,6 +58,7 @@ class ListOrdersCommandHandlerTest extends TestCase
             $this->assertEquals(new \DateTimeImmutable('2020-03-14T12:00:00+00:00'), $query->getOrderDateFrom());
             $this->assertEquals(new \DateTimeImmutable('2020-03-15T12:00:00+00:00'), $query->getOrderDateTo());
             $this->assertEquals('created_at_desc', $query->getOrderBy());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $query->getStatus());
             return true;
         });
 
@@ -120,6 +122,7 @@ class ListOrdersCommandHandlerTest extends TestCase
             null,
             null,
             null,
+            null,
             null
         );
 
@@ -130,6 +133,7 @@ class ListOrdersCommandHandlerTest extends TestCase
             $this->assertNull($query->getOrderDateFrom());
             $this->assertNull($query->getOrderDateTo());
             $this->assertNull($query->getOrderBy());
+            $this->assertNull($query->getStatus());
             return true;
         });
 
