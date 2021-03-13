@@ -9,6 +9,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Relmans\Boundary\Command\ListOrdersCommand;
+use Relmans\Domain\Enum\OrderStatus;
 
 class ListOrdersControllerTest extends TestCase
 {
@@ -78,6 +79,7 @@ class ListOrdersControllerTest extends TestCase
             'orderFrom' => '2020-03-14T12:00:00+00:00',
             'orderTo' => '2020-03-15T12:00:00+00:00',
             'orderBy' => 'created_at_desc',
+            'status' => 'ACCEPTED',
         ];
 
         $request = (new ServerRequest())->withQueryParams($params);
@@ -89,6 +91,7 @@ class ListOrdersControllerTest extends TestCase
             $this->assertEquals(new \DateTimeImmutable('2020-03-14T12:00:00+00:00'), $command->getOrderDateFrom());
             $this->assertEquals(new \DateTimeImmutable('2020-03-15T12:00:00+00:00'), $command->getOrderDateTo());
             $this->assertEquals('created_at_desc', $command->getOrderBy());
+            $this->assertEquals(OrderStatus::ACCEPTED(), $command->getStatus());
             return true;
         });
 
