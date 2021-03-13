@@ -17,4 +17,6 @@ interface OrderWriter
      * @throws NotFoundException
      */
     public function update(string $orderId, OrderWriterQuery $query): void;
+
+    public function delete(string $orderId): void;
 }

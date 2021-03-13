@@ -91,6 +91,29 @@ class DoctrineOrderWriter implements OrderWriter
         }
     }
 
+    public function delete(string $orderId): void
+    {
+        try {
+            $this->connection->createQueryBuilder()
+                ->delete('customer_order')
+                ->where('id = :id')
+                ->setParameter(':id', $orderId)
+                ->execute();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        try {
+            $this->connection->createQueryBuilder()
+                ->delete('customer_order_item')
+                ->where('order_id = :order_id')
+                ->setParameter(':order_id', $orderId)
+                ->execute();
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+    }
+
     /**
      * @param array|OrderItem[] $items
      * @return void

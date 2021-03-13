@@ -228,6 +228,78 @@ class DoctrineOrderWriterTest extends TestCase
         $this->writer->update($orderId, new OrderWriterQuery());
     }
 
+    public function test_delete_reduces_customer_order_and_customer_order_item_tables_counts()
+    {
+        $orderId = '12345678';
+        $transactionId = 'ID9991111';
+        $address = new Address(
+            '58 Holwick Close',
+            'Templetown',
+            'In the ghetto',
+            'Consett',
+            'Durham',
+            'DH87UJ'
+        );
+        $customer = new Customer(
+            'Joe',
+            'Sweeny',
+            $address,
+            '07939843048',
+            'joe@email.com'
+        );
+        $status = OrderStatus::ACCEPTED();
+        $method = new OrderMethod(FulfilmentType::DELIVERY(), new \DateTimeImmutable(), 250);
+        $items = [
+            new OrderItem(
+                Uuid::uuid4(),
+                $orderId,
+                Uuid::uuid4(),
+                'Cabbage',
+                10,
+                1,
+                Measurement::EACH(),
+                100,
+                new \DateTimeImmutable(),
+                new \DateTimeImmutable(),
+            ),
+            new OrderItem(
+                Uuid::uuid4(),
+                $orderId,
+                Uuid::uuid4(),
+                'Cabbage',
+                10,
+                1,
+                Measurement::EACH(),
+                100,
+                new \DateTimeImmutable(),
+                new \DateTimeImmutable(),
+            )
+        ];
+        $createdAt = new \DateTimeImmutable();
+        $updatedAt = new \DateTimeImmutable();
+
+        $order = new Order(
+            $orderId,
+            $transactionId,
+            $customer,
+            $status,
+            $method,
+            $items,
+            $createdAt,
+            $updatedAt
+        );
+
+        $this->writer->insert($order);
+
+        $this->assertEquals(1, $this->tableRowCount('customer_order'));
+        $this->assertEquals(2, $this->tableRowCount('customer_order_item'));
+
+        $this->writer->delete($order->getId());
+
+        $this->assertEquals(0, $this->tableRowCount('customer_order'));
+        $this->assertEquals(0, $this->tableRowCount('customer_order_item'));
+    }
+
     private function tableRowCount(string $table): int
     {
         return $this->connection->createQueryBuilder()
