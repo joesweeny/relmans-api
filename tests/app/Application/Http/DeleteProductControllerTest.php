@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Application\Http;
+namespace Relmans\Application\Http;
 
 use Laminas\Diactoros\ServerRequest;
 use League\Tactician\CommandBus;
