@@ -50,8 +50,6 @@ class OrderFactoryTest extends TestCase
         $this->logger = $this->prophesize(LoggerInterface::class);
         $this->factory = new OrderFactory(
             $this->productReader->reveal(),
-            $this->paymentService->reveal(),
-            $this->logger->reveal(),
             new FixedClock(new \DateTimeImmutable('2021-02-24T12:00:00+00:00'))
         );
     }
@@ -87,121 +85,6 @@ class OrderFactoryTest extends TestCase
                 10
             ),
         ];
-
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willReturn('TRAN1');
-
-        $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
-            ->shouldBeCalled()
-            ->willReturn($this->product());
-
-        $this->productReader->getPriceById(Uuid::fromString( 'eb3553bf-4e93-4a76-a9e2-85c37fe9d957'))
-            ->shouldBeCalled()
-            ->willReturn($this->product()->getPrices()[0]);
-
-        $order = $this->factory->createNewOrder('ORDER123', $customer, $orderMethod, $orderItems);
-
-        $this->assertEquals('ORDER123', $order->getId());
-        $this->assertEquals('TRAN1', $order->getTransactionId());
-        $this->assertEquals($customer, $order->getCustomer());
-        $this->assertEquals(OrderStatus::PENDING(), $order->getStatus());
-        $this->assertEquals($orderMethod, $order->getMethod());
-        $this->assertEquals(new \DateTimeImmutable('2021-02-24T12:00:00+00:00'), $order->getCreatedAt());
-        $this->assertEquals(new \DateTimeImmutable('2021-02-24T12:00:00+00:00'), $order->getUpdatedAt());
-
-        $this->assertCount(1, $order->getItems());
-        $this->assertEquals('ORDER123', $order->getItems()[0]->getOrderId());
-        $this->assertEquals(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'), $order->getItems()[0]->getProductId());
-        $this->assertEquals('Maris Pipers', $order->getItems()[0]->getName());
-        $this->assertEquals(100, $order->getItems()[0]->getPrice());
-        $this->assertEquals(500, $order->getItems()[0]->getSize());
-        $this->assertEquals(Measurement::GRAMS(), $order->getItems()[0]->getMeasurement());
-        $this->assertEquals(10, $order->getItems()[0]->getQuantity());
-        $this->assertEquals(new \DateTimeImmutable('2021-02-24T12:00:00+00:00'), $order->getItems()[0]->getCreatedAt());
-        $this->assertEquals(new \DateTimeImmutable('2021-02-24T12:00:00+00:00'), $order->getItems()[0]->getUpdatedAt());
-    }
-
-    public function test_createNewOrder_throws_a_ValidationException_if_the_order_is_not_found_via_the_payment_service()
-    {
-        $customer = new Customer(
-            'Joe',
-            'Sweeny',
-            new Address(
-                '58 Holwick Close',
-                'Templetown',
-                'In the ghetto',
-                'Consett',
-                'Durham',
-                'DH87UJ'
-            ),
-            '07939843048',
-            'joe@email.com'
-        );
-
-        $orderMethod = new OrderMethod(
-            FulfilmentType::DELIVERY(),
-            new \DateTimeImmutable('2020-03-12T12:00:00+00:00'),
-            250
-        );
-
-        $orderItems = [
-            new OrderItemData(
-                Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'),
-                Uuid::fromString( 'eb3553bf-4e93-4a76-a9e2-85c37fe9d957'),
-                100,
-                10
-            ),
-        ];
-
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willThrow(new NotFoundException('Not found'));
-
-        $this->logger->error('Error fetching order from payment service: Not found', Argument::type('array'))->shouldBeCalled();
-
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Unable to validate order number');
-        $this->factory->createNewOrder('ORDER123', $customer, $orderMethod, $orderItems);
-    }
-
-    public function test_createNewOrder_parses_an_empty_string_for_the_transaction_if_if_payment_service_throws_a_PaymentServiceException()
-    {
-        $customer = new Customer(
-            'Joe',
-            'Sweeny',
-            new Address(
-                '58 Holwick Close',
-                'Templetown',
-                'In the ghetto',
-                'Consett',
-                'Durham',
-                'DH87UJ'
-            ),
-            '07939843048',
-            'joe@email.com'
-        );
-
-        $orderMethod = new OrderMethod(
-            FulfilmentType::DELIVERY(),
-            new \DateTimeImmutable('2020-03-12T12:00:00+00:00'),
-            250
-        );
-
-        $orderItems = [
-            new OrderItemData(
-                Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'),
-                Uuid::fromString( 'eb3553bf-4e93-4a76-a9e2-85c37fe9d957'),
-                100,
-                10
-            ),
-        ];
-
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willThrow(new PaymentServiceException('Error making request'));
-
-        $this->logger->error('Error making request', Argument::type('array'))->shouldBeCalled();
 
         $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
             ->shouldBeCalled()
@@ -265,10 +148,6 @@ class OrderFactoryTest extends TestCase
             ),
         ];
 
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willReturn('TRAN1');
-
         $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
             ->shouldBeCalled()
             ->willThrow(new NotFoundException('Product not found'));
@@ -309,10 +188,6 @@ class OrderFactoryTest extends TestCase
                 10
             ),
         ];
-
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willReturn('TRAN1');
 
         $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
             ->shouldBeCalled()
@@ -359,10 +234,6 @@ class OrderFactoryTest extends TestCase
             ),
         ];
 
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willReturn('TRAN1');
-
         $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
             ->shouldBeCalled()
             ->willReturn($this->product());
@@ -407,10 +278,6 @@ class OrderFactoryTest extends TestCase
                 10
             ),
         ];
-
-        $this->paymentService->getTransactionId('ORDER123')
-            ->shouldBeCalled()
-            ->willReturn('TRAN1');
 
         $this->productReader->getById(Uuid::fromString('ea00060d-fb4a-4583-a76c-736f0c06bd86'))
             ->shouldBeCalled()

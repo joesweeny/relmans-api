@@ -2,7 +2,6 @@
 
 namespace Relmans\Domain\Factory;
 
-use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Relmans\Boundary\Utility\OrderItemData;
 use Relmans\Domain\Entity\Customer;
@@ -11,8 +10,6 @@ use Relmans\Domain\Entity\OrderItem;
 use Relmans\Domain\Entity\OrderMethod;
 use Relmans\Domain\Enum\OrderStatus;
 use Relmans\Domain\Persistence\ProductReader;
-use Relmans\Domain\Service\Payment\PaymentService;
-use Relmans\Domain\Service\Payment\PaymentServiceException;
 use Relmans\Framework\Exception\NotFoundException;
 use Relmans\Framework\Exception\ValidationException;
 use Relmans\Framework\Time\Clock;
@@ -20,19 +17,11 @@ use Relmans\Framework\Time\Clock;
 class OrderFactory
 {
     private ProductReader $productReader;
-    private PaymentService $paymentService;
-    private LoggerInterface $logger;
     private Clock $clock;
 
-    public function __construct(
-        ProductReader $productReader,
-        PaymentService $paymentService,
-        LoggerInterface $logger,
-        Clock $clock
-    ) {
+    public function __construct(ProductReader $productReader, Clock $clock)
+    {
         $this->productReader = $productReader;
-        $this->paymentService = $paymentService;
-        $this->logger = $logger;
         $this->clock = $clock;
     }
 
@@ -48,7 +37,7 @@ class OrderFactory
     {
         return new Order(
             $orderNumber,
-            $this->fetchTransactionId($orderNumber),
+            '',
             $customer,
             OrderStatus::PENDING(),
             $method,
@@ -56,32 +45,6 @@ class OrderFactory
             $this->clock->now(),
             $this->clock->now()
         );
-    }
-
-    /**
-     * @param string $orderNumber
-     * @return string
-     * @throws ValidationException
-     */
-    private function fetchTransactionId(string $orderNumber): string
-    {
-        try {
-            $transactionId = $this->paymentService->getTransactionId($orderNumber);
-        } catch (NotFoundException $e) {
-            $this->logger->error("Error fetching order from payment service: {$e->getMessage()}", [
-                'exception' => $e,
-                'message' => $e->getMessage(),
-            ]);
-
-            throw new ValidationException('Unable to validate order number');
-        } catch (PaymentServiceException $e) {
-            $this->logger->error($e->getMessage(), [
-                'exception' => $e,
-                'message' => $e->getMessage(),
-            ]);
-        }
-
-        return $transactionId ?? '';
     }
 
     /**

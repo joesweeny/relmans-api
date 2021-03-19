@@ -2,12 +2,9 @@
 
 namespace Relmans\Boundary\Command;
 
-use Ramsey\Uuid\Uuid;
-use Ramsey\Uuid\UuidInterface;
-
 class GetOrderCommand
 {
-    private UuidInterface $orderId;
+    private string $orderId;
 
     /**
      * @param string $orderId
@@ -15,10 +12,10 @@ class GetOrderCommand
      */
     public function __construct(string $orderId)
     {
-        $this->orderId = Uuid::fromString($orderId);
+        $this->orderId = $orderId;
     }
 
-    public function getOrderId(): UuidInterface
+    public function getOrderId(): string
     {
         return $this->orderId;
     }

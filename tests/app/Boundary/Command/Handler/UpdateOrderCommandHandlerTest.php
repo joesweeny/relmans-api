@@ -75,6 +75,7 @@ class UpdateOrderCommandHandlerTest extends TestCase
             ->willReturn($order->reveal());
 
         $this->emailService->sendDeliveryConfirmation($order)->shouldBeCalled();
+        $this->emailService->sendAdminOrderReceivedEmail($order)->shouldBeCalled();
 
         $this->handler->handle($command);
     }
@@ -99,6 +100,7 @@ class UpdateOrderCommandHandlerTest extends TestCase
             ->willReturn($order->reveal());
 
         $this->emailService->sendCollectionConfirmation($order)->shouldBeCalled();
+        $this->emailService->sendAdminOrderReceivedEmail($order)->shouldBeCalled();
 
         $this->handler->handle($command);
     }
