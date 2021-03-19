@@ -7,16 +7,22 @@ use Relmans\Boundary\Presenter\OrderPresenter;
 use Relmans\Domain\Entity\Order;
 use Relmans\Domain\Persistence\OrderReader;
 use Relmans\Domain\Persistence\OrderReaderQuery;
+use Relmans\Framework\Time\Clock;
 
 class ListOrdersCommandHandler
 {
     private OrderReader $reader;
     private OrderPresenter $presenter;
+    /**
+     * @var Clock
+     */
+    private Clock $clock;
 
-    public function __construct(OrderReader $reader, OrderPresenter $presenter)
+    public function __construct(OrderReader $reader, OrderPresenter $presenter, Clock $clock)
     {
         $this->reader = $reader;
         $this->presenter = $presenter;
+        $this->clock = $clock;
     }
 
     /**
@@ -29,7 +35,7 @@ class ListOrdersCommandHandler
             ->setPostCode($command->getPostCode())
             ->setDeliveryDateFrom($command->getDeliveryFrom())
             ->setDeliveryDateTo($command->getDeliveryTo())
-            ->setOrderDateFrom($command->getOrderDateFrom())
+            ->setOrderDateFrom($command->getOrderDateFrom() ?? $this->clock->now()->sub(new \DateInterval('P7D')))
             ->setOrderDateTo($command->getOrderDateTo())
             ->setOrderBy($command->getOrderBy())
             ->setStatus($command->getStatus());

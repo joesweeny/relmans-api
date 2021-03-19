@@ -19,6 +19,7 @@ use Relmans\Domain\Enum\Measurement;
 use Relmans\Domain\Enum\OrderStatus;
 use Relmans\Domain\Persistence\OrderReader;
 use Relmans\Domain\Persistence\OrderReaderQuery;
+use Relmans\Framework\Time\FixedClock;
 
 class ListOrdersCommandHandlerTest extends TestCase
 {
@@ -35,7 +36,8 @@ class ListOrdersCommandHandlerTest extends TestCase
         $this->reader = $this->prophesize(OrderReader::class);
         $this->handler = new ListOrdersCommandHandler(
             $this->reader->reveal(),
-            new OrderPresenter()
+            new OrderPresenter(),
+            new FixedClock(new \DateTimeImmutable('2021-03-18T00:00:00+00:00'))
         );
     }
 
@@ -130,7 +132,7 @@ class ListOrdersCommandHandlerTest extends TestCase
             $this->assertNull($query->getPostCode());
             $this->assertNull($query->getDeliveryDateFrom());
             $this->assertNull($query->getDeliveryDateTo());
-            $this->assertNull($query->getOrderDateFrom());
+            $this->assertEquals(new \DateTimeImmutable('2021-03-11T00:00:00+00:00'), $query->getOrderDateFrom());
             $this->assertNull($query->getOrderDateTo());
             $this->assertNull($query->getOrderBy());
             $this->assertNull($query->getStatus());
