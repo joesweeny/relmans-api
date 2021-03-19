@@ -64,6 +64,8 @@ class UpdateOrderCommandHandler
                 if ($order->getMethod()->getFulfilmentType()->equals(FulfilmentType::COLLECTION())) {
                     $this->emailService->sendCollectionConfirmation($order);
                 }
+
+                $this->emailService->sendAdminOrderReceivedEmail($order);
             } catch (EmailException $e) {
                 $this->logger->error("Error sending customer confirmation email: {$e->getMessage()}");
             }

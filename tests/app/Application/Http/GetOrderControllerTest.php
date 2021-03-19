@@ -71,10 +71,10 @@ class GetOrderControllerTest extends TestCase
             'updatedAt' => '2020-03-12T12:00:00+00:00',
         ];
 
-        $request = (new ServerRequest())->withAttribute('id', '9af64fc1-6168-4859-99ba-a8173fab472c');
+        $request = (new ServerRequest())->withAttribute('id', '12345678');
 
         $commandAssertion = Argument::that(function (GetOrderCommand $command) {
-            $this->assertEquals(Uuid::fromString('9af64fc1-6168-4859-99ba-a8173fab472c'), $command->getOrderId());
+            $this->assertEquals('12345678', $command->getOrderId());
             return true;
         });
 
@@ -95,34 +95,12 @@ class GetOrderControllerTest extends TestCase
         $this->assertEquals($expected, json_decode($response->getBody()->getContents()));
     }
 
-    public function test_invoke_returns_a_404_response_if_id_provided_is_not_a_valid_uuid_string()
-    {
-        $request = (new ServerRequest())->withAttribute('id', '9');
-
-        $this->commandBus->handle(Argument::type(GetOrderCommand::class))->shouldNotBeCalled();
-
-        $response = $this->controller->__invoke($request);
-
-        $expectedBody = (object) [
-            'status' => 'fail',
-            'errors' => [
-                (object) [
-                    'code' => 1,
-                    'message' => 'Invalid UUID string: 9',
-                ]
-            ],
-        ];
-
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals($expectedBody, json_decode($response->getBody()->getContents()));
-    }
-
     public function test_invoke_returns_a_404_response_if_command_bus_throws_a_NotFoundException()
     {
-        $request = (new ServerRequest())->withAttribute('id', '9af64fc1-6168-4859-99ba-a8173fab472c');
+        $request = (new ServerRequest())->withAttribute('id', '12345678');
 
         $commandAssertion = Argument::that(function (GetOrderCommand $command) {
-            $this->assertEquals(Uuid::fromString('9af64fc1-6168-4859-99ba-a8173fab472c'), $command->getOrderId());
+            $this->assertEquals('12345678', $command->getOrderId());
             return true;
         });
 

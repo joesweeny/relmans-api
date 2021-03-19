@@ -45,18 +45,6 @@ class CreateOrderCommandHandler
 
         $this->writer->insert($order);
 
-        try {
-            $this->emailService->sendAdminOrderReceivedEmail($order);
-        } catch (EmailException $e) {
-            $this->logger->error(
-                "Error sending customer order confirmation email: {$e->getMessage()}",
-                [
-                    'exception' => $e,
-                    'message' => $e->getMessage(),
-                ]
-            );
-        }
-
         return $order->getId();
     }
 }
