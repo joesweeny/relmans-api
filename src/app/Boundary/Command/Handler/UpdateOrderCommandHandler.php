@@ -68,5 +68,9 @@ class UpdateOrderCommandHandler
                 $this->logger->error("Error sending customer confirmation email: {$e->getMessage()}");
             }
         }
+
+        if ($command->getStatus() !== null && $command->getStatus()->equals(OrderStatus::CANCELLED())) {
+            $this->writer->delete($command->getId());
+        }
     }
 }

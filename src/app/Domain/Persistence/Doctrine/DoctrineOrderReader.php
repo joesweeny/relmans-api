@@ -7,6 +7,7 @@ use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Ramsey\Uuid\UuidInterface;
 use Relmans\Domain\Entity\Order;
+use Relmans\Domain\Entity\OrderItem;
 use Relmans\Domain\Persistence\OrderReader;
 use Relmans\Domain\Persistence\OrderReaderQuery;
 use Relmans\Framework\Exception\NotFoundException;
@@ -58,8 +59,29 @@ class DoctrineOrderReader implements OrderReader
         }
 
         return array_map(function (array $row) {
-            return $this->hydrator->hydrateOrder((object) $row, $this->fetchOrderItems($row['id']));
+            return $this->hydrator->hydrateOrder((object) $row, []);
         }, $rows->fetchAllAssociative());
+    }
+
+    public function getOrderItems(string $orderId): array
+    {
+        $builder = $this->connection->createQueryBuilder();
+
+        try {
+            $fetched = $builder
+                ->select('*')
+                ->from('customer_order_item')
+                ->where('order_id = :order_id')
+                ->setParameter(':order_id', $orderId)
+                ->execute()
+                ->fetchAllAssociative();
+        } catch (Exception $e) {
+            throw new \RuntimeException("Error executing query: {$e->getMessage()}");
+        }
+
+        return array_map(function (array $row) {
+            return $this->hydrator->hydrateOrderItem((object) $row);
+        }, $fetched);
     }
 
     /**

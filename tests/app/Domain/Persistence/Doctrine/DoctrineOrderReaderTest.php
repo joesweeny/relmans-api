@@ -197,6 +197,17 @@ class DoctrineOrderReaderTest extends TestCase
         $this->assertEquals('123455555', $fetched[0]->getId());
     }
 
+    public function test_getOrderItems_returns_an_array_of_OrderItem_objects()
+    {
+        $this->seedOrders();
+
+        $items = $this->reader->getOrderItems('12345678');
+
+        $this->assertCount(2, $items);
+        $this->assertEquals(Uuid::fromString('c0c4ad12-f315-4e5e-96ec-97ca9dbd975e'), $items[0]->getId());
+        $this->assertEquals(Uuid::fromString('a7f212ae-8c40-46e1-8b82-dfc4e6f522c5'), $items[1]->getId());
+    }
+
     private function seedOrders(): void
     {
         $orderId = '12345678';
